@@ -222,6 +222,7 @@ Licensed under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)
 ## Contact
 
 For questions about the workshop:
+- **Instructor:** Christopher Stubbs - [stubbs@g.harvard.edu](mailto:stubbs@g.harvard.edu)
 - Harvard Data Science Initiative: [https://datascience.harvard.edu](https://datascience.harvard.edu)
 - Course materials issues: [GitHub Issues](https://github.com/astrostubbs/GenAI-for-Scholarship/issues)
 
