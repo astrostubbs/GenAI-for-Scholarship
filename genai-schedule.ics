@@ -1,0 +1,55 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Harvard HDSI//GenAI for Scholarship//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:GenAI for Scholarship
+X-WR-TIMEZONE:America/New_York
+X-WR-CALDESC:Three-part workshop series on Generative AI for STEM researchers
+
+BEGIN:VEVENT
+DTSTART:20260220T210000Z
+DTEND:20260220T223000Z
+DTSTAMP:20260208T000000Z
+UID:genai-session1@harvard.edu
+CREATED:20260208T000000Z
+DESCRIPTION:Introduction to Google's Gemini AI toolkit: Gemini, NotebookLM, and Gems. Effective prompting and responsible AI use in research.\n\nSession followed by reception and discussion.\n\nWebsite: https://astrostubbs.github.io/GenAI-for-Scholarship/
+LAST-MODIFIED:20260208T000000Z
+LOCATION:Northwest Building, Room B103, 52 Oxford Street, Cambridge, MA 02138
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:GenAI for Scholarship: Session 1 - The Basics
+TRANSP:OPAQUE
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART:20260227T210000Z
+DTEND:20260227T223000Z
+DTSTAMP:20260208T000000Z
+UID:genai-session2@harvard.edu
+CREATED:20260208T000000Z
+DESCRIPTION:Incorporating AI into Python workflows: code generation, revision, and debugging.\n\nSession followed by reception and discussion.\n\nWebsite: https://astrostubbs.github.io/GenAI-for-Scholarship/
+LAST-MODIFIED:20260208T000000Z
+LOCATION:Northwest Building, Room B103, 52 Oxford Street, Cambridge, MA 02138
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:GenAI for Scholarship: Session 2 - The AI-Empowered Coder
+TRANSP:OPAQUE
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART:20260306T210000Z
+DTEND:20260306T223000Z
+DTSTAMP:20260208T000000Z
+UID:genai-session3@harvard.edu
+CREATED:20260208T000000Z
+DESCRIPTION:Hands-on with Claude Code: agentic AI programming and data analysis from the command line.\n\nSession followed by reception and discussion.\n\nWebsite: https://astrostubbs.github.io/GenAI-for-Scholarship/
+LAST-MODIFIED:20260208T000000Z
+LOCATION:Northwest Building, Room B103, 52 Oxford Street, Cambridge, MA 02138
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:GenAI for Scholarship: Session 3 - Claude Code CLI
+TRANSP:OPAQUE
+END:VEVENT
+
+END:VCALENDAR
