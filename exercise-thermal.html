@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise: Thermal Data Analysis — Generative AI for Scholarship</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logos">
+        <img src="HDSI.png" alt="Harvard Data Science Initiative">
+        <img src="FAS.png" alt="Harvard Faculty of Arts and Sciences">
+    </div>
+    <h1>Generative AI for Scholarship</h1>
+    <div class="sponsors">Harvard Data Science Initiative (HDSI) &amp; Faculty of Arts and Sciences (FAS)</div>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="session1-foundation.html">The Basics</a>
+    <a href="session2-coder.html">The AI-Empowered Coder</a>
+    <a href="session3-power-user.html">Claude Code CLI</a>
+</nav>
+
+<h2>Exercise: Telescope Thermal Data Analysis</h2>
+
+<p>
+    In this exercise you will use Claude Code to analyze real thermal data
+    from the Vera C. Rubin Observatory primary mirror. The dataset contains
+    temperature measurements at 15-minute intervals from June through
+    December 2025, recorded at the summit in Chile.
+</p>
+
+<h2>Setup: Create Working Directory and Get the Data</h2>
+
+<p>First, create a subdirectory for this session's work and navigate to it:</p>
+
+<pre><code>cd ~/Desktop/GAI
+mkdir -p session3
+cd session3</code></pre>
+
+<p>Now download the data file:</p>
+
+<pre><code>curl -O https://astrostubbs.github.io/GenAi-for-Scholarship/data/session3/rubin_mirror_temps.csv</code></pre>
+
+<p>The file contains about 17,600 rows with two columns:</p>
+
+<ul class="resources">
+    <li><code>timestamp</code> <span class="desc">Date and time of the measurement (UTC), at 15-minute intervals</span></li>
+    <li><code>temperature</code> <span class="desc">Mirror temperature (&deg;C)</span></li>
+</ul>
+
+<h2>The Exercise</h2>
+
+<p>
+    Start Claude Code in your <code>~/Desktop/GAI/session3</code> directory:
+</p>
+
+<pre><code>claude</code></pre>
+
+<p>
+    Work through the following steps. For each one, type the prompt (or
+    your own version of it) into Claude Code and observe what it does.
+</p>
+
+<h3>Step 1: Explore the data</h3>
+
+<p>Try a prompt like:</p>
+
+<pre><code>"Look at the file rubin_mirror_temps.csv. Tell me the column names
+and show me the first few lines of data. Are there any anomalies
+in the data file?"</code></pre>
+
+<p>
+    Notice how Claude Code reads the file, summarizes its structure,
+    and flags any issues (missing values, gaps in the time series, etc.)
+    without you writing any code.
+</p>
+
+<h3>Step 2: Plot the temperature time series</h3>
+
+<pre><code>"Write a Python program to plot temperature vs. time from
+rubin_mirror_temps.csv. Label the axes with units and give
+the plot a descriptive title."</code></pre>
+
+<p>
+    Claude Code will write a Python script, run it, and display the
+    resulting plot. Look at the code it wrote — is it what you would
+    have written?
+</p>
+
+<h3>Step 3: Add a histogram</h3>
+
+<pre><code>"Add a histogram of the temperature values. Show it as a
+separate figure."</code></pre>
+
+<p>
+    This builds on the previous step. Notice how Claude Code remembers
+    the context of what it has already done.
+</p>
+
+<h3>Step 4: Find the extremes</h3>
+
+<pre><code>"When did the maximum and minimum temperatures occur?
+Report the dates, times, and values."</code></pre>
+
+<h3>Step 5: Mark sunset on the plot</h3>
+
+<pre><code>"Modify the plotting program to show only the most recent
+week of data. For each day, estimate the time of sunset at
+Cerro Pachon, Chile (latitude -30.24, longitude -70.74) and
+mark it on the time series plot with a large red dot."</code></pre>
+
+<p>
+    This is a more complex request — Claude Code needs to figure out how
+    to compute sunset times (it will likely use an astronomy library like
+    <code>astropy</code> or <code>ephem</code>), interpolate the
+    temperature at that time, and add the markers to the plot. Watch how
+    it breaks the problem into pieces.
+</p>
+
+<h3>Step 6: Fourier analysis</h3>
+
+<pre><code>"Take the Fourier transform of the temperature time series
+and report the dominant periods, in days. Plot the power
+spectrum."</code></pre>
+
+<p>
+    Look at the periods Claude Code reports as dominant. Do they make
+    physical sense? What period would you <em>expect</em> to see most
+    prominently for outdoor temperature data? Is the answer you got
+    consistent with that expectation?
+</p>
+
+<h3>Step 7: Think critically about the result</h3>
+
+<p>
+    Pause here. Look at the dominant periods Claude Code reported.
+    Are we asking the right question of the data? Discuss with your
+    neighbors — what would you expect to see, and does the answer
+    match? If not, think about why, and then ask Claude Code a
+    better question.
+</p>
+
+<h3>Step 8: Practice resuming your session</h3>
+
+<p>
+    Claude Code automatically saves your conversation history in the
+    <code>~/.claude/</code> directory, organized by the working directory
+    where you ran it. Let's test this.
+</p>
+
+<p>
+    First, quit Claude Code by typing <code>/exit</code> or pressing
+    <code>Ctrl-D</code>. Then restart it:
+</p>
+
+<pre><code>claude -r</code></pre>
+
+<p>
+    You'll see a list of your recent sessions. Select the one for
+    <code>~/Desktop/GAI/session3</code>. The session resumes with full
+    context — you can continue asking questions about the data, request
+    modifications to the plots, or reference anything from earlier in the
+    conversation. Try asking:
+</p>
+
+<pre><code>"What was the maximum temperature we found earlier?"</code></pre>
+
+<p>
+    Claude Code remembers. This makes it easy to work in stages — do
+    some analysis, take a break, come back later and continue where
+    you left off.
+</p>
+
+<h3>Step 9: Generate a lab notebook entry</h3>
+
+<p>
+    Good research practice means documenting what you did. Ask Claude
+    Code to write up the session as a self-contained HTML lab notebook:
+</p>
+
+<pre><code>"Create a NEW HTML file called lab_notebook.html that documents
+the analysis we just did. Include:
+- A title with today's date
+- A summary of each analysis step and what we found
+- All the plots, embedded directly in the HTML as base64 images
+- Links to each Python source file used
+- A section at the end listing the data file and its provenance
+
+The HTML should be self-contained — openable in any browser
+with no external dependencies."</code></pre>
+
+<p>
+    Open <code>lab_notebook.html</code> in your browser to see the
+    result. This is a reproducible record of your analysis session.
+</p>
+
+<h2>Using Plan Mode for Complex Tasks</h2>
+
+<p>
+    For complex, multi-step tasks, Claude Code offers <strong>Plan Mode</strong>.
+    In Plan Mode, Claude explores your codebase and designs an implementation
+    approach first, presenting you with a detailed plan before executing anything.
+    This is especially useful for tasks that require:
+</p>
+
+<ul class="resources">
+    <li>Multiple implementation steps</li>
+    <li>Exploring trade-offs between approaches</li>
+    <li>Installing new dependencies or libraries</li>
+    <li>Significant changes to existing code</li>
+</ul>
+
+<h3>The Plan Mode Workflow</h3>
+
+<ol>
+    <li><strong>Enter Plan Mode:</strong> Press <kbd>Shift+Tab</kbd> (or type <code>/plan</code>).
+        The mode indicator in the status area will change to show you're in Plan Mode.</li>
+
+    <li><strong>Submit your prompt:</strong> Describe what you want to accomplish.
+        Claude will explore the relevant files, think through the approach,
+        and present a detailed plan with step-by-step implementation strategy.</li>
+
+    <li><strong>Review and approve:</strong> Read the plan carefully. If it looks
+        good, approve it. If you want changes, you can discuss modifications
+        while still in Plan Mode.</li>
+
+    <li><strong>Exit Plan Mode to execute:</strong> Press <kbd>Shift+Tab</kbd> again
+        to cycle out of Plan Mode. Claude will then execute the approved plan,
+        writing code, installing packages, running tests, etc.</li>
+</ol>
+
+<p>
+    Think of Plan Mode as the "design" phase and normal mode as the
+    "implementation" phase. This two-phase workflow prevents Claude from
+    diving into implementation before you've agreed on the approach.
+</p>
+
+<h3>Step 10 (Advanced): Machine Learning Prediction</h3>
+
+<p>
+    Now let's use Plan Mode for a challenging task: predict the temperature
+    at sunset, three hours ahead of time, by comparing multiple machine
+    learning methods.
+</p>
+
+<p>Here's the prompt to use in Plan Mode:</p>
+
+<pre><code>I want you to act as an expert in machine learning methods. The goal is
+to predict the temperature at sunset on any given day, using the entire
+time history of temperature measurements up to 3 hours before sunset.
+
+For each day:
+- Input: all temperature measurements from the start of that day up to
+  3 hours before sunset
+- Target: the actual temperature at sunset
+
+Break the data file into 2 sections: use even days of the month for
+training, and odd days of the month for testing and validation.
+
+The metric to optimize is MAE (mean absolute error) between predicted
+and actual sunset temperature.
+
+First, suggest several approaches that might work well for this problem,
+considering that we have rich time series history as input. Then
+implement and compare at least 3 different methods. Make a quantitative
+performance comparison and give me a recommendation on what I should use.</code></pre>
+
+<p>
+    <strong>In Plan Mode</strong>, Claude will explore the data, think
+    through the approach, and present you with a detailed plan covering
+    steps like:
+</p>
+
+<ul class="resources">
+    <li>Computing sunset times for all dates in the dataset</li>
+    <li>Extracting temperature 3 hours before sunset as features</li>
+    <li>Splitting data into even/odd days for train/test</li>
+    <li>Implementing multiple ML models (Random Forest, Prophet, etc.)</li>
+    <li>Training and evaluating each on the test set</li>
+    <li>Comparing performance metrics</li>
+</ul>
+
+<p>
+    Review the plan. If it looks good, approve it and exit Plan Mode
+    (press <kbd>Shift+Tab</kbd> again). Claude will then execute the plan:
+    installing packages, writing code, training models, and producing
+    comparison plots and metrics.
+</p>
+
+<p>
+    This demonstrates the full power of an agentic coding assistant on a
+    real research problem — planning, implementing, and evaluating a
+    solution end-to-end.
+</p>
+
+<h3>Step 11: Create a Summary Report</h3>
+
+<p>
+    After running the ML comparison, you'll have two PNG files with results:
+    <code>ml_comparison_v2.png</code> (model performance comparison) and
+    <code>ml_residuals_v2.png</code> (comprehensive residual analysis).
+    Now create a professional HTML report to document your findings.
+</p>
+
+<p>Ask Claude Code:</p>
+
+<pre><code>"Create a NEW HTML file called ml_summary.html that presents the machine
+learning comparison results. This should be a separate report from the
+lab notebook. Include:
+
+1. Title: 'Machine Learning for Sunset Temperature Prediction'
+2. Introduction: Brief description of the prediction problem and why it matters
+3. Methods: Summarize each of the 5 ML approaches tested and what they do
+4. Results: Embed both PNG files (ml_comparison_v2.png and ml_residuals_v2.png)
+5. Performance table: Show MAE, RMSE, and R² for each method
+6. Recommendation: Which method should be used and why?
+7. Interpretation: What do the residual plots tell us about model quality?
+
+The HTML should be self-contained with embedded images and professional
+styling."</code></pre>
+
+<p>
+    This creates a polished summary suitable for sharing with collaborators
+    or including in research documentation. Notice how Claude Code can take
+    the raw analysis results and transform them into a publication-ready
+    format.
+</p>
+
+<h3>Session Management</h3>
+
+<p>
+    Claude Code saves all sessions locally in <code>~/.claude/</code>,
+    organized by the directory where you ran it. This means:
+</p>
+
+<ul class="resources">
+    <li><code>claude -c</code> — continues the most recent session in the current directory</li>
+    <li><code>claude -r</code> — shows a picker to resume any previous session</li>
+    <li>Sessions include full conversation history and context</li>
+    <li>You can work in stages across multiple sessions</li>
+</ul>
+
+<p>
+    The session files themselves are in <code>~/.claude/sessions/</code>
+    as JSON files, but the intended way to access them is through
+    <code>claude -c</code> and <code>claude -r</code>.
+</p>
+
+<h3>Best Practice: Organize Your Work by Directory</h3>
+
+<p>
+    Since Claude Code sessions are tied to the working directory, use
+    your directory structure to organize different projects and analyses.
+    For example:
+</p>
+
+<pre><code>~/Desktop/GAI/
+  session1/             # Session 1 work
+  session2/             # Session 2 work
+  session3/             # This session - thermal analysis
+  my-project/           # Your own research project</code></pre>
+
+<p>
+    When you navigate to a project directory and run <code>claude -c</code>,
+    you automatically resume in the context of that project. This keeps
+    different analyses separate and makes it easy to switch between them.
+    Think of each directory as a separate "lab notebook" with its own
+    conversation history. For this exercise, all work will be in
+    <code>~/Desktop/GAI/session3/</code>, keeping it separate from other sessions.
+</p>
+
+<h2>Useful Claude Code Commands</h2>
+
+<p>
+    Claude Code has several built-in commands (slash commands) that are
+    useful during your session. Type them at the prompt:
+</p>
+
+<ul class="resources">
+    <li><code>/help</code> <span class="desc">Show help and available commands</span></li>
+    <li><code>/permissions</code> <span class="desc">View and manage tool permissions (Bash, Edit, Write, etc.)</span></li>
+    <li><code>/cost</code> <span class="desc">Show API cost for the current session</span></li>
+    <li><code>/model</code> <span class="desc">Show which model you're using (opus, sonnet, haiku)</span></li>
+    <li><code>/plan</code> <span class="desc">Enter Plan Mode (same as Shift+Tab)</span></li>
+    <li><code>/exit</code> <span class="desc">Exit Claude Code (same as Ctrl-D)</span></li>
+    <li><code>/clear</code> <span class="desc">Clear the conversation history</span></li>
+    <li><code>/tasks</code> <span class="desc">Show task list if you're using task tracking</span></li>
+</ul>
+
+<p>
+    The <code>/permissions</code> command is particularly useful if Claude Code
+    gets blocked on certain operations. You can grant permissions for specific
+    tools or prompts during your session.
+</p>
+
+<h2>Check Your API Usage</h2>
+
+<p>
+    After completing the exercises, it's helpful to see how much API usage they
+    consumed. In Claude Code, type:
+</p>
+
+<pre><code>/cost</code></pre>
+
+<p>
+    This will show you the total API cost for your current session, broken down
+    by model usage and token counts. This helps you understand the typical costs
+    of using Claude Code for research tasks and plan your budget accordingly.
+</p>
+
+<h2>For Instructors</h2>
+
+<p>
+    Reference implementations, teaching notes, and solutions are available on a
+    separate page:
+</p>
+
+<p style="text-align: center; margin: 2rem 0;">
+    <a href="exercise-thermal-solutions.html" style="display: inline-block; background: #A51C30; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 4px; font-weight: bold;">View Instructor Solutions</a>
+</p>
+
+<footer>
+    <p>
+        &copy; 2026 President and Fellows of Harvard College.
+        Licensed under
+        <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.
+    </p>
+</footer>
+
+</body>
+</html>

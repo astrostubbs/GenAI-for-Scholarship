@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setting Up Anthropic API Access for Harvard Users — Generative AI for Scholarship</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logos">
+        <img src="HDSI.png" alt="Harvard Data Science Initiative">
+        <img src="FAS.png" alt="Harvard Faculty of Arts and Sciences">
+    </div>
+    <h1>Generative AI for Scholarship</h1>
+    <div class="sponsors">Harvard Data Science Initiative (HDSI) & Faculty of Arts and Sciences (FAS)</div>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="session1-foundation.html">The Basics</a>
+    <a href="session2-coder.html">The AI-Empowered Coder</a>
+    <a href="session3-power-user.html">Claude Code CLI</a>
+</nav>
+
+<h2>Setting Up Anthropic API Access for Harvard Users</h2>
+
+<p>
+    This guide will help you set up access to Anthropic's Claude API through Harvard's
+    HUIT system after the workshop sessions. This provides secure, compliant access to
+    Claude AI services with usage charged to your research accounts.
+</p>
+
+<div class="disclaimer" style="background: #fff3cd; border-left: 4px solid #ff9800;">
+    <h3 style="margin-top: 0; color: #ff9800;">Cost Management is Critical</h3>
+    <p>
+        <strong>The PI is responsible for all costs incurred through API usage.</strong>
+        API usage can consume budget quickly if not properly controlled.
+    </p>
+    <p>
+        <strong>It is essential to set upper limit caps on monthly spending.</strong>
+        This is your primary defense against unexpected budget overruns. Always establish
+        monthly spending caps when registering your API access.
+    </p>
+    <ul>
+        <li><strong>Set upper spending limits:</strong> Establish monthly caps during registration</li>
+        <li><strong>Choose the right model tier:</strong> Use the lowest tier model that meets
+            your project's needs. More powerful models cost more per token.</li>
+        <li><strong>Monitor usage regularly:</strong> Use the <code>/cost</code> command in
+            Claude Code to track your API consumption and adjust accordingly.</li>
+    </ul>
+</div>
+
+<h2>Prerequisites</h2>
+
+<ul class="resources">
+    <li><strong>Harvard Affiliation:</strong> Valid Harvard ID and access to Harvard systems</li>
+    <li><strong>Budget Authority:</strong> Permission to set up billing on a Harvard 33-digit budget code (typically requires PI or unit administrator approval)</li>
+    <li><strong>Command Line Experience:</strong> Comfortable using Terminal and editing configuration files</li>
+</ul>
+
+<div class="disclaimer">
+    <strong>Important:</strong> Setting up API access through Harvard's system requires
+    the authority to set up billing on a Harvard 33-digit budget code. This authority
+    normally vests with a project PI or unit administrator.
+</div>
+
+<h2>Understanding Harvard's API Access Structure</h2>
+
+<p>
+    Harvard provides access to Anthropic's Claude API through the HUIT (Harvard
+    University Information Technology) system. This ensures:
+</p>
+
+<ul class="resources">
+    <li><strong>Secure access:</strong> All API traffic goes through Harvard's cyber-secure infrastructure</li>
+    <li><strong>Proper billing:</strong> Usage is charged to appropriate research accounts</li>
+    <li><strong>Grant compliance:</strong> Effort tracking aligns with grant requirements</li>
+</ul>
+
+<p>
+    <strong>Key principle:</strong> You'll need one HUIT billing number for each research
+    account that has an associated "effort" from the standpoint of grant compliance.
+    There should be a 1:1 correspondence between project-specific efforts and the
+    accounting structure.
+</p>
+
+<h2>Step 1: Set Up a HUIT Billing Number</h2>
+
+<p>
+    If you don't already have an appropriate HUIT billing number for API services,
+    you'll need to request one.
+</p>
+
+<ol>
+    <li>Go to the HUIT Billing Portal:
+        <a href="https://billing.huit.harvard.edu/portal/allusers/newcustomer" target="_blank">https://billing.huit.harvard.edu/portal/allusers/newcustomer</a>
+    </li>
+    <li>Fill out the form to request a new billing number</li>
+    <li>Associate it with your Harvard 33-digit budget/account number</li>
+    <li>Under <strong>"HUIT Services"</strong> at the bottom, list: <code>AI API keys</code></li>
+    <li>Submit the form and wait for approval</li>
+</ol>
+
+<p>
+    <strong>Note:</strong> If your research group already has a HUIT billing number
+    set up for AI services, you can skip this step and proceed to Step 2.
+</p>
+
+<h2>Step 2: Register Your App (User) in the HUIT API Portal</h2>
+
+<p>
+    Once you have an appropriate HUIT billing number, you need to connect it to
+    API keys and individual users through the HUIT API Portal.
+</p>
+
+<p>
+    <strong>Terminology note:</strong> Although the system talks about registering
+    an "App," for our purposes this should be considered as "registering a user."
+</p>
+
+<h3>Recommended Naming Convention</h3>
+
+<p>
+    We recommend creating <strong>one App per research group member for each project
+    to which they bill time</strong>. This ensures proper effort tracking and grant
+    compliance.
+</p>
+
+<p><strong>Example:</strong></p>
+
+<blockquote>
+    A postdoc named Jane Smith has her salary (and effort) split 50-50 between an
+    NIH grant and faculty research funds. She should create two "Apps":
+    <ul>
+        <li><code>Smith_NIH</code> — for work charged to the NIH grant</li>
+        <li><code>Smith_FAS</code> — for work charged to faculty research funds</li>
+    </ul>
+</blockquote>
+
+<h3>Registration Process</h3>
+
+<ol>
+    <li>Go to the HUIT API Portal:
+        <a href="https://portal.apis.huit.harvard.edu/register-an-app" target="_blank">https://portal.apis.huit.harvard.edu/register-an-app</a>
+    </li>
+    <li><strong>Sign in</strong> using the button in the top right of the web page</li>
+    <li>Click on <strong>"API Catalog"</strong> from the menu at the top</li>
+    <li>Select <strong>"AI Services"</strong> from the category options on the left</li>
+    <li>Follow the prompts to complete your App registration</li>
+</ol>
+
+<h3>Important Configuration Details</h3>
+
+<p>When filling out the App registration form:</p>
+
+<ul class="resources">
+    <li><strong>Set a monthly spending limit:</strong> In the description or budget settings,
+        be sure to set a monthly upper limit on expenses. It's easy to use a lot of API tokens
+        quickly, and this will avoid unpleasant billing surprises.</li>
+
+    <li><strong>Add descriptive information:</strong> We suggest including grant information
+        and scholar name in the description field. This helps with tracking and auditing.
+        <br>Example: <code>Jane Smith - NIH Grant R01-XYZ123 - Monthly limit $200</code></li>
+
+    <li><strong>Enable AI access:</strong> When prompted, enable all default AI access options
+        to ensure you have access to the Claude models.</li>
+</ul>
+
+<h2>Step 3: Configure Your Environment</h2>
+
+<p>
+    Once you have your API key from the HUIT portal, you need to configure your
+    shell environment to use Harvard's API endpoint.
+</p>
+
+<h3>Required Environment Variables</h3>
+
+<p>
+    Set these environment variables in your Terminal session:
+</p>
+
+<pre><code>export ANTHROPIC_BEDROCK_BASE_URL=https://apis.huit.harvard.edu/ais-bedrock-llm/v2
+export ANTHROPIC_API_KEY=YourKeyHere
+export ANTHROPIC_MODEL=us.anthropic.claude-opus-4-5-20251101-v1:0
+export ANTHROPIC_SMALL_FAST_MODEL=us.anthropic.claude-opus-4-5-20251101-v1:0
+export CLAUDE_CODE_SKIP_BEDROCK_AUTH=1
+export CLAUDE_CODE_USE_BEDROCK=1</code></pre>
+
+<p>
+    <strong>Important:</strong> Replace <code>YourKeyHere</code> with the
+    actual API key you received from the HUIT API Portal.
+</p>
+
+<p><strong>What these variables do:</strong></p>
+<ul class="resources">
+    <li><code>ANTHROPIC_BEDROCK_BASE_URL</code> — Points to Harvard's secure API endpoint</li>
+    <li><code>ANTHROPIC_API_KEY</code> — Your personal API key from HUIT</li>
+    <li><code>ANTHROPIC_MODEL</code> — Specifies which Claude model to use (Opus 4.5)</li>
+    <li><code>ANTHROPIC_SMALL_FAST_MODEL</code> — Model for quick operations</li>
+    <li><code>CLAUDE_CODE_SKIP_BEDROCK_AUTH</code> — Skips additional Bedrock authentication (Harvard handles this)</li>
+    <li><code>CLAUDE_CODE_USE_BEDROCK</code> — Enables Bedrock mode for Harvard's infrastructure</li>
+</ul>
+
+<h3>Automatic Configuration</h3>
+
+<p>
+    To avoid setting these variables manually each time you open Terminal, add them
+    to your <code>~/.zshrc</code> file, which runs automatically when a shell session
+    is initiated:
+</p>
+
+<ol>
+    <li>Open your <code>~/.zshrc</code> file in a text editor:
+        <pre><code>nano ~/.zshrc</code></pre>
+    </li>
+    <li>Add these lines at the end of the file (with your actual API key):
+        <pre><code># Harvard HUIT Anthropic API Configuration
+export ANTHROPIC_BEDROCK_BASE_URL=https://apis.huit.harvard.edu/ais-bedrock-llm/v2
+export ANTHROPIC_API_KEY=YourKeyHere
+export ANTHROPIC_MODEL=us.anthropic.claude-opus-4-5-20251101-v1:0
+export ANTHROPIC_SMALL_FAST_MODEL=us.anthropic.claude-opus-4-5-20251101-v1:0
+export CLAUDE_CODE_SKIP_BEDROCK_AUTH=1
+export CLAUDE_CODE_USE_BEDROCK=1</code></pre>
+    </li>
+    <li>Save and exit the editor (Ctrl+X, then Y, then Enter in nano)</li>
+    <li>Reload your configuration:
+        <pre><code>source ~/.zshrc</code></pre>
+    </li>
+</ol>
+
+<div class="disclaimer" style="background: #fff3cd; border-left: 4px solid #ff9800; margin-top: 1rem;">
+    <h3 style="margin-top: 0; color: #ff9800;">Security: Protect Your API Key</h3>
+    <p>
+        <strong>Your API key is like a password — never share it with anyone.</strong>
+    </p>
+    <ul>
+        <li><strong>Never share your API key</strong> via email, Slack, GitHub, or any other medium</li>
+        <li><strong>Never commit API keys to Git repositories</strong> — use .gitignore to exclude config files</li>
+        <li><strong>Set proper file permissions:</strong> Run <code>chmod 600 ~/.zshrc</code> to restrict access</li>
+        <li><strong>If compromised:</strong> Immediately revoke the key in the HUIT API Portal and generate a new one</li>
+        <li><strong>Each researcher needs their own key</strong> for proper cost tracking and accountability</li>
+    </ul>
+</div>
+
+<h2>Cost Considerations</h2>
+
+<p>
+    PIs can set an upper limit to monthly API key costs during registration.
+    This is your primary defense against unexpected budget overruns.
+</p>
+
+<h2>Support and Resources</h2>
+
+<ul class="resources">
+    <li><a href="https://code.claude.com" target="_blank">Claude Code Official Website</a></li>
+    <li><a href="https://docs.anthropic.com" target="_blank">Anthropic API Documentation</a></li>
+    <li><a href="https://console.anthropic.com" target="_blank">Anthropic Console (API Key Management)</a></li>
+</ul>
+
+<footer>
+    <p>
+        &copy; 2026 President and Fellows of Harvard College.
+        Licensed under
+        <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.
+    </p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unleashing Claude Code Command Line Interface as a Problem Solver — Generative AI for Scholarship</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logos">
+        <img src="HDSI.png" alt="Harvard Data Science Initiative">
+        <img src="FAS.png" alt="Harvard Faculty of Arts and Sciences">
+    </div>
+    <h1>Generative AI for Scholarship</h1>
+    <div class="sponsors">Harvard Data Science Initiative (HDSI) &amp; Faculty of Arts and Sciences (FAS)</div>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="session1-foundation.html">The Basics</a>
+    <a href="session2-coder.html">The AI-Empowered Coder</a>
+    <a href="session3-power-user.html" class="active">Claude Code CLI</a>
+</nav>
+
+<h2>Week 3 — Unleashing Claude Code Command Line Interface as a Problem Solver</h2>
+<p>Friday, March 6, 2026 · 4:00–5:30 pm · Northwest Building, Room B103</p>
+
+<div class="disclaimer">
+    <strong>Important:</strong> The setup below installs an AI agent that can
+    read, write, and execute code on your laptop. While we will run it in a
+    sandboxed mode with restricted permissions, we recommend performing a
+    full backup of your system (e.g. via Time Machine) before proceeding.
+</div>
+
+<p>
+    This session focuses on Claude Code, Anthropic's agentic coding tool
+    that runs in your terminal. We will use Claude Code to carry out
+    programming and data analysis tasks interactively, from your command line.
+</p>
+
+<h3>Prerequisites</h3>
+<ul class="resources">
+    <li>Familiarity with large language models (LLMs) and prompt-based interaction</li>
+    <li>Comfort with the Mac command line / Terminal</li>
+    <li>Experience with Python programming</li>
+</ul>
+
+<p>We will support Mac (macOS) systems for this workshop.</p>
+
+<h2>Getting Started: Open Terminal and Test Python</h2>
+
+<p>
+    Open the Terminal application on your Mac: in Finder, go to
+    <strong>Applications &rarr; Utilities &rarr; Terminal</strong>
+    and double-click to launch it. You will use this window for all
+    the steps below.
+</p>
+
+<h3>Create your working directory</h3>
+
+<pre><code>mkdir -p ~/Desktop/GAI
+cd ~/Desktop/GAI</code></pre>
+
+<h3>Verify Python is installed</h3>
+
+<p>Check that Python 3 is available on your system:</p>
+
+<pre><code>which python3</code></pre>
+
+<p>
+    You should see a path like <code>/usr/bin/python3</code> or
+    <code>/Library/Frameworks/Python.framework/.../python3</code>.
+    If you get no output, you will need to
+    <a href="https://www.python.org/downloads/macos/">install Python 3</a>
+    before continuing.
+</p>
+
+<h3>Run a test script</h3>
+
+<p>
+    Create a file called <code>hello.py</code> with the following contents
+    (or download it with the curl command below):
+</p>
+
+<pre><code>print("Hello! Python is working correctly.")
+print()
+
+import sys
+print(f"Python version: {sys.version}")
+print(f"Python location: {sys.executable}")</code></pre>
+
+<p>To download directly into your current directory instead:</p>
+
+<pre><code>curl -O https://astrostubbs.github.io/GenAi-for-Scholarship/hello.py</code></pre>
+
+<p>Then run it:</p>
+
+<pre><code>python3 hello.py</code></pre>
+
+<p>You should see output like:</p>
+
+<pre><code>Hello! Python is working correctly.
+
+Python version: 3.x.x (...)
+Python location: /usr/bin/python3</code></pre>
+
+<h3>Test plotting</h3>
+
+<p>
+    Create a file called <code>plottest.py</code> with the following contents
+    (or download it with the curl command below):
+</p>
+
+<pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(0, 4 * np.pi, 200)
+y = np.sin(x)
+
+plt.figure()
+plt.plot(x, y)
+plt.xlabel("x")
+plt.ylabel("sin(x)")
+plt.title("Sine Wave — Plot Test")
+plt.grid(True)
+plt.show()</code></pre>
+
+<p>To download directly instead:</p>
+
+<pre><code>curl -O https://astrostubbs.github.io/GenAi-for-Scholarship/plottest.py</code></pre>
+
+<p>Then run it:</p>
+
+<pre><code>python3 plottest.py</code></pre>
+
+<p>
+    A window should appear showing a sine wave plot. Close the plot window
+    to continue. If you get an error about missing packages, install them
+    by running the following in your Terminal window:
+</p>
+
+<pre><code>pip3 install numpy matplotlib</code></pre>
+
+<p>Then run <code>python3 plottest.py</code> again in Terminal.</p>
+
+<p>If both tests pass, you're ready to proceed.</p>
+
+<h2>Installing Claude Code</h2>
+
+<p>
+    Still in your Terminal window, install Claude Code with a single command:
+</p>
+
+<pre><code>curl -fsSL https://claude.ai/install.sh | bash</code></pre>
+
+<p>
+    Full documentation:
+    <a href="https://code.claude.com/docs/en/overview#native-install-recommended">Claude Code installation and setup</a>
+</p>
+
+<h2>Environment Setup</h2>
+
+<p>
+    Before launching Claude Code, you need to set environment variables
+    that configure it to use Harvard's Bedrock endpoint. First, get your
+    API key based on the first letter of your surname:
+</p>
+
+<ul class="resources">
+    <li><a href="key-A-G.txt">Surnames A – G</a></li>
+    <li><a href="key-H-N.txt">Surnames H – N</a></li>
+    <li><a href="key-O-Z.txt">Surnames O – Z</a></li>
+</ul>
+
+<p>
+    Create a file called <code>trainingsetup.sh</code> with the following
+    contents (or download it with the curl command below):
+</p>
+
+<pre><code>export ANTHROPIC_BEDROCK_BASE_URL=https://apis.huit.harvard.edu/ais-bedrock-llm/v2
+export ANTHROPIC_API_KEY=YourKeyHere
+export ANTHROPIC_MODEL=us.anthropic.claude-opus-4-5-20251101-v1:0
+export ANTHROPIC_SMALL_FAST_MODEL=us.anthropic.claude-opus-4-5-20251101-v1:0
+export CLAUDE_CODE_SKIP_BEDROCK_AUTH=1
+export CLAUDE_CODE_USE_BEDROCK=1</code></pre>
+
+<p>To download directly instead:</p>
+
+<pre><code>curl -O https://astrostubbs.github.io/GenAi-for-Scholarship/trainingsetup.sh</code></pre>
+
+<p>Then make it executable:</p>
+
+<pre><code>chmod 755 trainingsetup.sh</code></pre>
+
+<p>
+    Open <code>trainingsetup.sh</code> in a text editor and replace
+    <code>YourKeyHere</code> with the API key from your surname-range
+    file above. Save the file, then source it:
+</p>
+
+<pre><code>source ./trainingsetup.sh</code></pre>
+
+<div class="disclaimer" style="background: #fff3cd; border-left: 4px solid #ff9800;">
+    <h3 style="margin-top: 0; color: #ff9800;">Security: Never Share Your API Key</h3>
+    <p>
+        <strong>Your API key is like a password — treat it with the same level of security.</strong>
+    </p>
+    <ul>
+        <li><strong>Never share your API key</strong> with anyone, including via email, Slack, or code repositories</li>
+        <li><strong>Never commit API keys to Git</strong> or include them in files that might be shared</li>
+        <li><strong>If a key is compromised,</strong> immediately revoke it in the HUIT API Portal and generate a new one</li>
+        <li><strong>Each person should have their own key</strong> for proper cost tracking and security</li>
+    </ul>
+</div>
+
+<h2>Launching Claude Code</h2>
+
+<p>
+    With the environment variables set, start Claude Code from your
+    working directory:
+</p>
+
+<pre><code>cd ~/Desktop/GAI
+claude</code></pre>
+
+<p>
+    You will be prompted to log in on first use. For this workshop we are
+    using Harvard's API endpoint, so you do not need a personal Claude
+    subscription.
+</p>
+
+<h2>Exercises</h2>
+
+<ul class="resources">
+    <li>
+        <a href="exercise-thermal.html">Telescope Thermal Data Analysis</a>
+        <span class="desc">Analyze real temperature time series data from the Vera C. Rubin Observatory using Claude Code.</span>
+    </li>
+</ul>
+
+<h2>Next Steps: Running Claude Code on Your Own</h2>
+
+<p>
+    After the workshop, if you want to continue using Claude Code with your
+    own Anthropic account, we recommend enabling sandboxed mode. This
+    restricts Claude Code to your working directory and limits network
+    access, giving you an extra layer of safety.
+</p>
+
+<p>
+    To enable sandboxing, launch Claude Code and type:
+</p>
+
+<pre><code>/sandbox</code></pre>
+
+<p>
+    Select <strong>auto-allow mode</strong> from the menu. You can also
+    download this settings file to enable it automatically at launch:
+    <a href="sandbox-settings.json" download>sandbox-settings.json</a>
+</p>
+
+<pre><code>claude --settings ./sandbox-settings.json</code></pre>
+
+<p>
+    For more details, see the
+    <a href="https://code.claude.com/docs/en/sandboxing">Claude Code sandboxing documentation</a>.
+</p>
+
+<h2>After the Session: Get Your Own API Key</h2>
+
+<div class="disclaimer">
+    <strong>Important:</strong> The API keys provided during this session will be disabled
+    after the course ends. To continue using Claude Code, you will need to obtain your own
+    Anthropic API key.
+</div>
+
+<p>
+    For Harvard users, we have prepared detailed instructions on how to set up API access
+    through Harvard's HUIT system:
+</p>
+
+<p style="text-align: center; margin: 2rem 0;">
+    <a href="setting-up-claude-code.html" style="display: inline-block; background: #A51C30; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 4px; font-weight: bold;">Setting Up Anthropic API Access for Harvard Users</a>
+</p>
+
+<footer>
+    <p>
+        &copy; 2026 President and Fellows of Harvard College.
+        Licensed under
+        <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.
+    </p>
+</footer>
+
+</body>
+</html>

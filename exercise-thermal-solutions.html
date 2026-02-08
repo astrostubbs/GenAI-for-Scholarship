@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructor Solutions: Thermal Data Analysis — Generative AI for Scholarship</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logos">
+        <img src="HDSI.png" alt="Harvard Data Science Initiative">
+        <img src="FAS.png" alt="Harvard Faculty of Arts and Sciences">
+    </div>
+    <h1>Generative AI for Scholarship</h1>
+    <div class="sponsors">Harvard Data Science Initiative (HDSI) & Faculty of Arts and Sciences (FAS)</div>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="session1-foundation.html">The Basics</a>
+    <a href="session2-coder.html">The AI-Empowered Coder</a>
+    <a href="session3-power-user.html">Claude Code CLI</a>
+    <a href="exercise-thermal.html">Exercise</a>
+</nav>
+
+<h2>Instructor Solutions: Thermal Data Analysis</h2>
+
+<div class="disclaimer">
+    <strong>For Instructors Only</strong><br>
+    These solutions provide reference implementations and teaching notes.
+    Students should work through the exercises independently before
+    consulting these materials.
+</div>
+
+<h2>Critical Thinking: The Fourier Analysis Issue (Step 7)</h2>
+
+<p>
+    Students will likely report that the dominant period from naive Fourier
+    analysis is very long (tens to hundreds of days) rather than the expected
+    1-day period. This is the pedagogical moment.
+</p>
+
+<p>
+    <strong>The issue:</strong> Raw power spectra of time series data typically
+    show "red noise" — power increasing toward low frequencies. The longest
+    periods dominate simply because there's more total variance at low
+    frequencies, not because they represent real periodic signals.
+</p>
+
+<p>
+    <strong>The solution:</strong> Estimate the local background power as a
+    function of frequency (using a smoothing filter), then look for peaks that
+    stand significantly above this background. This reveals the true periodic
+    signals: the 1-day diurnal cycle and its harmonics.
+</p>
+
+<p>
+    <strong>Teaching point:</strong> Always ask "are we asking the right
+    question?" Before accepting computational results, think about whether
+    the method matches the scientific question. Here, we want periodic signals,
+    not just raw power.
+</p>
+
+<h2>Reference Code: Basic Analysis (Steps 1-9)</h2>
+
+<h3>plot_temperature.py — Time series plot, histogram, sunset markers</h3>
+
+<pre><code>import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from datetime import timedelta
+from astropy.coordinates import EarthLocation, AltAz, get_sun
+from astropy.time import Time
+import astropy.units as u
+
+# Load data
+df = pd.read_csv('rubin_mirror_temps.csv', parse_dates=['timestamp'])
+
+# Full time series
+fig, ax = plt.subplots(figsize=(12, 5))
+ax.plot(df['timestamp'], df['temperature'], linewidth=0.5)
+ax.set_xlabel('Date (UTC)')
+ax.set_ylabel('Temperature (°C)')
+ax.set_title('Rubin Observatory Primary Mirror Temperature')
+ax.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.savefig('temperature_timeseries.png', dpi=150)
+
+# Histogram
+fig, ax = plt.subplots(figsize=(8, 5))
+ax.hist(df['temperature'], bins=60, edgecolor='black', linewidth=0.5)
+ax.set_xlabel('Temperature (°C)')
+ax.set_ylabel('Count')
+ax.set_title('Temperature Distribution')
+ax.grid(True, alpha=0.3, axis='y')
+plt.tight_layout()
+plt.savefig('temperature_histogram.png', dpi=150)
+
+# Last week with sunset markers
+location = EarthLocation(lat=-30.24*u.deg, lon=-70.74*u.deg, height=2715*u.m)
+last_time = df['timestamp'].max()
+week_start = last_time - timedelta(days=7)
+week = df[df['timestamp'] >= week_start].copy()
+
+unique_dates = week['timestamp'].dt.date.unique()
+sunset_times = []
+
+for date in unique_dates:
+    t_start = pd.Timestamp(date).replace(hour=21, minute=0)
+    times_utc = [t_start + timedelta(minutes=m) for m in range(300)]
+    astropy_times = Time(times_utc)
+    altaz_frame = AltAz(obstime=astropy_times, location=location)
+    sun_altitudes = get_sun(astropy_times).transform_to(altaz_frame).alt.deg
+    for i in range(len(sun_altitudes) - 1):
+        if sun_altitudes[i] > 0 and sun_altitudes[i + 1] <= 0:
+            frac = sun_altitudes[i] / (sun_altitudes[i] - sun_altitudes[i + 1])
+            sunset_utc = times_utc[i] + frac * timedelta(minutes=1)
+            sunset_times.append(sunset_utc)
+            break
+
+sunset_temps = []
+for st in sunset_times:
+    idx = (week['timestamp'] - st).abs().idxmin()
+    sunset_temps.append(week.loc[idx, 'temperature'])
+
+fig, ax = plt.subplots(figsize=(12, 5))
+ax.plot(week['timestamp'], week['temperature'], linewidth=0.8)
+ax.plot(sunset_times, sunset_temps, 'ro', markersize=10, label='Sunset')
+ax.set_xlabel('Date (UTC)')
+ax.set_ylabel('Temperature (°C)')
+ax.set_title('Last Week with Sunset Markers')
+ax.legend()
+ax.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.savefig('week_with_sunsets.png', dpi=150)
+plt.show()
+
+print(f"Max temp: {df['temperature'].max():.2f} °C at {df.loc[df['temperature'].idxmax(), 'timestamp']}")
+print(f"Min temp: {df['temperature'].min():.2f} °C at {df.loc[df['temperature'].idxmin(), 'timestamp']}")
+</code></pre>
+
+<h3>fourier_analysis.py — Corrected Fourier analysis with local background</h3>
+
+<pre><code>import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.ndimage import uniform_filter1d
+from scipy.signal import find_peaks
+
+# Load data
+df = pd.read_csv('rubin_mirror_temps.csv', parse_dates=['timestamp'])
+temp = df['temperature'].values
+N = len(temp)
+dt_hrs = 15.0 / 60.0  # 15 minutes in hours
+
+# Remove mean
+temp_centered = temp - np.mean(temp)
+
+# Compute FFT
+fft_vals = np.fft.rfft(temp_centered)
+power = np.abs(fft_vals) ** 2
+freqs = np.fft.rfftfreq(N, d=dt_hrs)
+
+# Convert to periods in days
+with np.errstate(divide='ignore'):
+    periods_days = 1.0 / (freqs * 24.0)
+
+# Skip DC component
+freqs = freqs[1:]
+power = power[1:]
+periods_days = periods_days[1:]
+
+# Estimate local background using smoothing
+log_power = np.log10(power + 1e-30)
+background = uniform_filter1d(log_power, size=201, mode='nearest')
+background_linear = 10.0 ** background
+
+# Signal-to-background ratio
+snr = power / background_linear
+
+# Find peaks above background
+peak_indices, _ = find_peaks(snr, height=2.0, distance=5)
+sorted_peaks = peak_indices[np.argsort(snr[peak_indices])[::-1]]
+
+# Plot
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 8))
+
+# Power spectrum with background
+mask = periods_days > 0.05
+ax1.loglog(periods_days[mask], power[mask], linewidth=0.5, alpha=0.7, label='Power')
+ax1.loglog(periods_days[mask], background_linear[mask], 'r-', linewidth=1.5, label='Background')
+ax1.axvline(x=1.0, color='green', linestyle='--', alpha=0.5, label='1 day')
+ax1.set_xlabel('Period (days)')
+ax1.set_ylabel('Power')
+ax1.set_title('Power Spectrum with Local Background')
+ax1.legend()
+ax1.grid(True, alpha=0.3)
+
+# SNR
+ax2.semilogx(periods_days[mask], snr[mask], linewidth=0.5)
+ax2.axhline(y=1.0, color='gray', linestyle='--', alpha=0.5)
+ax2.axvline(x=1.0, color='green', linestyle='--', alpha=0.5)
+ax2.set_xlabel('Period (days)')
+ax2.set_ylabel('Power / Background')
+ax2.set_title('Signals Above Background')
+ax2.grid(True, alpha=0.3)
+
+# Annotate top peaks
+for idx in sorted_peaks[:5]:
+    if periods_days[idx] > 0.05:
+        ax2.annotate(f'{periods_days[idx]:.2f} d',
+                     xy=(periods_days[idx], snr[idx]),
+                     xytext=(0, 10), textcoords='offset points',
+                     ha='center', fontsize=9, color='red',
+                     arrowprops=dict(arrowstyle='->', color='red', lw=0.8))
+
+plt.tight_layout()
+plt.savefig('fourier_corrected.png', dpi=150)
+plt.show()
+
+print("Top 5 periods above background:")
+for i, idx in enumerate(sorted_peaks[:5]):
+    print(f"{i+1}. Period: {periods_days[idx]:.3f} days, SNR: {snr[idx]:.2f}")
+</code></pre>
+
+<h3>Additional Files</h3>
+
+<p>
+    Full reference implementations are available in the course repository:
+</p>
+
+<ul class="resources">
+    <li><a href="data/session3/generate_lab_notebook.py">generate_lab_notebook.py</a>
+        <span class="desc">Generates lab_notebook.html with embedded plots and analysis summary</span></li>
+    <li><a href="data/session3/ml_sunset_comparison_v2.py">ml_sunset_comparison_v2.py</a>
+        <span class="desc">Complete 5-method ML comparison with comprehensive residual analysis</span></li>
+    <li><a href="data/session3/generate_ml_summary.py">generate_ml_summary.py</a>
+        <span class="desc">Generates ml_summary.html with ML results and recommendations</span></li>
+    <li><a href="data/session3/lab_notebook.html">lab_notebook.html</a>
+        <span class="desc">Example output from Steps 1-9</span></li>
+    <li><a href="data/session3/ml_summary.html">ml_summary.html</a>
+        <span class="desc">Example output from Steps 10-11</span></li>
+</ul>
+
+<h2>Machine Learning Solutions (Steps 10-11)</h2>
+
+<h3>Key Teaching Points</h3>
+
+<ul class="resources">
+    <li><strong>Feature engineering matters:</strong> XGBoost and NBEATSx-Ridge
+        outperform traditional methods because they use engineered features
+        (statistics, trends, windowed history) rather than raw time series.</li>
+
+    <li><strong>Windowed approaches work well:</strong> NBEATSx-Ridge achieves
+        best performance (MAE = 0.89°C) by using a sliding window of recent
+        measurements as features.</li>
+
+    <li><strong>Fourier struggles with extrapolation:</strong> Despite capturing
+        the diurnal cycle, Fourier series perform poorly when extrapolating
+        3 hours ahead due to transient weather patterns.</li>
+
+    <li><strong>Residual diagnostics are essential:</strong> The comprehensive
+        residual plots reveal model quality beyond just accuracy metrics.</li>
+</ul>
+
+<h3>Expected Performance Metrics</h3>
+
+<table>
+    <tr>
+        <th>Method</th>
+        <th>MAE (°C)</th>
+        <th>RMSE (°C)</th>
+        <th>R²</th>
+    </tr>
+    <tr>
+        <td>24-Hour Mean Baseline</td>
+        <td>2.03</td>
+        <td>2.68</td>
+        <td>0.69</td>
+    </tr>
+    <tr>
+        <td>Linear Trend (6h)</td>
+        <td>3.88</td>
+        <td>4.19</td>
+        <td>0.23</td>
+    </tr>
+    <tr>
+        <td>Fourier Series (4 days)</td>
+        <td>3.60</td>
+        <td>4.67</td>
+        <td>0.04</td>
+    </tr>
+    <tr>
+        <td>XGBoost + Engineered Features</td>
+        <td>1.14</td>
+        <td>1.51</td>
+        <td>0.90</td>
+    </tr>
+    <tr class="highlight">
+        <td>NBEATSx-Ridge</td>
+        <td>0.89</td>
+        <td>1.12</td>
+        <td>0.94</td>
+    </tr>
+</table>
+
+<h3>Expected Student Outcomes</h3>
+
+<ul>
+    <li>Two separate HTML reports: <code>lab_notebook.html</code> (Steps 1-9)
+        and <code>ml_summary.html</code> (Steps 10-11)</li>
+    <li>Understanding that raw computational results need critical evaluation</li>
+    <li>Experience with the full ML workflow: problem formulation, method
+        selection, evaluation, and reporting</li>
+    <li>Appreciation for Claude Code's ability to handle complex,
+        multi-step research tasks</li>
+    <li>Recognition that different ML methods have different strengths and
+        that proper evaluation requires multiple metrics and diagnostic plots</li>
+</ul>
+
+<h3>Discussion Questions for Class</h3>
+
+<ol>
+    <li>Why does the naive Fourier analysis fail to identify the 1-day period as dominant?</li>
+    <li>What does it mean when a model has high R² but we still see patterns in the residuals?</li>
+    <li>Why might NBEATSx-Ridge outperform XGBoost despite using a simpler model (linear regression)?</li>
+    <li>What are the trade-offs between model complexity and interpretability?</li>
+    <li>How would you validate these models for operational deployment at the observatory?</li>
+</ol>
+
+<h2>Implementation Notes</h2>
+
+<h3>Common Student Issues</h3>
+
+<ul class="resources">
+    <li><strong>Forgetting to specify lat/lon units:</strong> Astropy requires
+        <code>u.deg</code> units. Students may forget this and get cryptic errors.</li>
+
+    <li><strong>Sunset calculation timezone confusion:</strong> The dataset is in UTC,
+        and sunset calculations should also be in UTC. Local time conversion is not needed.</li>
+
+    <li><strong>Plot display issues:</strong> <code>plt.show()</code> can cause
+        problems in some environments. Recommend saving plots first with
+        <code>plt.savefig()</code> then displaying.</li>
+
+    <li><strong>Missing packages:</strong> Students may need to install
+        <code>xgboost</code>, <code>astropy</code>, <code>scipy</code>. Claude
+        Code will typically suggest this automatically.</li>
+</ul>
+
+<h3>Timing Guidance</h3>
+
+<ul>
+    <li><strong>Steps 1-7 (Basic analysis):</strong> 30-45 minutes</li>
+    <li><strong>Step 8 (Session resumption):</strong> 5 minutes</li>
+    <li><strong>Step 9 (Lab notebook):</strong> 10-15 minutes</li>
+    <li><strong>Steps 10-11 (ML comparison):</strong> 45-60 minutes</li>
+    <li><strong>Total:</strong> ~2 hours for a thorough walkthrough</li>
+</ul>
+
+<p>
+    The exercise can be shortened by skipping the ML comparison (Steps 10-11)
+    or by providing more specific prompts to reduce exploration time.
+</p>
+
+<footer>
+    <p>
+        &copy; 2026 President and Fellows of Harvard College.
+        Licensed under
+        <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.
+    </p>
+</footer>
+
+</body>
+</html>

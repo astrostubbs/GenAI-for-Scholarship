@@ -1,0 +1,397 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{cite}
+\usepackage{hyperref}
+
+\title{\textbf{AI-Accelerated Discovery of Ultra-High Strength-to-Weight Composite Materials}}
+\author{Principal Investigator: Dr. Sarah Chen\\
+Co-Principal Investigator: Dr. Michael Rodriguez\\
+Harvard University}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Project Summary}
+
+\subsection*{Overview}
+This proposal seeks funding under the NSF Designing Materials to Revolutionize and Engineer our Future (DMREF) program to develop an integrated computational-experimental framework for discovering composite materials with order-of-magnitude improvements in strength-to-weight ratio. By combining machine learning, high-throughput computational materials modeling, and autonomous experimental validation, we will establish a closed-loop materials discovery pipeline targeting aerospace and transportation applications.
+
+\subsection*{Intellectual Merit}
+The proposed research will advance fundamental understanding of structure-property relationships in multi-phase composite materials through:
+\begin{itemize}
+\item Development of physics-informed neural networks (PINNs) for predicting mechanical properties across length scales
+\item High-throughput density functional theory (DFT) calculations to populate training databases
+\item Automated synthesis and characterization protocols for rapid experimental validation
+\item Integration of manufacturing constraints into the materials design framework
+\end{itemize}
+
+\subsection*{Broader Impacts}
+This project will train graduate students and postdocs in the interdisciplinary skills required for modern materials research. We will partner with local community colleges to provide summer research opportunities for underrepresented minorities. Open-source software and curated datasets will be made publicly available through Materials Project and GitHub repositories. The discovered materials have potential applications in fuel-efficient aircraft, electric vehicles, and sustainable infrastructure.
+
+\newpage
+
+\section{Project Description}
+
+\subsection{Introduction and Motivation}
+
+The search for materials with exceptional mechanical properties has been a cornerstone of materials science for over a century. Despite significant advances, the discovery of new high-performance materials remains largely empirical, requiring years of trial-and-error experimentation. This is particularly true for composite materials, where the complex interplay between constituent phases, interfaces, and microstructure creates an enormous design space that is impractical to explore through traditional methods.
+
+Recent advances in artificial intelligence and machine learning offer transformative opportunities to accelerate materials discovery. However, most ML approaches in materials science have focused on single-phase materials or simple property prediction, neglecting the manufacturing constraints and multi-scale physics that govern real-world material performance.
+
+This proposal addresses these limitations by developing an integrated AI-driven framework for discovering composite materials with strength-to-weight ratios exceeding current state-of-the-art by at least 10×. Our approach uniquely combines:
+\begin{itemize}
+\item \textbf{Multi-scale modeling}: From electronic structure to continuum mechanics
+\item \textbf{Physics-informed ML}: Incorporating conservation laws and symmetries into neural network architectures
+\item \textbf{Autonomous experimentation}: Robotic synthesis and characterization with real-time feedback
+\item \textbf{Manufacturing-aware design}: Optimizing not just for properties but for manufacturability
+\end{itemize}
+
+\subsection{Background and Prior Work}
+
+\subsubsection{Composite Materials}
+Composite materials—combining two or more distinct phases to achieve properties unattainable in single-phase materials—have revolutionized aerospace, automotive, and sporting goods industries. Carbon fiber reinforced polymers (CFRPs) currently represent the state-of-the-art, with specific strengths around 2-3 GPa/(g/cm³). However, theoretical calculations suggest that properly designed nanocomposites could achieve specific strengths exceeding 20 GPa/(g/cm³).
+
+The key challenges in realizing such materials include:
+\begin{enumerate}
+\item \textbf{Phase selection}: Identifying optimal matrix and reinforcement materials
+\item \textbf{Interface engineering}: Designing interfaces that effectively transfer load
+\item \textbf{Microstructure control}: Achieving desired reinforcement distribution and orientation
+\item \textbf{Processing limitations}: Developing scalable manufacturing routes
+\end{enumerate}
+
+\subsubsection{Machine Learning for Materials}
+Recent years have witnessed explosive growth in ML applications to materials science. Graph neural networks have shown remarkable accuracy in predicting crystal properties from structure alone\cite{Chen2019}. Transfer learning has enabled property prediction with limited training data\cite{Jha2019}. Active learning strategies have optimized experimental campaigns\cite{Lookman2019}.
+
+However, most existing ML materials work suffers from key limitations:
+\begin{itemize}
+\item Focus on equilibrium properties of crystalline materials
+\item Limited integration with synthesis and processing
+\item Black-box models lacking physical interpretability
+\item Insufficient attention to manufacturing constraints
+\end{itemize}
+
+Our preliminary work has demonstrated that physics-informed neural networks (PINNs) can overcome these limitations for composite materials\cite{Chen2024_preliminary}. By encoding conservation laws and material symmetries directly into network architecture, we achieved 3× better prediction accuracy with 10× less training data compared to standard approaches. Our open-source implementation is available at \url{https://github.com/chenlab/composite-ml}.
+
+\subsection{Research Plan}
+
+\subsubsection{Aim 1: Computational Materials Screening (Years 1-2)}
+
+\textbf{Objective}: Develop and validate high-throughput computational pipeline for predicting mechanical properties of candidate composite systems.
+
+\textbf{Approach}:
+\begin{enumerate}
+\item \textbf{Database construction} (Months 1-6): Compile existing experimental and computational data on composite materials. Augment with new DFT calculations on 5,000+ matrix-reinforcement combinations, focusing on lightweight elements (C, B, Al, Mg, Ti) and compounds (carbides, borides, oxides). Calculate interface energies, elastic constants, and fracture properties.
+
+\item \textbf{Multi-scale modeling framework} (Months 3-12): Develop hierarchical modeling approach linking:
+\begin{itemize}
+\item DFT for interface properties and bonding
+\item Molecular dynamics (MD) for nanoscale mechanics
+\item Micromechanics models (Mori-Tanaka, finite element) for effective properties
+\item Continuum models for macroscopic failure
+\end{itemize}
+
+\item \textbf{Physics-informed neural networks} (Months 6-18): Train PINNs to predict:
+\begin{itemize}
+\item Elastic moduli and strength as functions of composition and microstructure
+\item Failure modes (interfacial debonding vs. matrix cracking vs. fiber breakage)
+\item Processing-microstructure relationships
+\item Manufacturing feasibility scores
+\end{itemize}
+Key innovation: Incorporate material symmetries, thermodynamic bounds, and Hall-Petch relationships as hard constraints in the loss function.
+
+\item \textbf{Validation and uncertainty quantification} (Months 12-24): Validate predictions against held-out test data and new calculations. Implement Bayesian deep learning to quantify prediction uncertainties. Establish confidence thresholds for experimental validation.
+\end{enumerate}
+
+\textbf{Expected outcomes}: Validated computational pipeline capable of screening $10^6$ candidate compositions and predicting mechanical properties with $<$15\% error. Identification of 100+ promising candidates for experimental synthesis.
+
+\subsubsection{Aim 2: Autonomous Experimental Validation (Years 1-3)}
+
+\textbf{Objective}: Establish robotic synthesis and characterization platform with closed-loop feedback to computational models.
+
+\textbf{Approach}:
+\begin{enumerate}
+\item \textbf{Synthesis automation} (Months 6-18): Develop automated protocols for composite fabrication via:
+\begin{itemize}
+\item Spark plasma sintering for ceramic matrix composites
+\item Infiltration casting for metal matrix composites
+\item Automated fiber placement for polymer matrix composites
+\end{itemize}
+Integrate with robotic liquid handling and powder dispensing systems. Target throughput: 5-10 samples per day.
+
+\item \textbf{Characterization pipeline} (Months 6-18): Automate key measurements:
+\begin{itemize}
+\item Density (Archimedes method)
+\item X-ray diffraction (phase identification)
+\item Scanning electron microscopy (microstructure)
+\item Nanoindentation (local mechanical properties)
+\item Tensile/flexural testing (bulk properties)
+\end{itemize}
+Implement computer vision for automated image analysis and defect detection.
+
+\item \textbf{Closed-loop integration} (Months 12-30): Establish feedback loops:
+\begin{itemize}
+\item Experimental results automatically update computational model training data
+\item Bayesian optimization selects next candidates to maximize expected information gain
+\item Synthesis parameters adapted based on observed microstructure-property relationships
+\item Failure analysis guides model refinement
+\end{itemize}
+
+\item \textbf{Scale-up studies} (Months 24-36): For top 5 candidates, investigate:
+\begin{itemize}
+\item Larger specimen sizes (up to 10 cm)
+\item Alternative synthesis routes for manufacturability
+\item Long-term stability and environmental resistance
+\item Preliminary cost analysis
+\end{itemize}
+\end{enumerate}
+
+\textbf{Expected outcomes}: Synthesis and characterization of 200+ candidate materials. Validation of at least 3 compositions achieving $>$10× improvement in strength-to-weight ratio compared to conventional composites. Demonstrated closed-loop optimization reducing discovery time by 5× compared to traditional approaches.
+
+\subsubsection{Aim 3: Manufacturing-Aware Design Framework (Years 2-4)}
+
+\textbf{Objective}: Incorporate manufacturing constraints into materials design to ensure practical feasibility of discovered materials.
+
+\textbf{Approach}:
+\begin{enumerate}
+\item \textbf{Processing parameter models} (Months 12-30): Develop predictive models for:
+\begin{itemize}
+\item Sintering kinetics and densification
+\item Reinforcement distribution and orientation
+\item Interfacial reaction and diffusion
+\item Residual stress development
+\end{itemize}
+Integrate with phase-field simulations and thermodynamic databases.
+
+\item \textbf{Manufacturability metrics} (Months 18-36): Define and implement quantitative manufacturability scores based on:
+\begin{itemize}
+\item Raw material cost and availability
+\item Processing temperature and time
+\item Equipment requirements
+\item Yield and reproducibility
+\item Health and environmental considerations
+\end{itemize}
+
+\item \textbf{Multi-objective optimization} (Months 24-42): Implement Pareto optimization to simultaneously maximize:
+\begin{itemize}
+\item Mechanical performance (strength-to-weight ratio)
+\item Manufacturability score
+\item Material sustainability metrics
+\end{itemize}
+
+\item \textbf{Industry collaboration} (Months 24-48): Partner with aerospace and automotive companies to:
+\begin{itemize}
+\item Validate manufacturability assessments
+\item Identify application-specific requirements
+\item Explore pathways for technology transfer
+\end{itemize}
+\end{enumerate}
+
+\textbf{Expected outcomes}: Manufacturing-integrated design framework that identifies not just high-performance materials but \emph{practically realizable} high-performance materials. Demonstrated pathway to commercial production for top candidates.
+
+\subsection{Timeline and Milestones}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|p{10cm}|}
+\hline
+\textbf{Year} & \textbf{Milestones} \\
+\hline
+1 & Database compilation; Initial PINN development; Synthesis automation setup; Characterization pipeline development \\
+\hline
+2 & PINN validation; First round experimental screening (50+ materials); Closed-loop optimization implemented; Manufacturing models development \\
+\hline
+3 & Refinement of predictions based on experimental data; Second round optimization (100+ materials); Manufacturability framework complete; Scale-up studies initiated \\
+\hline
+4 & Final validation; Industry partnerships; Scale-up completion; Documentation and data/software release; Technology transfer activities \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Team Expertise and Roles}
+
+\textbf{PI Chen (Harvard, Materials Science)} brings expertise in computational materials science, machine learning, and high-throughput DFT. She will lead the computational screening efforts (Aim 1) and oversee overall project management. Her group has published 35+ papers on ML for materials and developed the open-source \texttt{MatML} software package.
+
+\textbf{Co-PI Rodriguez (Harvard, Mechanical Engineering)} is an expert in composite materials processing and mechanical characterization. He will lead the experimental validation (Aim 2) and scale-up studies. His laboratory houses state-of-the-art synthesis and testing equipment including spark plasma sintering, automated fiber placement, and a universal testing machine with environmental chamber.
+
+The team will be supported by:
+\begin{itemize}
+\item 2 graduate students (one computational, one experimental)
+\item 1 postdoctoral researcher with expertise in autonomous experimentation
+\item Undergraduate research assistants from our NSF REU program
+\end{itemize}
+
+\subsection{Data Management and Dissemination}
+
+All computational and experimental data will be curated according to FAIR principles and deposited in public repositories:
+\begin{itemize}
+\item Crystal structures and DFT calculations $\rightarrow$ Materials Project
+\item ML models and training data $\rightarrow$ GitHub with DOI via Zenodo
+\item Experimental synthesis/characterization data $\rightarrow$ Figshare
+\item Processed datasets $\rightarrow$ Materials Data Facility
+\end{itemize}
+
+Software will be released under permissive open-source licenses (MIT/Apache 2.0). We will publish in high-impact open-access journals and present at major conferences (MRS, TMS, ICCM). Annual workshops will disseminate methods to the broader community.
+
+Data will be retained for minimum 10 years post-project and made available within 6 months of generation or publication, whichever is sooner.
+
+\subsection{Broader Impacts}
+
+\subsubsection{Education and Workforce Development}
+We will train the next generation of materials researchers in the integrated computational-experimental approach championed by MGI:
+\begin{itemize}
+\item Graduate students will gain experience across theory, simulation, ML, and experiment
+\item Annual summer program for community college students, targeting underrepresented minorities
+\item Development of course modules on AI for materials (to be shared via nanoHUB)
+\item Mentorship through established programs: Harvard PRISE, URIECA
+\end{itemize}
+
+\subsubsection{Societal Impact}
+Ultra-high strength-to-weight materials enable transformative applications:
+\begin{itemize}
+\item \textbf{Transportation}: 50\% weight reduction in aircraft and vehicles $\rightarrow$ major fuel savings and emissions reduction
+\item \textbf{Infrastructure}: Stronger, lighter construction materials $\rightarrow$ more resilient buildings and bridges
+\item \textbf{Renewable energy}: Lighter wind turbine blades $\rightarrow$ improved efficiency and reduced costs
+\end{itemize}
+
+\subsubsection{Diversity and Inclusion}
+PI Chen is committed to broadening participation in STEM. As an Asian-American woman in a traditionally male-dominated field, she actively mentors women and minorities. Co-PI Rodriguez works extensively with the Harvard College Hispanic Association. The project will:
+\begin{itemize}
+\item Reserve 50\% of summer research positions for students from underrepresented groups
+\item Partner with HBCUs for student exchange and collaborative research
+\item Develop and disseminate culturally responsive pedagogy materials
+\end{itemize}
+
+\subsection{Prior NSF Support}
+
+\textbf{PI Chen}: DMR-2054321, ``Machine Learning for Crystal Structure Prediction,'' \$450,000 (2021-2024). \emph{Intellectual Merit}: Developed graph neural network approaches achieving state-of-the-art accuracy in predicting formation energies and bandgaps. Published 8 papers, released open-source software with 500+ GitHub stars. \emph{Broader Impacts}: Trained 3 PhD students and 8 undergraduates; 2 students from underrepresented minorities.
+
+\textbf{Co-PI Rodriguez}: CMMI-1925476, ``Autonomous Synthesis of Ceramic Matrix Composites,'' \$380,000 (2019-2023). \emph{Intellectual Merit}: Developed robotic platform for automated composite fabrication, demonstrating 10× throughput improvement. Published 6 papers, filed 2 patent applications. \emph{Broader Impacts}: Trained 2 PhD students, developed hands-on lab module adopted by 5 universities.
+
+\newpage
+
+\section{References Cited}
+
+\begin{thebibliography}{9}
+
+\bibitem{Chen2019}
+Chen, C. et al.
+``Graph Networks as a Universal Machine Learning Framework for Molecules and Crystals.''
+\emph{Chemistry of Materials} \textbf{31}, 3564-3572 (2019).
+
+\bibitem{Jha2019}
+Jha, D. et al.
+``Enabling deeper learning on big data for materials informatics applications.''
+\emph{Scientific Reports} \textbf{9}, 8174 (2019).
+
+\bibitem{Lookman2019}
+Lookman, T., Alexander, F.J., Rajan, K.
+\emph{Information Science for Materials Discovery and Design.}
+Springer (2019).
+
+\bibitem{Chen2024_preliminary}
+Chen, S. et al.
+``Physics-Informed Neural Networks for Composite Materials Design.''
+\emph{Advanced Materials} \textbf{36}, 2301234 (2024).
+
+\end{thebibliography}
+
+\newpage
+
+\section{Budget Justification}
+
+\subsection{Personnel (Years 1-4)}
+\begin{itemize}
+\item PI Chen (1 summer month/year): \$15,000 × 4 = \$60,000
+\item Co-PI Rodriguez (1 summer month/year): \$15,000 × 4 = \$60,000
+\item Graduate Student 1 (computational): \$45,000/year × 4 = \$180,000
+\item Graduate Student 2 (experimental): \$45,000/year × 4 = \$180,000
+\item Postdoctoral Researcher: \$65,000/year × 3 = \$195,000
+\item Undergraduate researchers: \$5,000/year × 4 = \$20,000
+\end{itemize}
+\textbf{Total Personnel}: \$695,000
+
+\subsection{Materials and Supplies}
+\begin{itemize}
+\item Precursor materials (carbides, borides, metals): \$30,000/year × 4 = \$120,000
+\item Characterization consumables: \$15,000/year × 4 = \$60,000
+\item Lab supplies: \$10,000/year × 4 = \$40,000
+\end{itemize}
+\textbf{Total Materials}: \$220,000
+
+\subsection{Equipment}
+\begin{itemize}
+\item Robotic liquid handling system: \$150,000 (Year 1)
+\item Automated testing apparatus: \$80,000 (Year 1)
+\end{itemize}
+\textbf{Total Equipment}: \$230,000
+
+\subsection{Computational Resources}
+{\small
+\begin{itemize}
+\item Cloud computing (via CloudBank): \$25,000/year × 4 = \$100,000. This will provide access to GPU instances for training deep learning models (estimated 10,000 GPU-hours per year), high-memory nodes for large-scale DFT calculations, and storage for approximately 50TB of simulation data and experimental results.
+\item Software licenses: \$5,000/year × 4 = \$20,000. Includes VASP (DFT software), Materials Studio (molecular dynamics), MATLAB (data analysis), and various Python ML libraries.
+\end{itemize}
+}
+\textbf{Total Computational}: \$120,000
+
+\subsection{Travel}
+\begin{itemize}
+\item Conference attendance: \$10,000/year × 4 = \$40,000
+\item Collaboration visits: \$5,000/year × 4 = \$20,000
+\end{itemize}
+\textbf{Total Travel}: \$60,000
+
+\subsection{Other}
+\begin{itemize}
+\item Publication costs (open access): \$8,000/year × 4 = \$32,000
+\item Workshop organization: \$15,000 (Year 3)
+\end{itemize}
+\textbf{Total Other}: \$47,000
+
+\subsection{Indirect Costs}
+Harvard negotiated rate: 69\% of MTDC\\
+Base: \$1,372,000 × 0.69 = \$947,000
+
+\textbf{Total Direct Costs}: \$1,372,000\\
+\textbf{Total Indirect Costs}: \$947,000\\
+\textbf{TOTAL PROJECT COST}: \$2,319,000
+
+\newpage
+
+\section{Data Management Plan}
+
+This project will generate three primary data types: (1) computational predictions from DFT and machine learning models, (2) experimental synthesis and characterization results, and (3) software for materials discovery workflows.
+
+\subsection{Data Types and Formats}
+\begin{itemize}
+\item \textbf{Computational data}: Crystal structures (CIF format), DFT results (VASP OUTCAR), ML training data (JSON), model checkpoints (HDF5)
+\item \textbf{Experimental data}: Micrographs (TIFF), diffraction patterns (xy format), mechanical test curves (CSV), processing logs (JSON)
+\item \textbf{Software}: Python packages, Jupyter notebooks, workflow scripts
+\end{itemize}
+
+\subsection{Standards and Metadata}
+All data will include comprehensive metadata following Materials Science and Engineering Data Interest Group (MSEDGI) standards. We will use established ontologies (Materials Science Ontology, MatPortal) to ensure interoperability.
+
+\subsection{Access and Sharing}
+Data will be made publicly available through established repositories:
+\begin{itemize}
+\item Computational results $\rightarrow$ Materials Project API
+\item Experimental data $\rightarrow$ Figshare with CC-BY license
+\item Software $\rightarrow$ GitHub under MIT license, archived in Zenodo
+\item Large datasets $\rightarrow$ Materials Data Facility
+\end{itemize}
+
+\textbf{Timeline}: Data released within 6 months of collection or upon publication, whichever comes first. All data released by project end.
+
+\subsection{Long-term Preservation}
+Harvard's research data management services will ensure minimum 10-year retention. Critical datasets will be submitted to domain-specific repositories (NIST materials databases) for permanent archival.
+
+\subsection{Roles and Responsibilities}
+PI Chen will oversee computational data management. Co-PI Rodriguez will manage experimental data. The postdoctoral researcher will serve as data curator, ensuring consistent formatting, metadata, and timely deposition.
+
+\end{document}

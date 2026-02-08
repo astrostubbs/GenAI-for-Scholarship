@@ -1,0 +1,257 @@
+/* Generative AI for Scholarship — Harvard HDSI & FAS */
+
+:root {
+    --crimson: #A51C30;
+    --crimson-dark: #8C1515;
+    --text: #1E1E1E;
+    --text-light: #555555;
+    --bg: #FFFFFF;
+    --bg-warm: #F7F5F2;
+    --code-bg: #F3F4F4;
+    --border: #E0DCDA;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Georgia, "Times New Roman", serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.6;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+/* Header */
+header {
+    border-bottom: 3px solid var(--crimson);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+header .logos {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 1rem;
+}
+
+header .logos img {
+    height: 50px;
+    width: auto;
+}
+
+header h1 {
+    color: var(--crimson);
+    font-size: 1.8rem;
+    margin-bottom: 0.25rem;
+}
+
+header .sponsors {
+    color: var(--text-light);
+    font-size: 0.95rem;
+}
+
+/* Navigation */
+nav {
+    margin-bottom: 2rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+}
+
+nav a {
+    color: var(--crimson);
+    text-decoration: none;
+    margin-right: 1.5rem;
+    font-size: 0.95rem;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+nav a.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* Main content */
+h2 {
+    color: var(--crimson-dark);
+    font-size: 1.4rem;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+}
+
+h3 {
+    font-size: 1.1rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+a {
+    color: var(--crimson);
+}
+
+a:hover {
+    color: var(--crimson-dark);
+}
+
+/* Session cards (index page) */
+.session-cards {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+}
+
+.session-card {
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--crimson);
+    padding: 1.25rem 1.5rem;
+    background: var(--bg-warm);
+    text-decoration: none;
+    color: var(--text);
+    display: block;
+    transition: border-left-color 0.2s;
+}
+
+.session-card:hover {
+    border-left-color: var(--crimson-dark);
+}
+
+.session-card .date {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 0.25rem;
+}
+
+.session-card h3 {
+    margin: 0;
+    color: var(--crimson);
+}
+
+.session-card p {
+    margin: 0.5rem 0 0 0;
+    font-size: 0.95rem;
+}
+
+/* Resource lists */
+.resources {
+    list-style: none;
+    margin: 1rem 0;
+}
+
+.resources li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.resources li:last-child {
+    border-bottom: none;
+}
+
+.resources a {
+    font-weight: bold;
+}
+
+.resources .desc {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-top: 0.15rem;
+}
+
+/* Code blocks */
+code {
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.9em;
+    background: var(--code-bg);
+    padding: 0.15em 0.4em;
+    border-radius: 3px;
+}
+
+pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    padding: 1rem 1.25rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+    border-radius: 4px;
+}
+
+pre code {
+    background: none;
+    padding: 0;
+}
+
+/* Colab button */
+.colab-link {
+    display: inline-block;
+    background: var(--crimson);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-family: -apple-system, Helvetica, Arial, sans-serif;
+    margin: 0.25rem 0.5rem 0.25rem 0;
+}
+
+.colab-link:hover {
+    background: var(--crimson-dark);
+    color: #fff;
+}
+
+/* Disclaimer box */
+.disclaimer {
+    background: #FFF3F4;
+    border: 2px solid var(--crimson);
+    border-radius: 4px;
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Footer */
+footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    body {
+        padding: 1rem;
+    }
+
+    header h1 {
+        font-size: 1.4rem;
+    }
+
+    header .logos {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    header .logos img {
+        height: 40px;
+    }
+
+    nav a {
+        display: block;
+        margin: 0.5rem 0;
+    }
+}

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 1 Exercises — Generative AI for Scholarship</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logos">
+        <img src="HDSI.png" alt="Harvard Data Science Initiative">
+        <img src="FAS.png" alt="Harvard Faculty of Arts and Sciences">
+    </div>
+    <h1>Generative AI for Scholarship</h1>
+    <div class="sponsors">Harvard Data Science Initiative (HDSI) & Faculty of Arts and Sciences (FAS)</div>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="session1-foundation.html">The Basics</a>
+    <a href="session2-coder.html">The AI-Empowered Coder</a>
+    <a href="session3-power-user.html">Claude Code CLI</a>
+</nav>
+
+<h2>Session 1 Exercises</h2>
+
+<p>
+    These hands-on exercises will help you practice using Google's AI tools effectively.
+    Make sure you're signed in with your Harvard-affiliated Google account
+    (e.g., <code>yourname@g.harvard.edu</code>).
+</p>
+
+<h2>Exercise 1: Using Gemini for Meal Planning</h2>
+
+<p>
+    In this exercise, you'll practice crafting effective prompts to get useful,
+    practical suggestions from Gemini.
+</p>
+
+<h3>Step 1: Open Gemini</h3>
+
+<ol>
+    <li>Go to <a href="https://gemini.google.com" target="_blank">gemini.google.com</a> (or access via the Google apps menu)</li>
+    <li>Make sure you're signed in with your Harvard-affiliated account</li>
+</ol>
+
+<h3>Step 2: Try this basic prompt</h3>
+
+<p>Copy and paste this prompt into Gemini:</p>
+
+<pre><code>I have these ingredients in my fridge: milk, eggs, yoghurt, carrots, spring onions, bell pepper, cheese, leftover rice.
+
+Can you suggest 3 meal ideas I could make with these ingredients?</code></pre>
+
+<p>
+    <strong>Observe:</strong> What kind of suggestions does Gemini provide? Are they practical?
+    Do they use all the ingredients or just some of them?
+</p>
+
+<p>
+    We'll explore ways to improve this prompt during the class discussion.
+</p>
+
+<h2>For Instructors: Key Gemini Features to Demonstrate</h2>
+
+<ul class="resources">
+    <li><strong>Choosing model for Gemini:</strong> Discuss the different Gemini models available (Flash, Pro, Advanced) and their cost and climate consequences. More powerful models consume more energy and cost more per query.</li>
+    <li><strong>Tools menu:</strong> Demonstrate the Tools menu options including Deep research, Create images, and Canvas for collaborative document editing.</li>
+    <li><strong>Uploading files with the + sign:</strong> Show how to use the + button to upload documents, images, and data files for analysis.</li>
+    <li><strong>Cloud execution:</strong> Emphasize that all data processing and code execution happen on the cloud—your computer is just the input and output device.</li>
+</ul>
+
+<h2>Exercise 2: Using NotebookLM for Document Analysis</h2>
+
+<p>
+    NotebookLM is Google's AI-powered research assistant designed specifically for
+    working with your own documents. Unlike Gemini, which can answer general questions,
+    NotebookLM focuses on analyzing and synthesizing content from files you upload.
+</p>
+
+<h3>Step 1: Open NotebookLM</h3>
+
+<ol>
+    <li>Go to <a href="https://google.com" target="_blank">google.com</a> and make sure you're signed in with your Harvard-affiliated account</li>
+    <li>Click the Google apps menu (the 3×3 grid of dots) in the upper right corner</li>
+    <li>Look for <strong>NotebookLM</strong> in the menu (you may need to scroll or search)</li>
+    <li>Click to open NotebookLM</li>
+</ol>
+
+<p>
+    Alternatively, you can go directly to <a href="https://notebooklm.google.com" target="_blank">notebooklm.google.com</a>
+</p>
+
+<h3>Step 2: Explore NotebookLM</h3>
+
+<p>
+    In class, we'll demonstrate how to upload documents and use NotebookLM to
+    analyze research papers, compare sources, and generate summaries.
+</p>
+
+<h2>For Instructors: Key NotebookLM Features to Demonstrate</h2>
+
+<ul class="resources">
+    <li><strong>RAG encoding of uploaded files:</strong> Explain that NotebookLM looks preferentially at uploaded files, which get RAG (Retrieval-Augmented Generation) encoded upon arrival. This means it creates a searchable index of your documents for more accurate, source-grounded responses.</li>
+    <li><strong>Core use cases:</strong> NotebookLM is particularly good for interrogating and comparing documents, summarizing information across multiple sources, and even generating audio podcasts (!!) from your research materials.</li>
+    <li><strong>How to share notebooks:</strong> Demonstrate the sharing feature by clicking the three-dot menu (⋮) in the upper right corner of a notebook, then selecting "Share". You can share with specific people via email (within your Google Workspace) or generate a shareable link. Show how collaborators can view, comment, or edit depending on permissions granted.</li>
+    <li><strong>Show how links to source documents work:</strong> When NotebookLM generates a response, demonstrate how to click on the citation numbers (e.g., [1], [2]) that appear inline in the text. These are clickable links that jump directly to the relevant passage in the source document, highlighting the exact section that supports the claim. This source-grounding is what distinguishes NotebookLM from general-purpose LLMs.</li>
+</ul>
+
+<h3>Step 3: Try the Grant Proposal Exercise</h3>
+
+<p>
+    Now we'll use NotebookLM's document comparison capabilities for a real research task:
+    checking a draft grant proposal against NSF guidelines.
+</p>
+
+<p>
+    <strong>Materials for this exercise:</strong>
+</p>
+
+<ul class="resources">
+    <li><a href="draft_proposal.pdf" download>Draft Grant Proposal</a> <span class="desc">A sample NSF DMREF proposal (intentionally contains errors)</span></li>
+    <li><a href="NSF 25-508_ Designing_Materials.pdf" download>NSF DMREF Call</a> <span class="desc">The official NSF program solicitation</span></li>
+    <li><a href="nsf23_1.pdf" download>NSF Proposal Guide</a> <span class="desc">General NSF proposal requirements</span></li>
+</ul>
+
+<p>
+    <strong>Step-by-step instructions:</strong>
+</p>
+
+<ol>
+    <li><strong>Create a new notebook</strong>: In NotebookLM, click "New notebook" or the "+" button to start fresh.</li>
+
+    <li><strong>Upload the three PDF documents</strong>: Click "Add source" or the "+" button and upload:
+        <ul style="margin-top: 0.5rem;">
+            <li>draft_proposal.pdf</li>
+            <li>NSF 25-508_ Designing_Materials.pdf</li>
+            <li>nsf23_1.pdf</li>
+        </ul>
+        Wait for all three to finish processing (you'll see checkmarks when ready).
+    </li>
+
+    <li><strong>Ask NotebookLM to review the proposal</strong>: Copy and paste this prompt into the chat:</li>
+</ol>
+
+<pre><code>I need you to compare the draft proposal to the requirements listed
+in the other two PDF files. Act as a fastidious grant administrator
+and give me a numbered listing of things that need modification.</code></pre>
+
+<p>
+    <strong>Observe:</strong> Notice how NotebookLM cites specific pages and sections
+    from the source documents when it identifies issues. This source-grounded approach
+    makes it particularly valuable for document analysis tasks. You should see it identify
+    multiple compliance problems with specific references to the NSF guidelines.
+</p>
+
+<h2>Discussion: Ethics of AI Use in Research</h2>
+
+<p>
+    Before moving to the next exercise, let's pause to discuss the ethical considerations
+    and social norms around using AI tools in academic work.
+</p>
+
+<p>
+    <strong>Questions to consider:</strong>
+</p>
+
+<ul class="resources">
+    <li><strong>Attribution and disclosure:</strong> If you use NotebookLM to review your grant proposal,
+        should you disclose this to the funding agency? What if it helps you write sections of the proposal?
+        Where is the line between "tool" and "co-author"?</li>
+
+    <li><strong>Lack of established norms:</strong> Unlike citation practices or authorship guidelines,
+        which have evolved over decades, social norms for AI use in research are still emerging.
+        Different journals, funding agencies, and institutions have different policies—or no policy at all.
+        How do you navigate this uncertainty?</li>
+
+    <li><strong>Competitive advantage vs. fairness:</strong> If some researchers use AI tools and others don't,
+        does this create an unfair advantage? Should AI assistance be disclosed to ensure transparency?</li>
+
+    <li><strong>Responsibility and verification:</strong> When AI identifies errors or suggests improvements,
+        you are still responsible for the final work. How do you verify AI-generated insights?
+        What happens if AI misses something important or provides incorrect information?</li>
+
+    <li><strong>Clarity within your research group:</strong> It's essential to establish shared expectations
+        between students and advisors, PIs and postdocs, about appropriate AI use. These conversations should
+        be explicit and ongoing. Different sub-fields are developing their own norms—some more permissive,
+        others more restrictive. You need to stay abreast of evolving practices in your specific field and
+        discuss them openly within your research group.</li>
+</ul>
+
+<div class="disclaimer" style="background: #fff3cd; border-left: 4px solid #ff9800; text-align: center; padding: 1.5rem; margin: 2rem 0;">
+    <h3 style="margin-top: 0; color: #ff9800; font-size: 1.5rem;">DISCLOSE. DISCLOSE. DISCLOSE.</h3>
+    <p style="margin-bottom: 0;">
+        When in doubt, err on the side of transparency. Disclose your use of AI tools to
+        collaborators, advisors, journals, and funding agencies. Transparency protects you
+        and helps establish community norms.
+    </p>
+</div>
+
+<p>
+    <strong>Key takeaway:</strong> As AI tools become more powerful and ubiquitous, the research community
+    needs to develop clear ethical guidelines and social norms. Until those norms are established,
+    transparency, disclosure, and critical thinking about appropriate use are essential.
+</p>
+
+<h2>Exercise 3: Using NotebookLM for Literature Review</h2>
+
+<p>
+    One of NotebookLM's most powerful applications is synthesizing information across
+    multiple research papers. In this exercise, you'll see how it can help with
+    literature review and research synthesis.
+</p>
+
+<p>
+    <strong>Step-by-step instructions:</strong>
+</p>
+
+<ol>
+    <li><strong>Create a new notebook</strong>: Start a fresh notebook for this exercise.</li>
+
+    <li><strong>Upload science papers</strong>: Upload 3-5 research papers from your field
+        (PDF format). For this demonstration, instructors can use any set of related papers
+        on a common topic (e.g., climate modeling, materials science, machine learning).</li>
+
+    <li><strong>Ask for a summary</strong>: Try prompts like:
+        <pre><code>Summarize the main findings of these papers.
+
+What are the common themes across these research articles?
+
+How do the methodologies differ across these studies?
+
+What gaps in the research do these papers reveal?</code></pre>
+    </li>
+
+    <li><strong>Follow-up questions</strong>: After the initial summary, ask more specific questions:
+        <pre><code>Which paper has the most comprehensive methodology?
+
+What are the key disagreements or contradictions between authors?
+
+Suggest directions for future research based on these papers.</code></pre>
+    </li>
+</ol>
+
+<p>
+    <strong>Observe:</strong> NotebookLM will synthesize information across all uploaded
+    papers, citing specific sources for each claim. This is invaluable for literature
+    reviews, where you need to track which paper said what.
+</p>
+
+<p>
+    <strong>Bonus:</strong> Try the "Generate Audio Overview" feature (if available) to
+    create a podcast-style discussion of the research papers!
+</p>
+
+<h2>Exercise 4: Creating Custom AI Assistants with Gems</h2>
+
+<p>
+    Gems are Google's version of custom AI assistants. The key feature is the ability to
+    write a <strong>persistent prompt</strong> that defines how the AI should behave.
+    Think of Gems as specialized assistants for specific tasks.
+</p>
+
+<p>
+    <strong>What makes Gems different:</strong>
+</p>
+
+<ul class="resources">
+    <li>Create custom AI assistants with persistent instructions</li>
+    <li>Similar to Custom GPTs in ChatGPT</li>
+    <li>Can upload documents for the Gem to reference</li>
+    <li>Shareable with others in your Google Workspace</li>
+    <li>Reusable across multiple conversations</li>
+</ul>
+
+<p>
+    <strong>Step-by-step instructions:</strong>
+</p>
+
+<ol>
+    <li><strong>Access Gems</strong>: In Gemini, look for the "Gem manager" option (usually
+        in the left sidebar or under a menu).</li>
+
+    <li><strong>Create a new Gem</strong>: Click "New Gem" or "Create Gem".</li>
+
+    <li><strong>Write the persistent prompt</strong>: This defines your Gem's behavior.
+        For example, try creating a "Research Paper Reviewer" Gem with this prompt:
+        <pre><code>You are an expert peer reviewer for scientific journals. When given
+a research paper, you should:
+
+1. Summarize the main contributions and findings
+2. Evaluate the methodology for rigor and appropriateness
+3. Identify strengths of the work
+4. Point out potential weaknesses or limitations
+5. Suggest specific improvements
+6. Assess whether the claims are supported by the data
+
+Always be constructive and specific in your feedback. Cite specific
+sections or figures when making critiques.</code></pre>
+    </li>
+
+    <li><strong>Name your Gem</strong>: Give it a descriptive name like "Research Paper Reviewer".</li>
+
+    <li><strong>Upload documents (optional)</strong>: Like NotebookLM, you can upload reference
+        documents that your Gem should always consider (e.g., journal guidelines, style guides).</li>
+
+    <li><strong>Test your Gem</strong>: Upload a paper or paste text and see how it responds
+        according to your instructions.</li>
+
+    <li><strong>Share if desired</strong>: Gems can be shared with colleagues, making it easy
+        to standardize workflows across a research group.</li>
+</ol>
+
+<p>
+    <strong>Other Gem ideas for research:</strong>
+</p>
+
+<ul class="resources">
+    <li><strong>Grant Writing Assistant</strong>: Helps structure proposals and checks for common requirements</li>
+    <li><strong>Literature Synthesizer</strong>: Summarizes papers in a consistent format</li>
+    <li><strong>Methods Section Writer</strong>: Helps document experimental procedures in proper style</li>
+    <li><strong>Data Analysis Explainer</strong>: Interprets statistical results for non-specialists</li>
+    <li><strong>Lab Protocol Checker</strong>: Reviews protocols for completeness and safety</li>
+</ul>
+
+<p>
+    <strong>Observe:</strong> Unlike starting fresh with Gemini each time, a Gem remembers
+    its role and instructions. This consistency is valuable for repetitive research tasks
+    where you want the same type of analysis applied to different materials.
+</p>
+
+<h2>Discussion</h2>
+
+<p>
+    In class, we'll discuss what you observed and explore how to improve prompts
+    to get more useful results. Think about:
+</p>
+
+<ul class="resources">
+    <li>What worked well in Gemini's response?</li>
+    <li>What could be improved?</li>
+    <li>How might you refine the prompt to get better suggestions?</li>
+    <li>How does this relate to using AI for research tasks?</li>
+</ul>
+
+<div class="disclaimer" style="background: #f0f8ff; border-left: 4px solid #A51C30; margin-top: 2rem;">
+    <strong>For Instructors:</strong> Before concluding this session, briefly preview the upcoming sessions:
+    <ul style="margin-top: 0.5rem;">
+        <li><strong>Session 2 (Next week):</strong> We'll integrate AI directly into Python workflows using Google Colab with Gemini. Students will learn to debug, document, and generate code with AI assistance.</li>
+        <li><strong>Session 3 (Week after):</strong> We'll explore Claude Code CLI, a powerful command-line tool that can autonomously execute multi-step coding tasks, run tests, and create complete analysis pipelines.</li>
+    </ul>
+</div>
+
+<footer>
+    <p>
+        &copy; 2026 President and Fellows of Harvard College.
+        Licensed under
+        <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.
+    </p>
+</footer>
+
+</body>
+</html>

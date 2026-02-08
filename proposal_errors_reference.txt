@@ -1,0 +1,80 @@
+Reference Guide: Intentional Errors in draft_proposal.pdf
+==========================================================
+
+This document lists the intentional errors included in the draft NSF DMREF proposal
+for use in the NotebookLM exercise. Students should use NotebookLM to compare the
+draft proposal against NSF guidelines and identify these compliance issues.
+
+ERROR 1: Budget Exceeds Maximum
+---------------------------------
+Location: Budget Justification section (page 8)
+Error: Total project cost of $2,319,000
+NSF Requirement: DMREF solicitation (NSF 25-508) states awards are expected to
+range from $1,500,000 to $2,000,000
+Violation: Exceeds maximum by $319,000
+
+What NotebookLM should find: The budget section shows total costs significantly
+over the allowed maximum for DMREF proposals.
+
+
+ERROR 2: Missing Required Section (Facilities)
+-----------------------------------------------
+Location: Entire document
+Error: No "Facilities, Equipment, and Other Resources" section
+NSF Requirement: NSF Proposal & Award Policies & Procedures Guide (PAPPG)
+Chapter II.D.9 requires this section describing available facilities and major
+equipment
+Violation: Required section completely absent
+
+What NotebookLM should find: When comparing to the PAPPG requirements, this
+mandatory section is not present in the proposal.
+
+
+ERROR 3: URL Link in Proposal Text
+-----------------------------------
+Location: Page 3, Background and Prior Work section
+Error: Contains clickable URL link: "https://github.com/chenlab/composite-ml"
+NSF Requirement: NSF PAPPG states that URLs should not be used within the
+Project Description as they are not subject to the same rigorous review as the
+proposal content. References should be properly cited instead.
+Violation: Direct URL link embedded in text
+
+What NotebookLM should find: The proposal contains a hyperlinked URL in the
+project description, which violates NSF formatting guidelines about web links.
+
+
+ERROR 4: Font Size Too Small
+-----------------------------
+Location: Page 9, Budget Justification section, Computational Resources subsection
+Error: Text formatted in small font (\small in LaTeX, approximately 9-10pt)
+NSF Requirement: PAPPG Chapter II.C.2.d.i specifies minimum 11-point font size
+for all text in the proposal (with limited exceptions for figures and tables)
+Violation: Budget justification detail text uses undersized font
+
+What NotebookLM should find: The computational resources budget section uses
+font smaller than the required 11-point minimum.
+
+
+TEACHING NOTES
+==============
+
+Expected Student Experience:
+- NotebookLM should identify most or all of these errors when asked to compare
+  the draft against NSF guidelines
+- Responses should include specific page citations from both the draft proposal
+  and the relevant NSF guideline documents
+- The RAG-based approach should provide direct quotes from the guidelines
+  explaining why each item is an error
+
+Discussion Points:
+- How source-grounded responses differ from generic LLM outputs
+- Importance of comparing documents systematically in grant writing
+- Role of AI tools in catching compliance issues early in the process
+- Limitations: AI may not catch everything; human review still essential
+
+Suggested Prompts for Students:
+1. "Compare the draft proposal's budget to the DMREF solicitation requirements.
+    Does it meet the funding limits?"
+2. "What required sections from the NSF PAPPG might be missing from this draft?"
+3. "Are there any formatting violations related to fonts or links in the proposal?"
+4. "Review the proposal for compliance with NSF submission guidelines."

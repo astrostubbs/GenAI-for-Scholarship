@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Basics — Generative AI for Scholarship</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logos">
+        <img src="HDSI.png" alt="Harvard Data Science Initiative">
+        <img src="FAS.png" alt="Harvard Faculty of Arts and Sciences">
+    </div>
+    <h1>Generative AI for Scholarship</h1>
+    <div class="sponsors">Harvard Data Science Initiative (HDSI) &amp; Faculty of Arts and Sciences (FAS)</div>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="session1-foundation.html" class="active">The Basics</a>
+    <a href="session2-coder.html">The AI-Empowered Coder</a>
+    <a href="session3-power-user.html">Claude Code CLI</a>
+</nav>
+
+<h2>Week 1 — The Basics</h2>
+<p>Friday, February 20, 2026 · 4:00–5:30 pm · Northwest Building, Room B103</p>
+
+<p>
+    This session introduces the core concepts behind large language models,
+    effective prompt engineering, and responsible use of AI in research.
+</p>
+
+<div class="disclaimer" style="background: #f0f8ff; border-left: 4px solid #A51C30; padding: 1rem; margin: 2rem 0;">
+    <h3 style="margin-top: 0; color: #A51C30;">Use Your Harvard-Affiliated Google Account</h3>
+    <p>
+        <strong>Important:</strong> For this course, you must access Google Gemini using your
+        <strong>Harvard-affiliated Google account</strong> (e.g., <code>yourname@g.harvard.edu</code>).
+        Here's why:
+    </p>
+    <ul>
+        <li><strong>Data Security:</strong> All data flows through Harvard's cyber-secure tunnel
+            and cannot be stored or used for training AI models.</li>
+        <li><strong>Confidential Data:</strong> This protection allows you to upload
+            <strong>Level 3 confidential data</strong>, including:
+            <ul style="margin-top: 0.5rem;">
+                <li>Student work, grades, and academic records</li>
+                <li>Excel spreadsheets with internal financial data (as long as not linked to
+                    personally identifying information)</li>
+            </ul>
+        </li>
+        <li><strong>Exclusions:</strong> Do <em>not</em> upload health records, sensitive
+            financial data linked to individuals, or other highly sensitive information.</li>
+    </ul>
+    <p style="margin-bottom: 0;">
+        <strong>Responsibility:</strong> As always, responsibility for all work products
+        and data handling rests with the user. Follow Harvard's data classification
+        and security policies.
+    </p>
+</div>
+
+<h2>Prerequisites</h2>
+
+<p>
+    Before the session, please verify that you can access Google Gemini:
+</p>
+
+<ol>
+    <li>Go to <a href="https://google.com" target="_blank">google.com</a> and sign in with your <strong>Harvard-affiliated Google account</strong> (e.g., <code>yourname@g.harvard.edu</code>)</li>
+    <li>Look for the <strong>3×3 grid of dots</strong> (⋮⋮⋮) in the upper right corner of the page, next to your profile picture</li>
+    <li>Click on this grid to open the Google apps menu</li>
+    <li>Verify that you see a menu similar to the one shown below, with various Google apps including <strong>Gemini</strong> (the colorful star icon)</li>
+</ol>
+
+<p style="text-align: center; margin: 2rem 0;">
+    <img src="GeminiAccess.png" alt="Google apps menu showing Gemini" style="max-width: 400px; border: 2px solid #ddd; border-radius: 8px;">
+    <br>
+    <em style="font-size: 0.9rem; color: #666;">Figure 1: Google apps menu showing Gemini access</em>
+</p>
+
+<div class="disclaimer">
+    <strong>Important:</strong> If you don't see the 3×3 grid of dots, or if Gemini is not in your apps menu,
+    please contact the instructors before the session. You may need to enable certain Google services or
+    use a different Google account.
+</div>
+
+<h2>Accessing Google Gemini</h2>
+
+<p>
+    For this session, we'll use Google's Gemini AI, which is accessible directly
+    from your web browser using your Harvard-affiliated Google account.
+</p>
+
+<h3>How to Access Gemini</h3>
+
+<ol>
+    <li>Open your web browser and go to <a href="https://google.com" target="_blank">google.com</a></li>
+    <li>Make sure you're signed in to your <strong>Harvard-affiliated Google account</strong> (e.g., <code>yourname@g.harvard.edu</code>)</li>
+    <li>Click the Google apps menu (the grid of dots) in the upper right corner of the page (see Figure 1 above)</li>
+    <li>Look for the <strong>Gemini</strong> icon (a colorful star) in the app menu</li>
+    <li>Click on Gemini to open the AI assistant</li>
+</ol>
+
+<p>
+    Alternatively, you can go directly to <a href="https://gemini.google.com" target="_blank">gemini.google.com</a>
+</p>
+
+<div class="disclaimer">
+    <strong>Note:</strong> Gemini may ask you to agree to terms of service when you first use it.
+    Review the terms, particularly regarding data usage and privacy, before proceeding.
+</div>
+
+<h2>Session Topics</h2>
+
+<p>In this session, we'll explore:</p>
+
+<ul class="resources">
+    <li><strong>Effective Prompting</strong>
+        <span class="desc">Techniques for getting better results from AI assistants</span>
+    </li>
+    <li><strong>Responsible AI Use</strong>
+        <span class="desc">Best practices for using AI in academic research, including attribution, verification, and limitations</span>
+    </li>
+    <li><strong>Hands-on Practice</strong>
+        <span class="desc">Interactive exercises using Google Gemini for research tasks</span>
+    </li>
+</ul>
+
+<h3>Google AI Tools Comparison</h3>
+
+<p>This course will focus on three Google AI tools, each with different strengths:</p>
+
+<table style="width: 100%; margin: 1.5rem 0;">
+    <thead>
+        <tr>
+            <th style="width: 15%; vertical-align: top;">Tool</th>
+            <th style="width: 20%; vertical-align: top;">Best For</th>
+            <th style="width: 35%; vertical-align: top;">Key Features</th>
+            <th style="width: 30%; vertical-align: top;">When to Use</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="vertical-align: top;"><strong>Gemini</strong></td>
+            <td style="vertical-align: top;">General-purpose AI assistant</td>
+            <td style="vertical-align: top;">
+                <ul style="margin: 0; padding-left: 1.2rem;">
+                    <li>Conversational interface</li>
+                    <li>Code generation</li>
+                    <li>Multi-turn dialogue</li>
+                    <li>Image understanding</li>
+                </ul>
+            </td>
+            <td style="vertical-align: top;">Writing, brainstorming, coding, general questions</td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top;"><strong>NotebookLM</strong></td>
+            <td style="vertical-align: top;">Document analysis & research</td>
+            <td style="vertical-align: top;">
+                <ul style="margin: 0; padding-left: 1.2rem;">
+                    <li>Upload your own documents</li>
+                    <li>Source-grounded responses</li>
+                    <li>Automatic citations</li>
+                    <li>Summarization & synthesis</li>
+                </ul>
+            </td>
+            <td style="vertical-align: top;">Analyzing papers, synthesizing research, literature review</td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top;"><strong>Gems</strong></td>
+            <td style="vertical-align: top;">Custom AI assistants</td>
+            <td style="vertical-align: top;">
+                <ul style="margin: 0; padding-left: 1.2rem;">
+                    <li>Pre-configured prompts</li>
+                    <li>Specialized personas</li>
+                    <li>Reusable workflows</li>
+                    <li>Task-specific optimization</li>
+                </ul>
+            </td>
+            <td style="vertical-align: top;">Repetitive tasks, specific workflows, domain expertise</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>Hands-On Exercises</h2>
+
+<p style="text-align: center; margin: 2rem 0;">
+    <a href="exercise-session1.html" style="display: inline-block; background: #A51C30; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 4px; font-weight: bold;">Go to Session 1 Exercises</a>
+</p>
+
+<h2>Additional Resources</h2>
+
+<ul class="resources">
+    <li>
+        <a href="https://ai.google.dev/gemini-api/docs" target="_blank">Gemini Documentation</a>
+        <span class="desc">Official documentation from Google</span>
+    </li>
+    <li>
+        <a href="https://www.anthropic.com/research" target="_blank">Anthropic Research</a>
+        <span class="desc">Research papers on AI safety and capabilities</span>
+    </li>
+</ul>
+
+<footer>
+    <p>
+        &copy; 2026 President and Fellows of Harvard College.
+        Licensed under
+        <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.
+    </p>
+</footer>
+
+</body>
+</html>
