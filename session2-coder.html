@@ -135,48 +135,36 @@
 <p>
     While Colab is convenient, many researchers prefer running Jupyter notebooks locally on their
     laptops for better control, offline access, and integration with local files.
+    You can set up an AI chat assistant (<strong>Jupyternaut</strong>) directly inside JupyterLab,
+    powered by Claude through Harvard's HUIT Bedrock proxy.
+</p>
+
+<p style="text-align: center; margin: 1.5rem 0;">
+    <a href="jupyter-ai-huit-setup.html"
+       style="display: inline-block; background: #A51C30; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 4px; font-weight: bold;">
+        Jupyter AI Setup Guide (HUIT Bedrock)
+    </a>
+    <br>
+    <span style="font-size: 0.85rem; color: #666; margin-top: 0.5rem; display: inline-block;">
+        Step-by-step instructions for configuring Jupyter AI with Harvard's API endpoint
+    </span>
 </p>
 
 <p>
-    <strong>Prerequisites:</strong>
+    <strong>Quick summary of what's needed:</strong>
 </p>
 
 <ul class="resources">
-    <li>Python 3.7+ installed on your laptop</li>
-    <li>Jupyter notebook installed (<code>pip install jupyter</code>)</li>
-    <li>Harvard HUIT API key — see <a href="setting-up-claude-code.html">Setting Up Anthropic API Access for Harvard Users</a></li>
+    <li><strong>Python 3.13+</strong> installed on your laptop (download from <a href="https://www.python.org/downloads/" target="_blank">python.org</a>)</li>
+    <li><strong>Harvard HUIT API key</strong> — see <a href="setting-up-claude-code.html">Setting Up Anthropic API Access for Harvard Users</a></li>
+    <li><strong>Jupyter AI v3 (beta)</strong> — <code>pip install "jupyter-ai==3.0.0b9" boto3</code></li>
+    <li><strong>Environment variable</strong> — <code>AWS_BEARER_TOKEN_BEDROCK</code> set to your HUIT API key</li>
 </ul>
 
 <p>
-    <strong>Setup steps:</strong>
+    The <a href="jupyter-ai-huit-setup.html">full setup guide</a> covers installation, environment
+    configuration, Jupyternaut settings, available models, and troubleshooting.
 </p>
-
-<ol>
-    <li><strong>Install Jupyter</strong> (if not already installed):
-        <pre><code>pip install jupyter notebook</code></pre>
-    </li>
-
-    <li><strong>Install Anthropic Python library</strong>:
-        <pre><code>pip install anthropic</code></pre>
-    </li>
-
-    <li><strong>Get your Harvard API key</strong>:
-        <ul style="margin-top: 0.5rem;">
-            <li>Follow the instructions on the <a href="setting-up-claude-code.html">API setup page</a></li>
-            <li>You'll need to register through Harvard's HUIT API Portal</li>
-            <li>Set monthly spending limits during registration</li>
-        </ul>
-    </li>
-
-    <li><strong>Configure environment variables</strong>:
-        <pre><code># In your terminal (Mac/Linux) - add to ~/.zshrc or ~/.bashrc:
-export ANTHROPIC_BEDROCK_BASE_URL=https://apis.huit.harvard.edu/ais-bedrock-llm/v2
-export ANTHROPIC_API_KEY="your-harvard-api-key"
-
-# Then reload:
-source ~/.zshrc</code></pre>
-    </li>
-</ol>
 
 <p>
     <strong>Using AI in your local notebook:</strong>

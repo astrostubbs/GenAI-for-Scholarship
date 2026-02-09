@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jupyter AI Setup with HUIT Bedrock — Generative AI for Scholarship</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles for setup guide */
+        .step-num {
+            display: inline-block;
+            background: var(--crimson);
+            color: white;
+            width: 1.7rem;
+            height: 1.7rem;
+            line-height: 1.7rem;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 0.85rem;
+            margin-right: 0.4rem;
+            font-family: -apple-system, Helvetica, Arial, sans-serif;
+        }
+        .warn-box {
+            background: #fff3cd;
+            border-left: 4px solid #ff9800;
+            padding: 0.8rem 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 0.8rem 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .info-box {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 0.8rem 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1rem 0;
+        }
+        th, td {
+            border: 1px solid var(--border);
+            padding: 0.5rem 0.8rem;
+            text-align: left;
+        }
+        th {
+            background: var(--crimson-dark);
+            color: white;
+            font-family: -apple-system, Helvetica, Arial, sans-serif;
+            font-size: 0.9rem;
+        }
+        tr:nth-child(even) { background: var(--bg-warm); }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logos">
+        <img src="HDSI.png" alt="Harvard Data Science Initiative">
+        <img src="FAS.png" alt="Harvard Faculty of Arts and Sciences">
+    </div>
+    <h1>Generative AI for Scholarship</h1>
+    <div class="sponsors">Harvard Data Science Initiative (HDSI) &amp; Faculty of Arts and Sciences (FAS)</div>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="session1-foundation.html">The Basics</a>
+    <a href="session2-coder.html">The AI-Empowered Coder</a>
+    <a href="session3-power-user.html">Claude Code CLI</a>
+</nav>
+
+<h2>Setting Up Jupyter AI with the Harvard HUIT Bedrock Endpoint</h2>
+
+<p>
+    This guide walks through configuring <strong>Jupyter AI</strong> (the JupyterLab AI chat assistant)
+    to route Claude queries through Harvard's HUIT Bedrock proxy. This gives you an interactive
+    AI assistant directly inside JupyterLab on your local machine.
+</p>
+
+<div class="info-box">
+    <strong>Prerequisite:</strong> You need a valid HUIT API key for the Bedrock proxy.
+    See <a href="setting-up-claude-code.html">Setting Up Anthropic API Access for Harvard Users</a>
+    for instructions on obtaining your key.
+</div>
+
+<!-- Step 1 -->
+<h2><span class="step-num">1</span> Verify Your Python Version</h2>
+
+<p>
+    Ensure you are running Python 3.13 (or at least 3.10+). The system Python 3.9 from
+    Xcode Command Line Tools is too old and causes package conflicts.
+</p>
+
+<pre><code>python3 --version
+# Expected: Python 3.13.x
+
+which python3
+# Expected: /usr/local/bin/python3 (not /usr/bin/python3)</code></pre>
+
+<p>
+    If you need to install Python 3.13, download it from
+    <a href="https://www.python.org/downloads/" target="_blank">python.org</a>.
+</p>
+
+<div class="warn-box">
+    <strong>Python 3.9 cleanup:</strong> If you have old packages installed under
+    <code>~/Library/Python/3.9/</code>, remove them to avoid conflicts:
+    <pre><code>rm -rf ~/Library/Python/3.9</code></pre>
+    Also comment out any Python 3.9 PATH entries in <code>~/.zshrc</code>:
+    <pre><code># export PATH="/Users/yourname/Library/Python/3.9/bin:$PATH"</code></pre>
+</div>
+
+<!-- Step 2 -->
+<h2><span class="step-num">2</span> Install JupyterLab</h2>
+
+<pre><code>python3 -m pip install notebook jupyterlab</code></pre>
+
+<p>Verify the installation and launch JupyterLab to confirm it works:</p>
+
+<pre><code>python3 -m jupyter lab</code></pre>
+
+<div class="info-box">
+    <strong>Always use <code>python3 -m jupyter lab</code></strong> to launch (not just
+    <code>jupyter lab</code>). This ensures you use the correct Python installation.
+</div>
+
+<!-- Step 3 -->
+<h2><span class="step-num">3</span> Install Jupyter AI (v3 Beta)</h2>
+
+<p>
+    The HUIT proxy speaks the <strong>AWS Bedrock Converse API</strong> format. Jupyter AI v3 uses
+    <strong>LiteLLM</strong> as its backend, which has native support for Bedrock endpoints with
+    Bearer token authentication. This is why v3 (beta) is required instead of the stable v2 release.
+</p>
+
+<pre><code>python3 -m pip install "jupyter-ai==3.0.0b9" boto3</code></pre>
+
+<p>Verify:</p>
+
+<pre><code>python3 -m pip show jupyter-ai
+# Expected: Version: 3.0.0b9</code></pre>
+
+<div class="warn-box">
+    <strong>Beta software:</strong> Version 3.0.0b9 is a pre-release. The UI and configuration
+    may change in future stable releases. This guide was tested with this specific version.
+</div>
+
+<!-- Step 4 -->
+<h2><span class="step-num">4</span> Configure Environment Variables</h2>
+
+<p>
+    Add the following to your <code>~/.zshrc</code> file (or <code>~/.bashrc</code> on Linux).
+    If you already have some of these set for Claude Code, you only need to add the new one.
+</p>
+
+<pre><code># ---- HUIT Bedrock Proxy Configuration ----
+
+# API key for the HUIT Bedrock proxy (used by Claude Code)
+export ANTHROPIC_API_KEY="your-huit-api-key-here"
+
+# Base URL for the HUIT Bedrock proxy (used by Claude Code)
+export ANTHROPIC_BEDROCK_BASE_URL=https://apis.huit.harvard.edu/ais-bedrock-llm/v2
+
+# Claude Code auth flags
+export CLAUDE_CODE_SKIP_BEDROCK_AUTH=1
+export CLAUDE_CODE_USE_BEDROCK=1
+
+# ---- NEW: Required for Jupyter AI / LiteLLM ----
+
+# LiteLLM uses this for Bearer token auth to Bedrock endpoints
+# (use the same value as ANTHROPIC_API_KEY)
+export AWS_BEARER_TOKEN_BEDROCK="your-huit-api-key-here"</code></pre>
+
+<p>After editing, reload your shell:</p>
+
+<pre><code>source ~/.zshrc</code></pre>
+
+<p>Verify the key variables are set:</p>
+
+<pre><code>echo $AWS_BEARER_TOKEN_BEDROCK
+echo $ANTHROPIC_API_KEY
+# Both should print your API key</code></pre>
+
+<div class="info-box">
+    <strong>Why <code>AWS_BEARER_TOKEN_BEDROCK</code>?</strong> LiteLLM's Bedrock handler checks
+    this variable to decide whether to use Bearer token authentication (your HUIT API key) or
+    standard AWS SigV4 signing (which requires IAM credentials you don't have). Without it,
+    you'll get "Unable to locate credentials."
+</div>
+
+<!-- Step 5 -->
+<h2><span class="step-num">5</span> Launch JupyterLab</h2>
+
+<p>Open a <strong>new terminal window</strong> (so the <code>.zshrc</code> changes take effect) and launch:</p>
+
+<pre><code>python3 -m jupyter lab</code></pre>
+
+<!-- Step 6 -->
+<h2><span class="step-num">6</span> Configure Jupyternaut Settings</h2>
+
+<p>In the JupyterLab interface, open the Jupyternaut (AI assistant) settings panel.</p>
+
+<h3>6a. Find Settings</h3>
+<p>Look for the Jupyternaut settings. In v3, this may be accessible via:</p>
+<ul class="resources">
+    <li>The menu bar: <strong>Settings &rarr; AI Settings</strong></li>
+    <li>The Jupyternaut icon in the left sidebar &rarr; settings gear</li>
+</ul>
+
+<h3>6b. Set the Chat Model ID</h3>
+<p>In the <strong>Chat model ID</strong> field, enter:</p>
+
+<pre><code>bedrock/converse/us.anthropic.claude-opus-4-5-20251101-v1:0</code></pre>
+
+<div class="info-box">
+    <strong>Model ID format:</strong> The <code>bedrock/converse/</code> prefix tells LiteLLM to use
+    the Bedrock Converse API handler, which correctly constructs the endpoint URL and supports
+    Bearer token auth. Do <strong>not</strong> use <code>bedrock/converse_like/</code> &mdash; it has
+    URL construction issues with custom endpoints.
+</div>
+
+<h3>6c. Set Model Parameters</h3>
+<p>In the <strong>Model parameters</strong> section, add:</p>
+
+<table>
+    <tr>
+        <th>Parameter Name</th>
+        <th>Type</th>
+        <th>Value</th>
+    </tr>
+    <tr>
+        <td><code>api_base</code></td>
+        <td>string</td>
+        <td><code>https://apis.huit.harvard.edu/ais-bedrock-llm/v2</code></td>
+    </tr>
+</table>
+
+<h3>6d. Verify API Key</h3>
+<p>
+    In the <strong>Secrets and API keys</strong> section, confirm that
+    <code>AWS_BEARER_TOKEN_BEDROCK</code> appears as a static (read-only) secret
+    imported from your environment. If it doesn't appear, add it using the "Add secret" button.
+</p>
+
+<h3>6e. Embedding Model</h3>
+<p>Leave the <strong>Embedding model</strong> blank. It is only needed for the <code>/learn</code>
+document indexing feature and is not required for chat.</p>
+
+<h3>6f. Save and Test</h3>
+<p>Click <strong>Update chat model</strong>, then send a test message in the Jupyternaut chat:</p>
+
+<pre><code>Hello, can you tell me what model you are?</code></pre>
+
+<div class="success-box">
+    <strong>Expected result:</strong> You should receive a response from Claude via the HUIT proxy.
+</div>
+
+<!-- Models -->
+<h2>Available Models</h2>
+
+<p>Change the model ID in Jupyternaut settings to use different Claude models:</p>
+
+<table>
+    <tr>
+        <th>Model</th>
+        <th>Chat Model ID</th>
+    </tr>
+    <tr>
+        <td>Claude Opus 4.5</td>
+        <td><code>bedrock/converse/us.anthropic.claude-opus-4-5-20251101-v1:0</code></td>
+    </tr>
+    <tr>
+        <td>Claude Opus 4.6</td>
+        <td><code>bedrock/converse/us.anthropic.claude-opus-4-6-v1:0</code></td>
+    </tr>
+    <tr>
+        <td>Claude Sonnet 4</td>
+        <td><code>bedrock/converse/us.anthropic.claude-sonnet-4-20250514-v1:0</code></td>
+    </tr>
+    <tr>
+        <td>Claude Haiku 3.5</td>
+        <td><code>bedrock/converse/us.anthropic.claude-3-5-haiku-20241022-v1:0</code></td>
+    </tr>
+</table>
+
+<div class="warn-box">
+    The exact model IDs available through your HUIT proxy may differ. Check with
+    Harvard IT for the current list of supported Bedrock model identifiers.
+</div>
+
+<!-- Troubleshooting -->
+<h2>Troubleshooting</h2>
+
+<h3>"Unable to locate credentials"</h3>
+<p>
+    LiteLLM is trying AWS SigV4 auth instead of Bearer token auth.
+    Ensure <code>AWS_BEARER_TOKEN_BEDROCK</code> is set and that you opened a
+    <strong>new terminal</strong> after editing <code>.zshrc</code>.
+</p>
+
+<h3>"Invalid ApiKey" (oauth.v2.InvalidApiKey)</h3>
+<p>
+    Verify that <code>AWS_BEARER_TOKEN_BEDROCK</code> is set to the correct HUIT API key
+    (same value as <code>ANTHROPIC_API_KEY</code>).
+</p>
+
+<h3>"bedrock does not support parameters: ['tools']"</h3>
+<p>
+    This should not occur with <code>bedrock/converse/</code> (which supports tools).
+    If it does, add to <code>~/.zshrc</code>:
+</p>
+<pre><code>export LITELLM_DROP_PARAMS=true</code></pre>
+
+<h3>No response / silent failure</h3>
+<p>Check the terminal where you launched <code>jupyter lab</code> for error tracebacks. Common causes:</p>
+<ul class="resources">
+    <li>Wrong model ID format (must start with <code>bedrock/converse/</code>)</li>
+    <li>Missing <code>api_base</code> model parameter in Jupyternaut settings</li>
+    <li>Stale environment variables (open a new terminal)</li>
+</ul>
+
+<h3>"No generation chunks were returned"</h3>
+<p>
+    You may be using the wrong API format. The HUIT proxy uses Bedrock Converse API, not the
+    native Anthropic Messages API. Do not use the <code>anthropic-chat</code> provider.
+</p>
+
+<!-- Summary tables -->
+<h2>Summary: Packages Installed</h2>
+
+<table>
+    <tr>
+        <th>Package</th>
+        <th>Version</th>
+        <th>Purpose</th>
+    </tr>
+    <tr>
+        <td>jupyter-ai</td>
+        <td>3.0.0b9</td>
+        <td>JupyterLab AI extension (LiteLLM backend)</td>
+    </tr>
+    <tr>
+        <td>boto3</td>
+        <td>(latest)</td>
+        <td>AWS SDK, required by LiteLLM for Bedrock</td>
+    </tr>
+    <tr>
+        <td>notebook / jupyterlab</td>
+        <td>(latest)</td>
+        <td>Jupyter Notebook server and JupyterLab IDE</td>
+    </tr>
+</table>
+
+<h2>Summary: Environment Variables</h2>
+
+<table>
+    <tr>
+        <th>Variable</th>
+        <th>Used By</th>
+        <th>Purpose</th>
+    </tr>
+    <tr>
+        <td><code>ANTHROPIC_API_KEY</code></td>
+        <td>Claude Code</td>
+        <td>HUIT API key for Claude Code CLI</td>
+    </tr>
+    <tr>
+        <td><code>ANTHROPIC_BEDROCK_BASE_URL</code></td>
+        <td>Claude Code</td>
+        <td>HUIT proxy URL for Claude Code</td>
+    </tr>
+    <tr>
+        <td><code>CLAUDE_CODE_SKIP_BEDROCK_AUTH</code></td>
+        <td>Claude Code</td>
+        <td>Skip SigV4 auth in Claude Code</td>
+    </tr>
+    <tr>
+        <td><code>CLAUDE_CODE_USE_BEDROCK</code></td>
+        <td>Claude Code</td>
+        <td>Enable Bedrock mode in Claude Code</td>
+    </tr>
+    <tr>
+        <td><code>AWS_BEARER_TOKEN_BEDROCK</code></td>
+        <td>Jupyter AI / LiteLLM</td>
+        <td>HUIT API key for LiteLLM Bearer auth (same value as ANTHROPIC_API_KEY)</td>
+    </tr>
+</table>
+
+<footer>
+    <p>
+        Last updated: February 2025. Tested with Python 3.13.3, jupyter-ai 3.0.0b9, macOS (Apple Silicon).
+    </p>
+    <p>
+        &copy; 2026 President and Fellows of Harvard College.
+        Licensed under
+        <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.
+    </p>
+</footer>
+
+</body>
+</html>
