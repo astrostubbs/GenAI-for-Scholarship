@@ -245,12 +245,42 @@ export CLAUDE_CODE_USE_BEDROCK=1</code></pre>
     </ul>
 </div>
 
-<h2>Cost Considerations</h2>
+<h2>Checking Your API Usage and Remaining Quota</h2>
 
 <p>
     PIs can set an upper limit to monthly API key costs during registration.
     This is your primary defense against unexpected budget overruns.
 </p>
+
+<p>
+    You can check your current spending and remaining quota at any time by running
+    this command in Terminal. Copy and paste it directly — it will automatically
+    use the <code>ANTHROPIC_API_KEY</code> from your environment:
+</p>
+
+<pre><code>curl --location 'https://go.apis.huit.harvard.edu/ais-bedrock-llm/apigee/quota' \
+  --header "Authorization: Bearer $ANTHROPIC_API_KEY"</code></pre>
+
+<p>You should see a JSON response like this:</p>
+
+<pre><code>{
+  "apigee_app_id": "64834f44-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+  "quota": {
+    "limit": "1000.0",
+    "limit_unit": "USD",
+    "interval": "1",
+    "unit": "month"
+  },
+  "remaining_limit": "826.19"
+}</code></pre>
+
+<div class="disclaimer">
+    <strong>Note:</strong> The <code>apigee_app_id</code> in the response is Harvard's
+    internal account identifier for your registration — it is <em>not</em> your API key.
+    Your API key is never echoed back in the response. The fields that matter are
+    <code>limit</code> (your monthly spending cap in USD) and <code>remaining_limit</code>
+    (how much of that budget remains for the current month).
+</div>
 
 <h2>Support and Resources</h2>
 
