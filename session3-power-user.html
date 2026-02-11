@@ -165,15 +165,10 @@ plt.show()</code></pre>
 
 <p>
     Before launching Claude Code, you need to set environment variables
-    that configure it to use Harvard's Bedrock endpoint. First, get your
-    API key based on the first letter of your surname:
+    that configure it to use Harvard's Bedrock endpoint. First, retrieve your
+    API key (requires Harvard Key authentication):
+    <a href="https://code.harvard.edu/dal470/keytest/blob/main/key.txt" target="_blank">Retrieve API Key</a>
 </p>
-
-<ul class="resources">
-    <li><a href="key-A-G.txt">Surnames A – G</a></li>
-    <li><a href="key-H-N.txt">Surnames H – N</a></li>
-    <li><a href="key-O-Z.txt">Surnames O – Z</a></li>
-</ul>
 
 <p>
     Create a file called <code>trainingsetup.sh</code> with the following
@@ -197,8 +192,8 @@ export CLAUDE_CODE_USE_BEDROCK=1</code></pre>
 
 <p>
     Open <code>trainingsetup.sh</code> in a text editor and replace
-    <code>YourKeyHere</code> with the API key from your surname-range
-    file above. Save the file, then source it:
+    <code>YourKeyHere</code> with the API key you retrieved above.
+    Save the file, then source it:
 </p>
 
 <pre><code>source ./trainingsetup.sh</code></pre>
