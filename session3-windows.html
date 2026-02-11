@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code CLI Setup for Windows — Generative AI for Scholarship</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logos">
+        <img src="HDSI.png" alt="Harvard Data Science Initiative">
+        <img src="FAS.png" alt="Harvard Faculty of Arts and Sciences">
+    </div>
+    <h1>Generative AI for Scholarship</h1>
+    <div class="sponsors">Harvard Data Science Initiative (HDSI) &amp; Faculty of Arts and Sciences (FAS)</div>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="session1-foundation.html">The Basics</a>
+    <a href="session2-coder.html">The AI-Empowered Coder</a>
+    <a href="session3-power-user.html">Claude Code CLI</a>
+    <a href="site-map.html">Site Map</a>
+</nav>
+
+<h2>Week 3 — Claude Code CLI Setup for Windows</h2>
+<p>Friday, March 6, 2026 · 4:00–5:30 pm · Northwest Building, Room B103</p>
+
+<div class="disclaimer">
+    <strong>Important:</strong> The setup below installs an AI agent that can
+    read, write, and execute code on your computer. While we will run it in a
+    sandboxed mode with restricted permissions, we recommend performing a
+    full backup of your system before proceeding.
+</div>
+
+<p>
+    This guide covers setting up Claude Code on <strong>Windows</strong> using PowerShell.
+    If you are on a Mac, see the <a href="session3-power-user.html">Mac setup guide</a> instead.
+</p>
+
+<h2>Prerequisites: Install Before the Session</h2>
+
+<p>You need two things installed before we begin. Do these ahead of time.</p>
+
+<h3>1. Install Git for Windows</h3>
+
+<p>
+    Claude Code requires Git for Windows (specifically Git Bash) to function.
+    Download and install it from:
+</p>
+
+<p style="text-align: center; margin: 1rem 0;">
+    <a href="https://git-scm.com/downloads/win"
+       target="_blank"
+       style="display: inline-block; background: #A51C30; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 4px; font-weight: bold;">
+        Download Git for Windows
+    </a>
+</p>
+
+<p>
+    Use the default settings during installation. When it finishes, you can verify
+    by opening PowerShell and running:
+</p>
+
+<pre><code>git --version</code></pre>
+
+<h3>2. Install Python 3.13</h3>
+
+<p>
+    Download Python from <a href="https://www.python.org/downloads/" target="_blank">python.org</a>
+    and run the installer.
+</p>
+
+<div class="disclaimer" style="background: #fff3cd; border-left: 4px solid #ff9800;">
+    <h3 style="margin-top: 0; color: #ff9800;">Critical: Check "Add python.exe to PATH"</h3>
+    <p>
+        On the <strong>first screen</strong> of the Python installer, you <strong>must</strong>
+        check the box that says <strong>"Add python.exe to PATH"</strong> before clicking Install.
+        If you miss this step, none of the commands below will work.
+    </p>
+</div>
+
+<h2>Getting Started: Open PowerShell</h2>
+
+<p>
+    Open PowerShell: click the <strong>Start menu</strong>, type <strong>PowerShell</strong>,
+    and click <strong>Windows PowerShell</strong>. You will use this window for all
+    the steps below.
+</p>
+
+<h3>Allow running scripts</h3>
+
+<p>
+    PowerShell's default security policy may block running <code>.ps1</code> scripts.
+    Run this once to allow them for your user account:
+</p>
+
+<pre><code>Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser</code></pre>
+
+<p>Type <strong>Y</strong> and press Enter if prompted to confirm.</p>
+
+<h3>Create your working directory</h3>
+
+<pre><code>mkdir "$env:USERPROFILE\Desktop\GAI"
+cd "$env:USERPROFILE\Desktop\GAI"</code></pre>
+
+<h3>Verify Python is installed</h3>
+
+<pre><code>python --version</code></pre>
+
+<p>
+    You should see output like <code>Python 3.13.x</code>.
+    If you get an error, Python was not added to your PATH — reinstall and check the
+    "Add python.exe to PATH" box.
+</p>
+
+<h3>Run a test script</h3>
+
+<p>
+    Download the test file (note: in PowerShell you must use <code>curl.exe</code>,
+    not <code>curl</code>):
+</p>
+
+<pre><code>curl.exe -O https://astrostubbs.github.io/GenAI-for-Scholarship/hello.py</code></pre>
+
+<p>Then run it:</p>
+
+<pre><code>python hello.py</code></pre>
+
+<p>You should see output like:</p>
+
+<pre><code>Hello! Python is working correctly.
+
+Python version: 3.13.x (...)
+Python location: C:\Users\you\AppData\Local\Programs\Python\Python313\python.exe</code></pre>
+
+<div class="disclaimer">
+    <strong>Why <code>curl.exe</code>?</strong> PowerShell aliases <code>curl</code> to its own
+    <code>Invoke-WebRequest</code> command, which has different syntax. Using <code>curl.exe</code>
+    calls the real curl that ships with Windows 10 and later.
+</div>
+
+<h3>Test plotting</h3>
+
+<p>Download and run the plot test:</p>
+
+<pre><code>curl.exe -O https://astrostubbs.github.io/GenAI-for-Scholarship/plottest.py
+python plottest.py</code></pre>
+
+<p>
+    A window should appear showing a sine wave plot. Close it to continue.
+    If you get an error about missing packages, install them:
+</p>
+
+<pre><code>pip install numpy matplotlib</code></pre>
+
+<p>Then run <code>python plottest.py</code> again.</p>
+
+<p>If both tests pass, you're ready to proceed.</p>
+
+<h2>Installing Claude Code</h2>
+
+<p>
+    In PowerShell, run:
+</p>
+
+<pre><code>irm https://claude.ai/install.ps1 | iex</code></pre>
+
+<p>
+    This downloads and runs the official Claude Code installer for Windows.
+    The binary is placed at <code>%USERPROFILE%\.local\bin\claude.exe</code>
+    and auto-updates in the background.
+</p>
+
+<p>
+    Full documentation:
+    <a href="https://code.claude.com/docs/en/overview#native-install-recommended">Claude Code installation and setup</a>
+</p>
+
+<h2>Environment Setup</h2>
+
+<p>
+    Before launching Claude Code, you need to set environment variables
+    that configure it to use Harvard's Bedrock endpoint. First, retrieve your
+    API key (requires Harvard Key authentication):
+    <a href="https://code.harvard.edu/dal470/keytest/blob/main/key.txt" target="_blank">Retrieve API Key</a>
+</p>
+
+<p>
+    Download the PowerShell setup script:
+</p>
+
+<pre><code>curl.exe -O https://astrostubbs.github.io/GenAI-for-Scholarship/trainingsetup.ps1</code></pre>
+
+<p>
+    Open <code>trainingsetup.ps1</code> in a text editor (Notepad works fine):
+</p>
+
+<pre><code>notepad trainingsetup.ps1</code></pre>
+
+<p>
+    Replace <code>YourKeyHere</code> with the API key you retrieved above.
+    Save and close the file, then source it in PowerShell:
+</p>
+
+<pre><code>. .\trainingsetup.ps1</code></pre>
+
+<p>The script sets these variables for your current session:</p>
+
+<pre><code>$env:ANTHROPIC_BEDROCK_BASE_URL = "https://apis.huit.harvard.edu/ais-bedrock-llm/v2"
+$env:ANTHROPIC_API_KEY = "YourKeyHere"
+$env:ANTHROPIC_MODEL = "us.anthropic.claude-opus-4-5-20251101-v1:0"
+$env:ANTHROPIC_SMALL_FAST_MODEL = "us.anthropic.claude-opus-4-5-20251101-v1:0"
+$env:CLAUDE_CODE_SKIP_BEDROCK_AUTH = "1"
+$env:CLAUDE_CODE_USE_BEDROCK = "1"</code></pre>
+
+<div class="disclaimer" style="background: #fff3cd; border-left: 4px solid #ff9800;">
+    <h3 style="margin-top: 0; color: #ff9800;">Security: Never Share Your API Key</h3>
+    <p>
+        <strong>Your API key is like a password — treat it with the same level of security.</strong>
+    </p>
+    <ul>
+        <li><strong>Never share your API key</strong> with anyone, including via email, Slack, or code repositories</li>
+        <li><strong>Never commit API keys to Git</strong> or include them in files that might be shared</li>
+        <li><strong>If a key is compromised,</strong> immediately revoke it in the HUIT API Portal and generate a new one</li>
+        <li><strong>Each person should have their own key</strong> for proper cost tracking and security</li>
+    </ul>
+</div>
+
+<h2>Launching Claude Code</h2>
+
+<p>
+    With the environment variables set, start Claude Code from your
+    working directory:
+</p>
+
+<pre><code>cd "$env:USERPROFILE\Desktop\GAI"
+claude</code></pre>
+
+<p>
+    You will be prompted to log in on first use. For this workshop we are
+    using Harvard's API endpoint, so you do not need a personal Claude
+    subscription.
+</p>
+
+<h2>Exercises</h2>
+
+<ul class="resources">
+    <li>
+        <a href="exercise-thermal.html">Telescope Thermal Data Analysis</a>
+        <span class="desc">Analyze real temperature time series data from the Vera C. Rubin Observatory using Claude Code.</span>
+    </li>
+</ul>
+
+<h2>Making Environment Variables Permanent (Optional)</h2>
+
+<p>
+    The <code>. .\trainingsetup.ps1</code> command only sets variables for the current
+    PowerShell window. If you close the window, you'll need to source it again.
+    To make the variables persist across all future sessions, you can add them
+    to your PowerShell profile:
+</p>
+
+<pre><code># Create the profile file if it doesn't exist
+if (!(Test-Path -Path $PROFILE)) { New-Item -Type File -Path $PROFILE -Force }
+
+# Open it in Notepad
+notepad $PROFILE</code></pre>
+
+<p>
+    Paste the environment variable lines from <code>trainingsetup.ps1</code> into
+    the profile file (with your actual API key), save, and close. The variables
+    will be set automatically every time you open PowerShell.
+</p>
+
+<h2>After the Session: Get Your Own API Key</h2>
+
+<div class="disclaimer">
+    <strong>Important:</strong> The API keys provided during this session will be disabled
+    after the course ends. To continue using Claude Code, you will need to obtain your own
+    Anthropic API key.
+</div>
+
+<p>
+    For Harvard users, we have prepared detailed instructions on how to set up API access
+    through Harvard's HUIT system:
+</p>
+
+<p style="text-align: center; margin: 2rem 0;">
+    <a href="setting-up-claude-code.html" style="display: inline-block; background: #A51C30; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 4px; font-weight: bold;">Setting Up Anthropic API Access for Harvard Users</a>
+</p>
+
+<footer>
+    <p>
+        &copy; 2026 President and Fellows of Harvard College.
+        Licensed under
+        <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.
+    </p>
+</footer>
+
+<script data-goatcounter="https://genaiatfas.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
