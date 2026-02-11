@@ -122,11 +122,11 @@ which python3
 </p>
 
 <div class="warn-box">
-    <strong>Python 3.9 cleanup:</strong> If you have old packages installed under
-    <code>~/Library/Python/3.9/</code>, remove them to avoid conflicts:
-    <pre><code>rm -rf ~/Library/Python/3.9</code></pre>
-    Also comment out any Python 3.9 PATH entries in <code>~/.zshrc</code>:
-    <pre><code># export PATH="/Users/yourname/Library/Python/3.9/bin:$PATH"</code></pre>
+    <strong>Verify you're not using the system Python 3.9:</strong> If <code>which python3</code>
+    returns <code>/usr/bin/python3</code> (the macOS system Python), your packages may install
+    under the old 3.9 tree and cause conflicts. Make sure the Python 3.13 installation from
+    <a href="https://www.python.org/downloads/" target="_blank">python.org</a> comes first
+    in your PATH.
 </div>
 
 <!-- Step 2 -->
