@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setting Up Claude Code in VS Code — Generative AI for Scholarship</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logos">
+        <img src="HDSI.png" alt="Harvard Data Science Initiative">
+        <img src="FAS.png" alt="Harvard Faculty of Arts and Sciences">
+    </div>
+    <h1>Generative AI for Scholarship</h1>
+    <div class="sponsors">Harvard Data Science Initiative (HDSI) &amp; Faculty of Arts and Sciences (FAS)</div>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="session1-foundation.html">The Basics</a>
+    <a href="session2-coder.html">The AI-Empowered Coder</a>
+    <a href="session3-power-user.html">Claude Code CLI</a>
+    <a href="site-map.html">Site Map</a>
+    <a href="https://datascience.harvard.edu/education/generative-ai-for-graduate-students-and-postdocs/" target="_blank">Other GAI Sessions</a>
+</nav>
+
+<h2>Setting Up Claude Code in VS Code with Harvard's HUIT Bedrock Endpoint</h2>
+
+<p>
+    This guide walks through installing and configuring the <strong>Claude Code extension
+    for Visual Studio Code</strong>, routing all queries through Harvard's HUIT Bedrock proxy.
+    This gives you an AI coding assistant directly inside your editor.
+</p>
+
+<div class="disclaimer" style="background: #d1ecf1; border-left: 4px solid #17a2b8;">
+    <strong>Prerequisite:</strong> You should already have a working HUIT API key.
+    If you don't have one yet, see
+    <a href="setting-up-claude-code.html">Setting Up Anthropic API Access for Harvard Users</a>.
+</div>
+
+<h2>Step 1: Install VS Code</h2>
+
+<p>
+    If you don't already have Visual Studio Code, download it from
+    <a href="https://code.visualstudio.com" target="_blank">code.visualstudio.com</a>.
+    It's free and available for Mac, Windows, and Linux.
+</p>
+
+<h2>Step 2: Install the Claude Code Extension</h2>
+
+<ol>
+    <li>Open VS Code</li>
+    <li>Press <strong>Cmd+Shift+X</strong> (Mac) or <strong>Ctrl+Shift+X</strong> (Windows) to open the Extensions panel</li>
+    <li>Search for <strong>"Claude Code"</strong></li>
+    <li>Find the extension published by <strong>Anthropic</strong> and click <strong>Install</strong></li>
+</ol>
+
+<div class="disclaimer">
+    <strong>Note:</strong> VS Code may prompt you to install other extensions like
+    <code>ms-toolsai</code> (Microsoft's Jupyter extension). This is <strong>not needed</strong>
+    for Claude Code — you can safely skip or dismiss that prompt.
+</div>
+
+<h2>Step 3: Configure Environment Variables</h2>
+
+<p>
+    This is the critical step. The Claude Code extension needs your HUIT API credentials.
+    The most reliable way to provide them is through the shared Claude settings file at
+    <code>~/.claude/settings.json</code>, which is used by both the CLI and the VS Code extension.
+</p>
+
+<div class="disclaimer" style="background: #fff3cd; border-left: 4px solid #ff9800;">
+    <strong>Why not just use .zshrc?</strong> When VS Code is launched from the Dock, Spotlight,
+    or Finder, macOS does <em>not</em> source your <code>~/.zshrc</code>, so the extension won't
+    see those environment variables. Putting them in <code>~/.claude/settings.json</code> ensures
+    they work regardless of how you launch VS Code.
+</div>
+
+<p>
+    Open a terminal and edit the settings file:
+</p>
+
+<pre><code>nano ~/.claude/settings.json</code></pre>
+
+<p>
+    Replace the contents with the following (substituting your actual HUIT API key):
+</p>
+
+<pre><code>{
+  "env": {
+    "ANTHROPIC_BEDROCK_BASE_URL": "https://apis.huit.harvard.edu/ais-bedrock-llm/v2",
+    "ANTHROPIC_API_KEY": "YourKeyHere",
+    "CLAUDE_CODE_SKIP_BEDROCK_AUTH": "1",
+    "CLAUDE_CODE_USE_BEDROCK": "1",
+    "ANTHROPIC_SMALL_FAST_MODEL": "us.anthropic.claude-opus-4-5-20251101-v1:0"
+  }
+}</code></pre>
+
+<p>Save with <strong>Ctrl+O</strong>, press Enter, then exit with <strong>Ctrl+X</strong>.</p>
+
+<p><strong>What these variables do:</strong></p>
+
+<ul class="resources">
+    <li><code>ANTHROPIC_BEDROCK_BASE_URL</code> — Points to Harvard's secure Bedrock proxy endpoint</li>
+    <li><code>ANTHROPIC_API_KEY</code> — Your personal HUIT API key</li>
+    <li><code>CLAUDE_CODE_SKIP_BEDROCK_AUTH</code> — Skips AWS SigV4 authentication (Harvard's proxy handles auth)</li>
+    <li><code>CLAUDE_CODE_USE_BEDROCK</code> — Enables Bedrock mode</li>
+    <li><code>ANTHROPIC_SMALL_FAST_MODEL</code> — Model used for quick background operations</li>
+</ul>
+
+<div class="disclaimer">
+    <strong>Note:</strong> All values in the <code>env</code> block must be strings
+    (e.g., <code>"1"</code> not <code>1</code>). You can also add a <code>"model"</code>
+    key at the top level to set your default model, e.g.,
+    <code>"model": "us.anthropic.claude-opus-4-6-v1"</code>.
+</div>
+
+<h2>Step 4: Disable the Login Prompt</h2>
+
+<p>
+    Since you're using Harvard's HUIT proxy rather than Anthropic's direct authentication,
+    you need to disable the default login prompt in VS Code:
+</p>
+
+<ol>
+    <li>Open VS Code Settings: <strong>Cmd+,</strong> (Mac) or <strong>Ctrl+,</strong> (Windows)</li>
+    <li>Search for <strong>"Claude Code login"</strong></li>
+    <li>Check the box for <strong>Disable Login Prompt</strong></li>
+</ol>
+
+<h2>Step 5: Open Claude Code</h2>
+
+<p>You can open Claude Code in VS Code several ways:</p>
+
+<ul class="resources">
+    <li>Click the <strong>spark icon</strong> in the top-right corner of an open editor tab</li>
+    <li>Click <strong>"Claude Code"</strong> in the status bar (bottom of the window)</li>
+    <li>Use the Command Palette: <strong>Cmd+Shift+P</strong> (Mac) or <strong>Ctrl+Shift+P</strong> (Windows), then type <strong>"Claude Code"</strong></li>
+</ul>
+
+<h2>Step 6: Verify It Works</h2>
+
+<p>Send a simple test message in the Claude Code chat panel:</p>
+
+<pre><code>Hello, what model are you?</code></pre>
+
+<p>
+    You should receive a response from Claude through the HUIT proxy.
+    If it works, you're all set.
+</p>
+
+<h2>Troubleshooting</h2>
+
+<h3>Claude Code asks me to log in</h3>
+<p>
+    You haven't disabled the login prompt. Go to VS Code Settings (<strong>Cmd+,</strong>),
+    search "Claude Code login", and check <strong>Disable Login Prompt</strong>.
+</p>
+
+<h3>No response or authentication errors</h3>
+<p>
+    Check that <code>~/.claude/settings.json</code> is valid JSON and contains the correct
+    API key. You can verify by running in Terminal:
+</p>
+
+<pre><code>cat ~/.claude/settings.json</code></pre>
+
+<p>Also verify your API key works from the command line:</p>
+
+<pre><code>curl --location 'https://go.apis.huit.harvard.edu/ais-bedrock-llm/apigee/quota' \
+  --header "Authorization: Bearer $ANTHROPIC_API_KEY"</code></pre>
+
+<h3>VS Code prompts to install ms-toolsai or other extensions</h3>
+<p>
+    These are unrelated to Claude Code. You can safely dismiss or skip them.
+</p>
+
+<h3>Settings not taking effect</h3>
+<p>
+    After editing <code>~/.claude/settings.json</code>, close and reopen VS Code
+    to ensure the extension picks up the new configuration.
+</p>
+
+<h2>Using Claude Code in VS Code</h2>
+
+<p>Once configured, Claude Code in VS Code can:</p>
+
+<ul class="resources">
+    <li><strong>Edit files:</strong> Claude can read and modify files in your workspace with inline diffs you can accept or reject</li>
+    <li><strong>Run commands:</strong> Execute terminal commands, run tests, install packages</li>
+    <li><strong>Navigate code:</strong> Use <code>@</code>-mentions to reference specific files, functions, or symbols</li>
+    <li><strong>Multi-turn conversations:</strong> Build on previous context across multiple messages</li>
+    <li><strong>Plan mode:</strong> Ask Claude to plan complex changes before implementing them</li>
+</ul>
+
+<p>
+    The extension provides the same capabilities as the CLI, with the added convenience
+    of inline diffs, file navigation, and visual integration with your editor.
+</p>
+
+<footer>
+    <p>
+        &copy; 2026 President and Fellows of Harvard College.
+        Licensed under
+        <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.
+    </p>
+</footer>
+
+<script data-goatcounter="https://genaiatfas.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
