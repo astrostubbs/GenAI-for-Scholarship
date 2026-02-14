@@ -254,6 +254,17 @@ claude</code></pre>
     subscription.
 </p>
 
+<div class="disclaimer" style="background: #d1ecf1; border-left: 4px solid #17a2b8;">
+    <strong>This warning is expected and safe to ignore:</strong>
+    <pre><code>Auth conflict: Using ANTHROPIC_API_KEY
+ instead of Anthropic Console key. Either
+  unset ANTHROPIC_API_KEY, or run `claude
+  /logout`.</code></pre>
+    This just means Claude Code is using your HUIT API key (from
+    <code>ANTHROPIC_API_KEY</code>) instead of a personal Anthropic account.
+    That's exactly what we want — no action needed.
+</div>
+
 <h2>Exercises</h2>
 
 <ul class="resources">
