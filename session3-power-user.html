@@ -205,10 +205,22 @@ export CLAUDE_CODE_USE_BEDROCK=1</code></pre>
 <pre><code>chmod 755 trainingsetup.sh</code></pre>
 
 <p>
-    Open <code>trainingsetup.sh</code> in a text editor and replace
-    <code>YourKeyHere</code> with the API key you retrieved above.
-    Save the file, then source it:
+    Open <code>trainingsetup.sh</code> in <code>nano</code> (a simple terminal text editor):
 </p>
+
+<pre><code>nano trainingsetup.sh</code></pre>
+
+<p>
+    Use the arrow keys to move the cursor to <code>YourKeyHere</code> on the second line.
+    Delete it and paste your API key in its place. Then:
+</p>
+
+<ol>
+    <li>Press <strong>Ctrl+O</strong> (the letter O) to save — press Enter to confirm the filename</li>
+    <li>Press <strong>Ctrl+X</strong> to exit nano</li>
+</ol>
+
+<p>Now source the file to set the environment variables:</p>
 
 <pre><code>source ./trainingsetup.sh</code></pre>
 
