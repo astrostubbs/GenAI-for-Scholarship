@@ -85,13 +85,12 @@
 <pre><code>nano ~/.claude/settings.json</code></pre>
 
 <p>
-    Add an <code>"env"</code> block to your existing settings. If your file already has
-    content (like a <code>model</code> or other settings), keep those and add the
-    <code>env</code> block alongside them. For example:
+    Add an <code>"env"</code> block to your settings file. If your file already has
+    other settings, keep those and add the <code>env</code> block alongside them.
+    For example:
 </p>
 
 <pre><code>{
-  "model": "us.anthropic.claude-opus-4-6-v1",
   "env": {
     "ANTHROPIC_BEDROCK_BASE_URL": "https://apis.huit.harvard.edu/ais-bedrock-llm/v2",
     "ANTHROPIC_API_KEY": "YourKeyHere",
@@ -121,7 +120,6 @@
     because <code>"env"</code> follows it. But there is <strong>no</strong> comma after the
     closing <code>}</code> of the <code>env</code> block because it's the last item:</p>
 <pre><code>{
-  "model": "us.anthropic.claude-opus-4-6-v1",
   "spinnerTipsEnabled": false,        &larr; comma here (more items follow)
   "env": {
     "ANTHROPIC_API_KEY": "YourKey",
@@ -142,9 +140,8 @@
 
 <div class="disclaimer">
     <strong>Note:</strong> All values in the <code>env</code> block must be strings
-    (e.g., <code>"1"</code> not <code>1</code>). You can also add a <code>"model"</code>
-    key at the top level to set your default model, e.g.,
-    <code>"model": "us.anthropic.claude-opus-4-6-v1"</code>.
+    (e.g., <code>"1"</code> not <code>1</code>). You do not need to specify a model —
+    Claude Code will automatically use the best available model.
 </div>
 
 <h2>Step 4: Disable the Login Prompt</h2>
