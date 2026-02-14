@@ -85,10 +85,13 @@
 <pre><code>nano ~/.claude/settings.json</code></pre>
 
 <p>
-    Replace the contents with the following (substituting your actual HUIT API key):
+    Add an <code>"env"</code> block to your existing settings. If your file already has
+    content (like a <code>model</code> or other settings), keep those and add the
+    <code>env</code> block alongside them. For example:
 </p>
 
 <pre><code>{
+  "model": "us.anthropic.claude-opus-4-6-v1",
   "env": {
     "ANTHROPIC_BEDROCK_BASE_URL": "https://apis.huit.harvard.edu/ais-bedrock-llm/v2",
     "ANTHROPIC_API_KEY": "YourKeyHere",
@@ -98,7 +101,16 @@
   }
 }</code></pre>
 
-<p>Save with <strong>Ctrl+O</strong>, press Enter, then exit with <strong>Ctrl+X</strong>.</p>
+<p>
+    Replace <code>YourKeyHere</code> with your actual HUIT API key.
+    Save with <strong>Ctrl+O</strong>, press Enter, then exit with <strong>Ctrl+X</strong>.
+</p>
+
+<div class="disclaimer">
+    <strong>Important:</strong> Keep any existing settings in the file — just add the
+    <code>"env"</code> block. Make sure each key-value pair is separated by commas
+    and the overall file is valid JSON (curly braces match, no trailing commas).
+</div>
 
 <p><strong>What these variables do:</strong></p>
 
