@@ -106,10 +106,28 @@
     Save with <strong>Ctrl+O</strong>, press Enter, then exit with <strong>Ctrl+X</strong>.
 </p>
 
-<div class="disclaimer">
-    <strong>Important:</strong> Keep any existing settings in the file — just add the
-    <code>"env"</code> block. Make sure each key-value pair is separated by commas
-    and the overall file is valid JSON (curly braces match, no trailing commas).
+<div class="disclaimer" style="background: #fff3cd; border-left: 4px solid #ff9800;">
+    <h3 style="margin-top: 0; color: #ff9800;">Watch Out: JSON Comma Rules</h3>
+    <p>
+        JSON is very picky about commas. A misplaced or missing comma will cause a
+        "malformed JSON" error. The rules are:
+    </p>
+    <ul>
+        <li>Put a <strong>comma after every item except the last one</strong> at each level</li>
+        <li>There must be <strong>no comma after the last item</strong> before a closing <code>}</code></li>
+        <li>Every opening <code>{</code> must have a matching closing <code>}</code></li>
+    </ul>
+    <p>For example, note the comma after <code>false</code> on line 3 below — it's required
+    because <code>"env"</code> follows it. But there is <strong>no</strong> comma after the
+    closing <code>}</code> of the <code>env</code> block because it's the last item:</p>
+<pre><code>{
+  "model": "us.anthropic.claude-opus-4-6-v1",
+  "spinnerTipsEnabled": false,        &larr; comma here (more items follow)
+  "env": {
+    "ANTHROPIC_API_KEY": "YourKey",
+    "CLAUDE_CODE_USE_BEDROCK": "1"     &larr; no comma (last item)
+  }                                    &larr; no comma (last item)
+}</code></pre>
 </div>
 
 <p><strong>What these variables do:</strong></p>
