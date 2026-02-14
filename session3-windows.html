@@ -46,13 +46,13 @@
 </div>
 
 <p>
-    This guide covers setting up Claude Code on <strong>Windows</strong> using PowerShell.
+    This guide covers setting up Claude Code on <strong>Windows</strong>.
     If you are on a Mac, see the <a href="session3-power-user.html">Mac setup guide</a> instead.
 </p>
 
 <h2>Prerequisites: Install Before the Session</h2>
 
-<p>You need two things installed before we begin. Do these ahead of time.</p>
+<p>You need these installed before we begin. Do these ahead of time.</p>
 
 <h3>1. Install Git for Windows</h3>
 
@@ -92,7 +92,68 @@
     </p>
 </div>
 
-<h2>Getting Started: Open PowerShell</h2>
+<h3>3. Install VS Code (for Option 1)</h3>
+
+<p>
+    If you don't already have Visual Studio Code, download it from
+    <a href="https://code.visualstudio.com" target="_blank">code.visualstudio.com</a>.
+    It's free and available for Windows, Mac, and Linux.
+</p>
+
+<h2>Choose Your Setup Path</h2>
+
+<p>There are two ways to run Claude Code on Windows:</p>
+
+<div class="session-cards">
+    <a href="#option1" class="session-card" style="text-decoration: none;">
+        <div class="date">Recommended</div>
+        <h3>Option 1: VS Code Extension</h3>
+        <p>The faster path to get started. Install the Claude Code extension inside
+        Visual Studio Code — no PowerShell configuration needed. Good for most users.</p>
+    </a>
+
+    <a href="#option2" class="session-card" style="text-decoration: none;">
+        <div class="date">Advanced</div>
+        <h3>Option 2: PowerShell CLI</h3>
+        <p>Run Claude Code directly from the command line. Requires PowerShell
+        environment variable setup. Good if you prefer working in a terminal.</p>
+    </a>
+</div>
+
+<h2 id="option1">Option 1: Claude Code in VS Code (Recommended)</h2>
+
+<p>
+    This is the fastest way to get Claude Code running on Windows. The VS Code extension
+    reads its configuration from a settings file, so you don't need to deal with
+    PowerShell environment variables or script execution policies.
+</p>
+
+<p>
+    Follow the step-by-step instructions here:
+</p>
+
+<p style="text-align: center; margin: 1.5rem 0;">
+    <a href="vscode-claude-setup.html"
+       style="display: inline-block; background: #A51C30; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 4px; font-weight: bold;">
+        VS Code + Claude Code Setup Guide
+    </a>
+</p>
+
+<p>
+    Once you have Claude Code working in VS Code, skip ahead to the
+    <a href="#exercises">Exercises</a> section below.
+</p>
+
+<hr style="margin: 2.5rem 0; border: none; border-top: 2px solid #ddd;">
+
+<h2 id="option2">Option 2: PowerShell CLI</h2>
+
+<p>
+    If you prefer working from the command line, you can install Claude Code
+    as a standalone CLI tool and run it directly in PowerShell.
+</p>
+
+<h3>Open PowerShell</h3>
 
 <p>
     Open PowerShell: click the <strong>Start menu</strong>, type <strong>PowerShell</strong>,
@@ -265,7 +326,7 @@ claude</code></pre>
     That's exactly what we want — no action needed.
 </div>
 
-<h2>Exercises</h2>
+<h2 id="exercises">Exercises</h2>
 
 <ul class="resources">
     <li>
