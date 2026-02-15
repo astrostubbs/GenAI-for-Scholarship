@@ -278,41 +278,35 @@ Tell me what we can learn from the data file.</code></pre>
     into specific trends or ask it to create plots.
 </p>
 
-<h2>Exercise 5: Creating Custom AI Assistants with Gems</h2>
+<h2>Exercise 5: Pre-Submission Paper Review</h2>
 
 <p>
-    Gems are Google's version of custom AI assistants. The key feature is the ability to
-    write a <strong>persistent prompt</strong> that defines how the AI should behave.
-    Think of Gems as specialized assistants for specific tasks.
+    In this exercise, you'll upload one of your own papers (a draft or a published paper)
+    to Gemini and ask it for a constructive critique. Think of this as a <strong>first
+    stage of self-review</strong> — like asking a knowledgeable colleague to read your
+    draft and point out issues before you submit.
 </p>
 
-<p>
-    <strong>What makes Gems different:</strong>
-</p>
+<div class="disclaimer" style="background: #d1ecf1; border-left: 4px solid #17a2b8;">
+    <strong>Important:</strong> This is <strong>not</strong> a substitute for the formal
+    peer review process. It's a way to catch obvious problems before reviewers see them.
+    Remember to use your <strong>Harvard Google account</strong> so your paper is protected
+    by Harvard's data security agreements.
+</div>
 
-<ul class="resources">
-    <li>Create custom AI assistants with persistent instructions</li>
-    <li>Similar to Custom GPTs in ChatGPT</li>
-    <li>Can upload documents for the Gem to reference</li>
-    <li>Shareable with others in your Google Workspace</li>
-    <li>Reusable across multiple conversations</li>
-</ul>
-
-<p>
-    <strong>Step-by-step instructions:</strong>
-</p>
+<h3>Step 1: Upload your paper</h3>
 
 <ol>
-    <li><strong>Access Gems</strong>: In Gemini, look for the "Gem manager" option (usually
-        in the left sidebar or under a menu).</li>
+    <li>Go to <a href="https://gemini.google.com" target="_blank">gemini.google.com</a></li>
+    <li>Click the <strong>+</strong> button and upload a PDF of one of your own papers</li>
+</ol>
 
-    <li><strong>Create a new Gem</strong>: Click "New Gem" or "Create Gem".</li>
+<h3>Step 2: Ask for a critique</h3>
 
-    <li><strong>Write the persistent prompt</strong>: This defines your Gem's behavior.
-        For example, try creating a "Pre-Submission Paper Reviewer" Gem with this prompt:
-        <pre><code>You are a thorough and constructive colleague helping me review
-my own paper before I submit it to a journal. When I upload a
-draft paper, you should:
+<p>Copy and paste this prompt (or adapt it to your needs):</p>
+
+<pre><code>I have uploaded one of my own papers. Please act as a thorough and
+constructive colleague helping me review it before submission. Please:
 
 1. Summarize what you understand to be the main contributions
 2. Check whether the abstract accurately reflects the paper's content
@@ -323,29 +317,35 @@ draft paper, you should:
 7. Note any missing citations or incomplete references
 8. Suggest specific improvements
 
-Be constructive and specific. Cite section numbers, figure
-numbers, or page numbers when making suggestions. This is a
-pre-submission self-review, not a formal referee report.</code></pre>
-    </li>
+Be constructive and specific. Cite section numbers, figure numbers,
+or page numbers when making suggestions.</code></pre>
 
-    <li><strong>Name your Gem</strong>: Give it a descriptive name like "Pre-Submission Paper Reviewer".</li>
+<p>
+    <strong>Observe:</strong> How useful is the feedback? Does it catch real issues?
+    Are there things it misses that a human reviewer would catch? Try follow-up
+    prompts to dig deeper into specific sections.
+</p>
 
-    <li><strong>Upload documents (optional)</strong>: Like NotebookLM, you can upload reference
-        documents that your Gem should always consider (e.g., target journal guidelines, style guides).</li>
+<h3>Step 3 (Optional): Turn this into a reusable Gem</h3>
 
-    <li><strong>Test your Gem</strong>: Upload one of your own draft papers and see how it responds
-        according to your instructions.</li>
+<p>
+    If you find this useful, you can create a <strong>Gem</strong> — a custom AI
+    assistant with a persistent prompt — so you don't have to paste the
+    instructions every time.
+</p>
 
-    <li><strong>Share if desired</strong>: Gems can be shared with colleagues, making it easy
-        to standardize workflows across a research group.</li>
+<ol>
+    <li><strong>Access Gems</strong>: In Gemini, look for the "Gem manager" option (usually
+        in the left sidebar or under a menu).</li>
+    <li><strong>Create a new Gem</strong>: Click "New Gem" or "Create Gem".</li>
+    <li><strong>Paste the prompt above</strong> as the Gem's persistent instructions.</li>
+    <li><strong>Name it</strong>: e.g., "Pre-Submission Paper Reviewer".</li>
+    <li><strong>Upload reference documents (optional)</strong>: You can add target journal
+        guidelines or style guides that the Gem should always consider.</li>
+    <li><strong>Share if desired</strong>: Gems can be shared with colleagues in your
+        Google Workspace, making it easy to standardize review workflows across
+        a research group.</li>
 </ol>
-
-<div class="disclaimer" style="background: #d1ecf1; border-left: 4px solid #17a2b8;">
-    <strong>Important framing:</strong> This is meant as a <strong>first stage of self-review</strong>
-    before you submit your paper — like asking a knowledgeable colleague to read a draft
-    and point out issues. It is <strong>not</strong> a substitute for the formal peer review
-    process. Think of it as catching obvious problems before reviewers see them.
-</div>
 
 <p>
     <strong>Other Gem ideas for research:</strong>
@@ -358,12 +358,6 @@ pre-submission self-review, not a formal referee report.</code></pre>
     <li><strong>Data Analysis Explainer</strong>: Interprets statistical results for non-specialists</li>
     <li><strong>Lab Protocol Checker</strong>: Reviews protocols for completeness and safety</li>
 </ul>
-
-<p>
-    <strong>Observe:</strong> Unlike starting fresh with Gemini each time, a Gem remembers
-    its role and instructions. This consistency is valuable for repetitive research tasks
-    where you want the same type of analysis applied to different materials.
-</p>
 
 <h2>Discussion</h2>
 
