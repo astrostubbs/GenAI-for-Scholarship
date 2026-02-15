@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 2 Instructor Guide — Generative AI for Scholarship</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logos">
+        <img src="HDSI.png" alt="Harvard Data Science Initiative">
+        <img src="FAS.png" alt="Harvard Faculty of Arts and Sciences">
+    </div>
+    <h1>Generative AI for Scholarship</h1>
+    <div class="sponsors">Harvard Data Science Initiative (HDSI) &amp; Faculty of Arts and Sciences (FAS)</div>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="session1-foundation.html">The Basics</a>
+    <a href="session2-coder.html">The AI-Empowered Coder</a>
+    <a href="session3-power-user.html">Claude Code CLI</a>
+    <a href="site-map.html">Site Map</a>
+    <a href="https://datascience.harvard.edu/education/generative-ai-for-graduate-students-and-postdocs/" target="_blank">Other GAI Sessions</a>
+</nav>
+
+<h2>Session 2 Instructor Guide — The AI-Empowered Coder</h2>
+<p>Friday, February 27, 2026 · 4:00–5:30 pm · Northwest Building, Room B103</p>
+
+<div class="disclaimer" style="background: #fff3cd; border-left: 4px solid #ff9800;">
+    <p style="margin: 0;">
+        <strong>This page is for instructors only.</strong>
+        It is listed on the Site Map but not in the main navigation bar.
+    </p>
+</div>
+
+<h2>Session Run-of-Show</h2>
+
+<ol>
+    <li>
+        <strong>Brief recap of Session 1</strong>
+        <ul>
+            <li>Quick review: Gemini, NotebookLM, Gems</li>
+            <li>Any follow-up questions from last week</li>
+        </ul>
+    </li>
+
+    <li>
+        <strong>Exercise 1: Google Colab with Gemini</strong>
+        <ul>
+            <li>Ensure everyone can access Colab with their Harvard Google account</li>
+            <li>Walk through the demonstration notebook (ai_python_demo.ipynb)</li>
+            <li>Cover: debugging, documentation, code generation, data analysis</li>
+            <li>Key point: Gemini works cell-by-cell within the notebook</li>
+        </ul>
+    </li>
+
+    <li>
+        <strong>Exercise 2: Local Jupyter Notebook with Jupyternaut</strong>
+        <ul>
+            <li>This requires Python installed locally and the HUIT API key</li>
+            <li>Walk through the <a href="jupyter-ai-huit-setup.html">Jupyter AI setup guide</a></li>
+            <li>Show Jupyternaut chat interface in JupyterLab</li>
+            <li>Key point: local notebooks give you control over environment and files</li>
+        </ul>
+    </li>
+
+    <li>
+        <strong>Exercise 3: Harvard RC Cluster overview</strong>
+        <ul>
+            <li>This is more of a demo/walkthrough than a hands-on exercise</li>
+            <li>Show Open OnDemand interface if possible</li>
+            <li>Explain when RC is appropriate (large datasets, GPU, long-running jobs)</li>
+        </ul>
+    </li>
+
+    <li>
+        <strong>Preview of Session 3</strong>
+        <ul>
+            <li>Briefly introduce Claude Code CLI</li>
+            <li>Explain the difference: Colab/Jupyter AI works cell-by-cell, Claude Code is an autonomous agent</li>
+            <li>No setup required before Session 3 — we'll do it together</li>
+        </ul>
+    </li>
+</ol>
+
+<h2>Teaching Notes</h2>
+
+<h3>Colab + Gemini</h3>
+<ul class="resources">
+    <li>Students need a Harvard-affiliated Google account (g.harvard.edu) for Colab</li>
+    <li>The demonstration notebook has tutorial markdown cells — students can follow along or work at their own pace</li>
+    <li>Gemini in Colab operates per-cell: it sees the current cell and context, not the whole notebook at once</li>
+    <li>Show students how to use the Gemini sidebar for code suggestions and explanations</li>
+</ul>
+
+<h3>Local Jupyter + HUIT</h3>
+<ul class="resources">
+    <li>This exercise requires Python 3.13+ and a working HUIT API key</li>
+    <li>The <code>AWS_BEARER_TOKEN_BEDROCK</code> environment variable must be set before launching JupyterLab</li>
+    <li>Common issue: students forget to set the environment variable, get authentication errors</li>
+    <li>Jupyter AI v3 (beta) is required: <code>pip install "jupyter-ai==3.0.0b9" boto3</code></li>
+</ul>
+
+<h3>Cost awareness</h3>
+<ul class="resources">
+    <li>Remind students that API calls through HUIT charge to their PI's billing account</li>
+    <li>Encourage setting monthly spending limits when registering API keys</li>
+    <li>The workshop API key has a shared quota — remind students not to run expensive operations</li>
+</ul>
+
+<h2>Discussion Points</h2>
+
+<ul class="resources">
+    <li>How does AI-assisted coding compare to writing code from scratch?</li>
+    <li>When is AI code generation helpful vs. when does it get in the way?</li>
+    <li>How do you verify AI-generated code is correct?</li>
+    <li>What are the risks of relying on AI for debugging — can it introduce new bugs?</li>
+    <li>How do you decide between Colab (cloud) and local Jupyter (your machine)?</li>
+</ul>
+
+<footer>
+    <p>
+        &copy; 2026 President and Fellows of Harvard College.
+        Licensed under
+        <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.
+    </p>
+</footer>
+
+<script data-goatcounter="https://genaiatfas.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

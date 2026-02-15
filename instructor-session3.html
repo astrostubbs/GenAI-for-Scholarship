@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 3 Instructor Guide — Generative AI for Scholarship</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logos">
+        <img src="HDSI.png" alt="Harvard Data Science Initiative">
+        <img src="FAS.png" alt="Harvard Faculty of Arts and Sciences">
+    </div>
+    <h1>Generative AI for Scholarship</h1>
+    <div class="sponsors">Harvard Data Science Initiative (HDSI) &amp; Faculty of Arts and Sciences (FAS)</div>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="session1-foundation.html">The Basics</a>
+    <a href="session2-coder.html">The AI-Empowered Coder</a>
+    <a href="session3-power-user.html">Claude Code CLI</a>
+    <a href="site-map.html">Site Map</a>
+    <a href="https://datascience.harvard.edu/education/generative-ai-for-graduate-students-and-postdocs/" target="_blank">Other GAI Sessions</a>
+</nav>
+
+<h2>Session 3 Instructor Guide — Claude Code CLI</h2>
+<p>Friday, March 6, 2026 · 4:00–5:30 pm · Northwest Building, Room B103</p>
+
+<div class="disclaimer" style="background: #fff3cd; border-left: 4px solid #ff9800;">
+    <p style="margin: 0;">
+        <strong>This page is for instructors only.</strong>
+        It is listed on the Site Map but not in the main navigation bar.
+    </p>
+</div>
+
+<h2>Session Run-of-Show</h2>
+
+<ol>
+    <li>
+        <strong>Brief recap of Sessions 1 and 2</strong>
+        <ul>
+            <li>Session 1: Gemini, NotebookLM, Gems — interactive AI tools</li>
+            <li>Session 2: AI-assisted coding in Colab and Jupyter — cell-by-cell</li>
+            <li>Session 3: Claude Code — autonomous agent that plans and executes</li>
+        </ul>
+    </li>
+
+    <li>
+        <strong>Installation and setup</strong>
+        <ul>
+            <li>Mac users: <a href="session3-power-user.html">Mac setup guide</a></li>
+            <li>Windows users: <a href="session3-windows.html">Windows setup guide</a> (Option 1: VS Code recommended, Option 2: PowerShell CLI)</li>
+            <li>Post the session API key and walk everyone through setup</li>
+            <li>Test with <code>hello.py</code> and <code>plottest.py</code></li>
+            <li>Expect this to take a significant chunk of time — installation issues are common</li>
+        </ul>
+    </li>
+
+    <li>
+        <strong>Launch Claude Code and verify</strong>
+        <ul>
+            <li>Everyone runs <code>claude</code> and sends a test message</li>
+            <li>Explain the "Auth conflict" warning — it's expected and safe</li>
+            <li>Show basic commands: <code>/help</code>, <code>/cost</code>, <code>/model</code></li>
+        </ul>
+    </li>
+
+    <li>
+        <strong>Thermal data exercise</strong>
+        <ul>
+            <li>Walk through <a href="exercise-thermal.html">the exercise</a> together</li>
+            <li>Steps 1–4 (explore, plot, histogram, extremes) go quickly</li>
+            <li>Step 5 (sunset markers) is where it gets interesting — Claude needs to figure out astronomy libraries</li>
+            <li>Step 6 (Fourier analysis) — pause here for discussion about whether results make physical sense</li>
+            <li>Step 7 (critical thinking) — this is the key teaching moment</li>
+        </ul>
+    </li>
+
+    <li>
+        <strong>Plan Mode demo</strong>
+        <ul>
+            <li>Show Shift+Tab to enter Plan Mode</li>
+            <li>Use the ML prediction exercise (Step 10) as the example</li>
+            <li>Walk through the plan review and approval process</li>
+        </ul>
+    </li>
+
+    <li>
+        <strong>Wrap-up</strong>
+        <ul>
+            <li>Show <code>/cost</code> to see session API usage</li>
+            <li>Point to "After the Session" section for getting personal API keys</li>
+            <li>Mention VS Code extension as alternative interface</li>
+        </ul>
+    </li>
+</ol>
+
+<h2>Teaching Notes</h2>
+
+<h3>Common installation issues</h3>
+<ul class="resources">
+    <li><strong>Mac:</strong> Some students may not have Python 3 — check with <code>which python3</code></li>
+    <li><strong>Windows:</strong> Python not on PATH (forgot to check the box during install)</li>
+    <li><strong>Windows:</strong> PowerShell execution policy blocks .ps1 scripts — need <code>Set-ExecutionPolicy</code></li>
+    <li><strong>Both:</strong> 403 errors usually mean the API key is wrong or the model is not available</li>
+    <li><strong>Both:</strong> "Auth conflict" warning is expected and harmless — tell students to ignore it</li>
+</ul>
+
+<h3>Key pedagogical moments</h3>
+<ul class="resources">
+    <li><strong>Step 5 (sunset markers):</strong> This shows Claude Code's ability to break complex problems into sub-tasks, install libraries, and combine results</li>
+    <li><strong>Step 7 (critical thinking):</strong> The Fourier analysis may give unexpected results — the dominant period should be ~1 day (diurnal cycle), but students should think about whether the data supports this and what other periods appear</li>
+    <li><strong>Plan Mode:</strong> Emphasize that reviewing the plan is critical — don't just rubber-stamp it. This teaches good habits for working with AI agents</li>
+</ul>
+
+<h3>Cost awareness</h3>
+<ul class="resources">
+    <li>The ML exercise (Step 10) is the most expensive step — it involves multiple model calls and iterations</li>
+    <li>Have students run <code>/cost</code> periodically to see cumulative usage</li>
+    <li>The workshop API key has a shared quota — if many students run the ML exercise simultaneously, watch the quota</li>
+</ul>
+
+<h2>Solutions and Reference Materials</h2>
+
+<div class="session-cards">
+    <a href="exercise-thermal-solutions.html" class="session-card">
+        <div class="date">Solutions</div>
+        <h3>Thermal Exercise Solutions</h3>
+        <p>Reference implementations and walkthrough for all exercise steps.</p>
+    </a>
+
+    <a href="data/session3/lab_notebook.html" class="session-card">
+        <div class="date">Example Output</div>
+        <h3>Sample Lab Notebook</h3>
+        <p>Example lab notebook generated by Claude Code during the exercise.</p>
+    </a>
+
+    <a href="data/session3/ml_summary.html" class="session-card">
+        <div class="date">Example Output</div>
+        <h3>Sample ML Summary</h3>
+        <p>Example ML comparison report from the sunset temperature prediction exercise.</p>
+    </a>
+</div>
+
+<h2>Discussion Points</h2>
+
+<ul class="resources">
+    <li>How does working with an autonomous agent differ from cell-by-cell AI assistance?</li>
+    <li>When should you trust Claude Code's output vs. verify it manually?</li>
+    <li>What are the risks of letting an AI agent read, write, and execute code on your machine?</li>
+    <li>How do you evaluate whether a Plan Mode plan is good before approving it?</li>
+    <li>What research tasks in your field could benefit from this kind of agentic workflow?</li>
+</ul>
+
+<footer>
+    <p>
+        &copy; 2026 President and Fellows of Harvard College.
+        Licensed under
+        <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.
+    </p>
+</footer>
+
+<script data-goatcounter="https://genaiatfas.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
