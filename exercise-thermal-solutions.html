@@ -32,14 +32,14 @@
 <div class="disclaimer">
     <strong>For Instructors Only</strong><br>
     These solutions provide reference implementations and teaching notes.
-    Students should work through the exercises independently before
+    Participants should work through the exercises independently before
     consulting these materials.
 </div>
 
 <h2>Critical Thinking: The Fourier Analysis Issue (Step 7)</h2>
 
 <p>
-    Students will likely report that the dominant period from naive Fourier
+    Participants will likely report that the dominant period from naive Fourier
     analysis is very long (tens to hundreds of days) rather than the expected
     1-day period. This is the pedagogical moment.
 </p>
@@ -308,7 +308,7 @@ for i, idx in enumerate(sorted_peaks[:5]):
     </tr>
 </table>
 
-<h3>Expected Student Outcomes</h3>
+<h3>Expected Participant Outcomes</h3>
 
 <ul>
     <li>Two separate HTML reports: <code>lab_notebook.html</code> (Steps 1-9)
@@ -334,11 +334,11 @@ for i, idx in enumerate(sorted_peaks[:5]):
 
 <h2>Implementation Notes</h2>
 
-<h3>Common Student Issues</h3>
+<h3>Common Participant Issues</h3>
 
 <ul class="resources">
     <li><strong>Forgetting to specify lat/lon units:</strong> Astropy requires
-        <code>u.deg</code> units. Students may forget this and get cryptic errors.</li>
+        <code>u.deg</code> units. Participants may forget this and get cryptic errors.</li>
 
     <li><strong>Sunset calculation timezone confusion:</strong> The dataset is in UTC,
         and sunset calculations should also be in UTC. Local time conversion is not needed.</li>
@@ -347,7 +347,7 @@ for i, idx in enumerate(sorted_peaks[:5]):
         problems in some environments. Recommend saving plots first with
         <code>plt.savefig()</code> then displaying.</li>
 
-    <li><strong>Missing packages:</strong> Students may need to install
+    <li><strong>Missing packages:</strong> Participants may need to install
         <code>xgboost</code>, <code>astropy</code>, <code>scipy</code>. Claude
         Code will typically suggest this automatically.</li>
 </ul>
