@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 1 Instructor Guide — Generative AI for Scholarship</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logos">
+        <img src="HDSI.png" alt="Harvard Data Science Initiative">
+        <img src="FAS.png" alt="Harvard Faculty of Arts and Sciences">
+    </div>
+    <h1>Generative AI for Scholarship</h1>
+    <div class="sponsors">Harvard Data Science Initiative (HDSI) &amp; Faculty of Arts and Sciences (FAS)</div>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="session1-foundation.html">The Basics</a>
+    <a href="session2-coder.html">The AI-Empowered Coder</a>
+    <a href="session3-power-user.html">Claude Code CLI</a>
+    <a href="site-map.html">Site Map</a>
+    <a href="https://datascience.harvard.edu/education/generative-ai-for-graduate-students-and-postdocs/" target="_blank">Other GAI Sessions</a>
+</nav>
+
+<h2>Session 1 Instructor Guide — The Basics</h2>
+<p>Friday, February 20, 2026 · 4:00–5:30 pm · Northwest Building, Room B103</p>
+
+<div class="disclaimer" style="background: #fff3cd; border-left: 4px solid #ff9800;">
+    <p style="margin: 0;">
+        <strong>This page is for instructors only.</strong>
+        It is listed on the Site Map but not in the main navigation bar.
+    </p>
+</div>
+
+<h2>Session Run-of-Show</h2>
+
+<ol>
+    <li>
+        <strong>Introduction and overview</strong>
+        <ul>
+            <li>Use the PowerPoint slide deck</li>
+            <li>Cover course goals, what generative AI is, and how it fits into research workflows</li>
+        </ul>
+    </li>
+
+    <li>
+        <strong>Gemini access and demos</strong>
+        <ul>
+            <li>Get everyone signed in with their Harvard-affiliated Google account and into Gemini</li>
+            <li>Do the menu/meal planning prompt exercise together (Exercise 1 from the exercises page)</li>
+        </ul>
+    </li>
+
+    <li>
+        <strong>Run through pinned Gemini demos</strong>
+        <ul>
+            <li>Banana astronomer — image generation</li>
+            <li>Conference planning</li>
+            <li>Poster for a talk</li>
+            <li>Figures for a talk</li>
+            <li><a href="https://gemini.google.com/share/31289562d26e" target="_blank">Barnyard skaters</a> — shared Gemini conversation</li>
+            <li>Harmonic oscillator simulation</li>
+        </ul>
+    </li>
+
+    <li>
+        <strong>NotebookLM demo and grant proposal exercise</strong>
+        <ul>
+            <li>Walk through Exercise 2 (grant proposal review)</li>
+            <li>Show source citations and document grounding</li>
+        </ul>
+    </li>
+
+    <li>
+        <strong>Ethics discussion</strong>
+        <ul>
+            <li>Use the discussion questions below</li>
+        </ul>
+    </li>
+
+    <li>
+        <strong>Literature review exercise (Exercise 3)</strong>
+        <ul>
+            <li>Students upload their own papers or use provided set</li>
+        </ul>
+    </li>
+
+    <li>
+        <strong>Data browsing exercise (Exercise 4)</strong>
+        <ul>
+            <li>Upload fake_data.xlsx to Gemini</li>
+        </ul>
+    </li>
+
+    <li>
+        <strong>Gems exercise (Exercise 5)</strong>
+        <ul>
+            <li>Create a custom AI assistant</li>
+        </ul>
+    </li>
+
+    <li>
+        <strong>Wrap-up and preview of Sessions 2 and 3</strong>
+    </li>
+</ol>
+
+<h2>Key Gemini Features to Demonstrate</h2>
+
+<ul class="resources">
+    <li><strong>Choosing model for Gemini:</strong> Discuss the different Gemini models available (Flash, Pro, Advanced) and their cost and climate consequences. More powerful models consume more energy and cost more per query.</li>
+    <li><strong>Tools menu:</strong> Demonstrate the Tools menu options including Deep research, Create images, and Canvas for collaborative document editing.</li>
+    <li><strong>Uploading files with the + sign:</strong> Show how to use the + button to upload documents, images, and data files for analysis.</li>
+    <li><strong>Cloud execution:</strong> Emphasize that all data processing and code execution happen on the cloud — your computer is just the input and output device.</li>
+</ul>
+
+<h2>Key NotebookLM Features to Demonstrate</h2>
+
+<ul class="resources">
+    <li><strong>RAG encoding of uploaded files:</strong> Explain that NotebookLM looks preferentially at uploaded files, which get RAG (Retrieval-Augmented Generation) encoded upon arrival. This means it creates a searchable index of your documents for more accurate, source-grounded responses.</li>
+    <li><strong>Core use cases:</strong> NotebookLM is particularly good for interrogating and comparing documents, summarizing information across multiple sources, and even generating audio podcasts from your research materials.</li>
+    <li><strong>How to share notebooks:</strong> Demonstrate the sharing feature by clicking the three-dot menu in the upper right corner of a notebook, then selecting "Share". You can share with specific people via email (within your Google Workspace) or generate a shareable link. Show how collaborators can view, comment, or edit depending on permissions granted.</li>
+    <li><strong>Show how links to source documents work:</strong> When NotebookLM generates a response, demonstrate how to click on the citation numbers (e.g., [1], [2]) that appear inline in the text. These are clickable links that jump directly to the relevant passage in the source document, highlighting the exact section that supports the claim. This source-grounding is what distinguishes NotebookLM from general-purpose LLMs.</li>
+</ul>
+
+<h2>Discussion Questions: Ethics of AI Use in Research</h2>
+
+<p>Use these to guide the in-class discussion after the grant proposal exercise:</p>
+
+<ul class="resources">
+    <li><strong>Attribution and disclosure:</strong> If you use NotebookLM to review your grant proposal,
+        should you disclose this to the funding agency? What if it helps you write sections of the proposal?
+        Where is the line between "tool" and "co-author"?</li>
+
+    <li><strong>Lack of established norms:</strong> Unlike citation practices or authorship guidelines,
+        which have evolved over decades, social norms for AI use in research are still emerging.
+        Different journals, funding agencies, and institutions have different policies — or no policy at all.
+        How do you navigate this uncertainty?</li>
+
+    <li><strong>Competitive advantage vs. fairness:</strong> If some researchers use AI tools and others don't,
+        does this create an unfair advantage? Should AI assistance be disclosed to ensure transparency?</li>
+
+    <li><strong>Responsibility and verification:</strong> When AI identifies errors or suggests improvements,
+        you are still responsible for the final work. How do you verify AI-generated insights?
+        What happens if AI misses something important or provides incorrect information?</li>
+
+    <li><strong>Clarity within your research group:</strong> It's essential to establish shared expectations
+        between students and advisors, PIs and postdocs, about appropriate AI use. These conversations should
+        be explicit and ongoing. Different sub-fields are developing their own norms — some more permissive,
+        others more restrictive. You need to stay abreast of evolving practices in your specific field and
+        discuss them openly within your research group.</li>
+</ul>
+
+<h2>General Discussion Questions</h2>
+
+<p>For wrapping up or filling time:</p>
+
+<ul class="resources">
+    <li>What worked well in Gemini's response?</li>
+    <li>What could be improved?</li>
+    <li>How might you refine the prompt to get better suggestions?</li>
+    <li>How does this relate to using AI for research tasks?</li>
+</ul>
+
+<h2>Session Preview Notes</h2>
+
+<p>Before concluding, briefly preview the upcoming sessions:</p>
+
+<ul class="resources">
+    <li><strong>Session 2 (Next week):</strong> We'll integrate AI directly into Python workflows using Google Colab with Gemini. Students will learn to debug, document, and generate code with AI assistance.</li>
+    <li><strong>Session 3 (Week after):</strong> We'll explore Claude Code, a powerful command-line tool that can autonomously execute multi-step coding tasks, run tests, and create complete analysis pipelines.</li>
+</ul>
+
+<footer>
+    <p>
+        &copy; 2026 President and Fellows of Harvard College.
+        Licensed under
+        <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.
+    </p>
+</footer>
+
+<script data-goatcounter="https://genaiatfas.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
