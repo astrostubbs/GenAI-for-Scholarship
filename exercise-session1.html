@@ -309,32 +309,43 @@ Tell me what we can learn from the data file.</code></pre>
     <li><strong>Create a new Gem</strong>: Click "New Gem" or "Create Gem".</li>
 
     <li><strong>Write the persistent prompt</strong>: This defines your Gem's behavior.
-        For example, try creating a "Research Paper Reviewer" Gem with this prompt:
-        <pre><code>You are an expert peer reviewer for scientific journals. When given
-a research paper, you should:
+        For example, try creating a "Pre-Submission Paper Reviewer" Gem with this prompt:
+        <pre><code>You are a thorough and constructive colleague helping me review
+my own paper before I submit it to a journal. When I upload a
+draft paper, you should:
 
-1. Summarize the main contributions and findings
-2. Evaluate the methodology for rigor and appropriateness
-3. Identify strengths of the work
-4. Point out potential weaknesses or limitations
-5. Suggest specific improvements
-6. Assess whether the claims are supported by the data
+1. Summarize what you understand to be the main contributions
+2. Check whether the abstract accurately reflects the paper's content
+3. Identify any gaps in the logic or argument
+4. Flag places where claims are not well supported by the data
+5. Point out unclear writing, jargon, or confusing figures
+6. Check that all figures and tables are referenced in the text
+7. Note any missing citations or incomplete references
+8. Suggest specific improvements
 
-Always be constructive and specific in your feedback. Cite specific
-sections or figures when making critiques.</code></pre>
+Be constructive and specific. Cite section numbers, figure
+numbers, or page numbers when making suggestions. This is a
+pre-submission self-review, not a formal referee report.</code></pre>
     </li>
 
-    <li><strong>Name your Gem</strong>: Give it a descriptive name like "Research Paper Reviewer".</li>
+    <li><strong>Name your Gem</strong>: Give it a descriptive name like "Pre-Submission Paper Reviewer".</li>
 
     <li><strong>Upload documents (optional)</strong>: Like NotebookLM, you can upload reference
-        documents that your Gem should always consider (e.g., journal guidelines, style guides).</li>
+        documents that your Gem should always consider (e.g., target journal guidelines, style guides).</li>
 
-    <li><strong>Test your Gem</strong>: Upload a paper or paste text and see how it responds
+    <li><strong>Test your Gem</strong>: Upload one of your own draft papers and see how it responds
         according to your instructions.</li>
 
     <li><strong>Share if desired</strong>: Gems can be shared with colleagues, making it easy
         to standardize workflows across a research group.</li>
 </ol>
+
+<div class="disclaimer" style="background: #d1ecf1; border-left: 4px solid #17a2b8;">
+    <strong>Important framing:</strong> This is meant as a <strong>first stage of self-review</strong>
+    before you submit your paper — like asking a knowledgeable colleague to read a draft
+    and point out issues. It is <strong>not</strong> a substitute for the formal peer review
+    process. Think of it as catching obvious problems before reviewers see them.
+</div>
 
 <p>
     <strong>Other Gem ideas for research:</strong>
