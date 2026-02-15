@@ -104,13 +104,26 @@
         <strong>Data browsing exercise (Exercise 4)</strong>
         <ul>
             <li>Upload fake_data.xlsx to Gemini</li>
+            <li>Give students a few minutes, then poll the class (show of hands):
+                <ul>
+                    <li>Did it make and show you plots?</li>
+                    <li>Did it do some interpretation of the data?</li>
+                    <li>Did it note that it's unlikely to find bees and butterflies at 10 F?</li>
+                    <li>Did it find the correlation of ~0.5 between bees and butterflies?</li>
+                </ul>
+            </li>
+            <li>Use this to discuss variability in AI outputs — different students may get different results from the same data</li>
         </ul>
     </li>
 
     <li>
         <strong>Gems exercise (Exercise 5)</strong>
         <ul>
-            <li>Create a custom AI assistant</li>
+            <li>Explain what Gems are: custom AI assistants with persistent prompts</li>
+            <li>Walk through creating a Gem (e.g., "Research Paper Reviewer")</li>
+            <li>Show how to write the persistent prompt that defines behavior</li>
+            <li>Demonstrate uploading reference documents to a Gem</li>
+            <li>Show sharing — Gems can be shared within a Google Workspace</li>
         </ul>
     </li>
 
@@ -143,6 +156,37 @@
     <li><strong>Core use cases:</strong> NotebookLM is particularly good for interrogating and comparing documents, summarizing information across multiple sources, and even generating audio podcasts from your research materials.</li>
     <li><strong>How to share notebooks:</strong> Demonstrate the sharing feature by clicking the three-dot menu in the upper right corner of a notebook, then selecting "Share". You can share with specific people via email (within your Google Workspace) or generate a shareable link. Show how collaborators can view, comment, or edit depending on permissions granted.</li>
     <li><strong>Show how links to source documents work:</strong> When NotebookLM generates a response, demonstrate how to click on the citation numbers (e.g., [1], [2]) that appear inline in the text. These are clickable links that jump directly to the relevant passage in the source document, highlighting the exact section that supports the claim. This source-grounding is what distinguishes NotebookLM from general-purpose LLMs.</li>
+</ul>
+
+<h2>Instructor Notes: Data Browsing Exercise (Exercise 4)</h2>
+
+<p>
+    The fake_data.xlsx file contains columns for date, temperature (F), number of bees,
+    and number of butterflies. Key things to look for in student results:
+</p>
+
+<ul class="resources">
+    <li><strong>Plot generation:</strong> Most students should get plots, but the style and type will vary (scatter, line, bar). Good opportunity to discuss how the same prompt yields different outputs.</li>
+    <li><strong>Physical interpretation:</strong> Did it flag that insect counts near zero at 10 F make biological sense? This tests whether the AI applies domain knowledge beyond pure statistics.</li>
+    <li><strong>Correlation:</strong> The bees and butterflies columns have a correlation of approximately 0.5. Did Gemini find and report this? Some runs will, some won't — depends on the model and how it interprets the prompt.</li>
+    <li><strong>Seasonal patterns:</strong> Both insect counts and temperature follow seasonal trends. Did it identify this?</li>
+</ul>
+
+<p>
+    <strong>Teaching moment:</strong> Poll the class with a show of hands for each question above.
+    The variation in responses illustrates that AI outputs are non-deterministic — the same
+    data and similar prompts can produce meaningfully different analyses.
+</p>
+
+<h2>Instructor Notes: Gems (Exercise 5)</h2>
+
+<ul class="resources">
+    <li><strong>What Gems are:</strong> Custom AI assistants with a persistent prompt (system prompt) that defines their behavior. Similar to Custom GPTs in ChatGPT.</li>
+    <li><strong>Key advantage over regular Gemini:</strong> The persistent prompt means you don't have to re-explain the task every time. The Gem remembers its role across conversations.</li>
+    <li><strong>Creating a Gem:</strong> Access through "Gem manager" in the Gemini sidebar. Click "New Gem", write the persistent prompt, name it, optionally upload reference documents.</li>
+    <li><strong>Sharing:</strong> Gems can be shared with others in your Google Workspace — useful for standardizing workflows across a research group (e.g., everyone uses the same paper reviewer Gem).</li>
+    <li><strong>Example Gem ideas for researchers:</strong> Paper reviewer, grant writing assistant, literature synthesizer, methods section writer, data analysis explainer, lab protocol checker.</li>
+    <li><strong>Uploading documents:</strong> Like NotebookLM, you can upload reference documents (journal guidelines, style guides) that the Gem always considers.</li>
 </ul>
 
 <h2>Discussion Questions: Ethics of AI Use in Research</h2>
