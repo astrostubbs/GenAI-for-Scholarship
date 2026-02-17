@@ -65,6 +65,35 @@ Can you suggest 3 meal ideas I could make with these ingredients?</code></pre>
     We'll explore ways to improve this prompt during the workshop discussion.
 </p>
 
+<h3>Step 3: Generate a scientific image</h3>
+
+<p>
+    Gemini can also generate images from text descriptions. Try creating a
+    scientific illustration by entering one of these prompts (or make up your own):
+</p>
+
+<pre><code>Create a diagram showing the layers of Earth's atmosphere,
+labeled with altitude, temperature profile, and key features
+(ozone layer, tropopause, etc.).</code></pre>
+
+<pre><code>Draw a schematic of the cosmic distance ladder, showing the
+sequence of methods used to measure distances at increasing
+scales: parallax, Cepheid variables, Type Ia supernovae,
+and the Hubble flow.</code></pre>
+
+<pre><code>Generate an illustration of CRISPR-Cas9 editing a strand of DNA,
+showing the guide RNA, Cas9 protein, and the target sequence.</code></pre>
+
+<pre><code>Create a visualization of the water cycle in a changing climate,
+showing evaporation, cloud formation, precipitation, runoff,
+and groundwater recharge with arrows indicating energy flows.</code></pre>
+
+<p>
+    <strong>Observe:</strong> How accurate is the scientific content? Are labels correct?
+    Would you trust this in a presentation without checking it? This is a good
+    opportunity to think critically about AI-generated visual content.
+</p>
+
 <h2>Exercise 2: Using NotebookLM for Document Analysis</h2>
 
 <p>
@@ -328,25 +357,77 @@ or page numbers when making suggestions.</code></pre>
     prompts to dig deeper into specific sections.
 </p>
 
-<h3>Step 3 (Optional): Turn this into a reusable Gem</h3>
+<h2>Exercise 6: Creating a Gem</h2>
 
 <p>
-    If you find this useful, you can create a <strong>Gem</strong> — a custom AI
-    assistant with a persistent prompt — so you don't have to paste the
-    instructions every time.
+    <strong>Gems</strong> are custom AI assistants in Gemini with two kinds of persistence:
+</p>
+
+<ul class="resources">
+    <li><strong>Persistent prompts:</strong> A Gem stores its instructions (the "system prompt")
+        permanently, so you don't have to re-type or paste a long prompt every time you start
+        a new conversation. The Gem always knows its role and how to behave.</li>
+    <li><strong>Persistent context materials:</strong> You can upload reference documents
+        (PDFs, style guides, journal guidelines, datasets) that the Gem always has access to.
+        Every conversation with that Gem starts with those documents already loaded.</li>
+</ul>
+
+<p>
+    This combination means you can build specialized tools that are ready to use
+    immediately — no setup required each time. Gems can also be shared with
+    colleagues in your Google Workspace, so an entire research group can use the
+    same standardized assistant.
+</p>
+
+<h3>Step 1: Open the Gem Manager</h3>
+
+<ol>
+    <li>In Gemini, look for <strong>"Gem manager"</strong> in the left sidebar (or under a menu).</li>
+    <li>Click <strong>"New Gem"</strong> or <strong>"Create Gem"</strong>.</li>
+</ol>
+
+<h3>Step 2: Create a "Pre-Submission Paper Reviewer" Gem</h3>
+
+<p>
+    Let's convert the paper review prompt from Exercise 5 into a reusable Gem.
 </p>
 
 <ol>
-    <li><strong>Access Gems</strong>: In Gemini, look for the "Gem manager" option (usually
-        in the left sidebar or under a menu).</li>
-    <li><strong>Create a new Gem</strong>: Click "New Gem" or "Create Gem".</li>
-    <li><strong>Paste the prompt above</strong> as the Gem's persistent instructions.</li>
-    <li><strong>Name it</strong>: e.g., "Pre-Submission Paper Reviewer".</li>
-    <li><strong>Upload reference documents (optional)</strong>: You can add target journal
-        guidelines or style guides that the Gem should always consider.</li>
-    <li><strong>Share if desired</strong>: Gems can be shared with colleagues in your
-        Google Workspace, making it easy to standardize review workflows across
-        a research group.</li>
+    <li><strong>Name it</strong>: "Pre-Submission Paper Reviewer"</li>
+
+    <li><strong>Paste these instructions</strong> as the Gem's persistent prompt:
+        <pre><code>When the user uploads a PDF of one of their papers, act as a thorough
+and constructive colleague helping them review it before submission.
+
+For each paper uploaded:
+1. Summarize the main contributions
+2. Check whether the abstract accurately reflects the paper's content
+3. Identify any gaps in the logic or argument
+4. Flag places where claims are not well supported by the data
+5. Point out unclear writing, jargon, or confusing figures
+6. Check that all figures and tables are referenced in the text
+7. Assess whether the abstract combined with the figure captions
+   conveys the main message of the paper
+8. Note any missing citations or incomplete references
+9. Suggest specific improvements
+
+Be constructive and specific. Cite section numbers, figure numbers,
+or page numbers when making suggestions.</code></pre>
+    </li>
+
+    <li><strong>Upload reference documents (optional)</strong>: If you have target journal
+        guidelines or a style guide, upload them so the Gem always considers them.</li>
+
+    <li><strong>Save</strong> the Gem.</li>
+</ol>
+
+<h3>Step 3: Test your Gem</h3>
+
+<ol>
+    <li>Open your new Gem from the Gem manager.</li>
+    <li>Upload a PDF of one of your papers — notice that you don't need to paste
+        any instructions. The Gem already knows what to do.</li>
+    <li>Compare the results to what you got in Exercise 5. Is the output similar?</li>
 </ol>
 
 <p>
@@ -354,11 +435,10 @@ or page numbers when making suggestions.</code></pre>
 </p>
 
 <ul class="resources">
-    <li><strong>Grant Writing Assistant</strong>: Helps structure proposals and checks for common requirements</li>
-    <li><strong>Literature Synthesizer</strong>: Summarizes papers in a consistent format</li>
-    <li><strong>Methods Section Writer</strong>: Helps document experimental procedures in proper style</li>
-    <li><strong>Data Analysis Explainer</strong>: Interprets statistical results for non-specialists</li>
-    <li><strong>Lab Protocol Checker</strong>: Reviews protocols for completeness and safety</li>
+    <li><strong>Grant Writing Assistant</strong>: Persistent prompt checks proposals against uploaded funding agency guidelines</li>
+    <li><strong>Literature Synthesizer</strong>: Summarizes papers in a consistent format you define</li>
+    <li><strong>Methods Section Writer</strong>: Uploads your lab's style guide and helps document procedures</li>
+    <li><strong>Course Teaching Assistant</strong>: Uploads the syllabus and textbook chapters so it can answer student questions grounded in course materials</li>
 </ul>
 
 <h2>Discussion</h2>
