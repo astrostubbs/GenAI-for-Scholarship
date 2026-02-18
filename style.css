@@ -186,6 +186,8 @@ pre {
     overflow-x: auto;
     margin: 1rem 0;
     border-radius: 4px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
 pre code {
