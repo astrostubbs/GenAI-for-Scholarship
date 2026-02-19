@@ -50,15 +50,10 @@
     If you are on a Mac, see the <a href="session3-power-user.html">Mac setup guide</a> instead.
 </p>
 
-<h2>Prerequisites: Install Before the Session</h2>
-
-<p>You need these installed before we begin. Do these ahead of time.</p>
-
-<h3>1. Install Git for Windows</h3>
+<h2>Step 1: Install Git</h2>
 
 <p>
-    Claude Code requires Git for Windows (specifically Git Bash) to function.
-    Download and install it from:
+    Claude Code requires Git. Download and install it from:
 </p>
 
 <p style="text-align: center; margin: 1rem 0;">
@@ -69,221 +64,76 @@
     </a>
 </p>
 
-<p>
-    Use the default settings during installation. When it finishes, you can verify
-    by opening PowerShell and running:
-</p>
+<p>All default settings during installation are fine.</p>
 
-<pre><code>git --version</code></pre>
-
-<h3>2. Install Python 3.13</h3>
+<h2>Step 2: Install Python</h2>
 
 <p>
-    Download Python from <a href="https://www.python.org/downloads/" target="_blank">python.org</a>
-    and run the installer.
+    Download and install Python from:
 </p>
 
-<div class="disclaimer" style="background: #fff3cd; border-left: 4px solid #ff9800;">
-    <h3 style="margin-top: 0; color: #ff9800;">Critical: Check "Add python.exe to PATH"</h3>
-    <p>
-        On the <strong>first screen</strong> of the Python installer, you <strong>must</strong>
-        check the box that says <strong>"Add python.exe to PATH"</strong> before clicking Install.
-        If you miss this step, none of the commands below will work.
-    </p>
-</div>
-
-<h3>3. Install VS Code (for Option 1)</h3>
-
-<p>
-    If you don't already have Visual Studio Code, download it from
-    <a href="https://code.visualstudio.com" target="_blank">code.visualstudio.com</a>.
-    It's free and available for Windows, Mac, and Linux.
-</p>
-
-<h2>Choose Your Setup Path</h2>
-
-<p>There are two ways to run Claude Code on Windows:</p>
-
-<div class="session-cards">
-    <a href="#option1" class="session-card" style="text-decoration: none;">
-        <div class="date">Recommended</div>
-        <h3>Option 1: VS Code Extension</h3>
-        <p>The faster path to get started. Install the Claude Code extension inside
-        Visual Studio Code — no PowerShell configuration needed. Good for most users.</p>
-    </a>
-
-    <a href="#option2" class="session-card" style="text-decoration: none;">
-        <div class="date">Advanced</div>
-        <h3>Option 2: PowerShell CLI</h3>
-        <p>Run Claude Code directly from the command line. Requires PowerShell
-        environment variable setup. Good if you prefer working in a terminal.</p>
-    </a>
-</div>
-
-<h2 id="option1">Option 1: Claude Code in VS Code (Recommended)</h2>
-
-<p>
-    This is the fastest way to get Claude Code running on Windows. The VS Code extension
-    reads its configuration from a settings file, so you don't need to deal with
-    PowerShell environment variables or script execution policies.
-</p>
-
-<p>
-    Follow the step-by-step instructions here:
-</p>
-
-<p style="text-align: center; margin: 1.5rem 0;">
-    <a href="vscode-claude-setup.html"
+<p style="text-align: center; margin: 1rem 0;">
+    <a href="https://www.python.org/downloads/"
+       target="_blank"
        style="display: inline-block; background: #A51C30; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 4px; font-weight: bold;">
-        VS Code + Claude Code Setup Guide
+        Download Python
     </a>
 </p>
 
-<p>
-    Once you have Claude Code working in VS Code, skip ahead to the
-    <a href="#exercises">Exercises</a> section below.
-</p>
+<p>All default settings during installation are fine.</p>
 
-<hr style="margin: 2.5rem 0; border: none; border-top: 2px solid #ddd;">
-
-<h2 id="option2">Option 2: PowerShell CLI</h2>
+<h2>Step 3: Install Claude Code</h2>
 
 <p>
-    If you prefer working from the command line, you can install Claude Code
-    as a standalone CLI tool and run it directly in PowerShell.
-</p>
-
-<h3>Open PowerShell</h3>
-
-<p>
-    Open PowerShell: click the <strong>Start menu</strong>, type <strong>PowerShell</strong>,
-    and click <strong>Windows PowerShell</strong>. You will use this window for all
-    the steps below.
-</p>
-
-<h3>Allow running scripts</h3>
-
-<p>
-    PowerShell's default security policy may block running <code>.ps1</code> scripts.
-    Run this once to allow them for your user account:
-</p>
-
-<pre><code>Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser</code></pre>
-
-<p>Type <strong>Y</strong> and press Enter if prompted to confirm.</p>
-
-<h3>Create your working directory</h3>
-
-<pre><code>mkdir "$env:USERPROFILE\GAIsandbox"
-cd "$env:USERPROFILE\GAIsandbox"</code></pre>
-
-<h3>Verify Python is installed</h3>
-
-<pre><code>python --version</code></pre>
-
-<p>
-    You should see output like <code>Python 3.13.x</code>.
-    If you get an error, Python was not added to your PATH — reinstall and check the
-    "Add python.exe to PATH" box.
-</p>
-
-<h3>Run a test script</h3>
-
-<p>
-    Download the test file (note: in PowerShell you must use <code>curl.exe</code>,
-    not <code>curl</code>):
-</p>
-
-<pre><code>curl.exe -O https://astrostubbs.github.io/GenAI-for-Scholarship/hello.py</code></pre>
-
-<p>Then run it:</p>
-
-<pre><code>python hello.py</code></pre>
-
-<p>You should see output like:</p>
-
-<pre><code>Hello! Python is working correctly.
-
-Python version: 3.13.x (...)
-Python location: C:\Users\you\AppData\Local\Programs\Python\Python313\python.exe</code></pre>
-
-<div class="disclaimer">
-    <strong>Why <code>curl.exe</code>?</strong> PowerShell aliases <code>curl</code> to its own
-    <code>Invoke-WebRequest</code> command, which has different syntax. Using <code>curl.exe</code>
-    calls the real curl that ships with Windows 10 and later.
-</div>
-
-<h3>Test plotting</h3>
-
-<p>Download and run the plot test:</p>
-
-<pre><code>curl.exe -O https://astrostubbs.github.io/GenAI-for-Scholarship/plottest.py
-python plottest.py</code></pre>
-
-<p>
-    A window should appear showing a sine wave plot. Close it to continue.
-    If you get an error about missing packages, install them:
-</p>
-
-<pre><code>pip install numpy matplotlib</code></pre>
-
-<p>Then run <code>python plottest.py</code> again.</p>
-
-<p>If both tests pass, you're ready to proceed.</p>
-
-<h2>Installing Claude Code</h2>
-
-<p>
-    In PowerShell, run:
+    Open <strong>Terminal</strong> from the Start menu (type "Terminal" and click the result).
+    Run the following command to install Claude Code:
 </p>
 
 <pre><code>irm https://claude.ai/install.ps1 | iex</code></pre>
 
 <p>
-    This downloads and runs the official Claude Code installer for Windows.
-    The binary is placed at <code>%USERPROFILE%\.local\bin\claude.exe</code>
-    and auto-updates in the background.
+    The installer will display a message asking you to add a directory to your PATH.
+    <strong>Note the directory it mentions</strong> — you will need it in Step 4 below.
+    It will typically be:
 </p>
+
+<pre><code>C:\Users\&lt;USERNAME&gt;\.local\bin</code></pre>
 
 <p>
     Full documentation:
     <a href="https://code.claude.com/docs/en/overview#native-install-recommended">Claude Code installation and setup</a>
 </p>
 
-<h2>Environment Setup</h2>
+<h3>Configure Claude Code settings</h3>
 
 <p>
-    Before launching Claude Code, you need to set environment variables
-    that configure it to use Harvard's Bedrock endpoint. Use the API key
-    from the link at the top of this page.
+    Still in the same Terminal window, create the Claude Code settings file.
+    Replace <code>&lt;API_KEY&gt;</code> with the key you retrieved from the
+    link at the top of this page:
 </p>
+
+<pre><code>notepad .claude\settings.json</code></pre>
 
 <p>
-    Download the PowerShell setup script:
+    Notepad may ask if you want to create a new file — click <strong>Yes</strong>.
+    Paste the following text into the file, replacing <code>&lt;API_KEY&gt;</code>
+    with your actual API key:
 </p>
 
-<pre><code>curl.exe -O https://astrostubbs.github.io/GenAI-for-Scholarship/trainingsetup.ps1</code></pre>
+<pre><code>{
+  "env": {
+    "ANTHROPIC_MODEL": "us.anthropic.claude-sonnet-4-5-20250929-v1:0",
+    "ANTHROPIC_SMALL_FAST_MODEL": "us.anthropic.claude-haiku-4-5-20251001-v1:0",
+    "ANTHROPIC_BEDROCK_BASE_URL": "https://apis.huit.harvard.edu/ais-bedrock-llm/v2",
+    "ANTHROPIC_API_KEY": "&lt;API_KEY&gt;",
+    "CLAUDE_CODE_SKIP_BEDROCK_AUTH": "1",
+    "CLAUDE_CODE_USE_BEDROCK": "1"
+  },
+  "disableLoginPrompt": true,
+  "autoUpdatesChannel": "latest"
+}</code></pre>
 
-<p>
-    Open <code>trainingsetup.ps1</code> in a text editor (Notepad works fine):
-</p>
-
-<pre><code>notepad trainingsetup.ps1</code></pre>
-
-<p>
-    Replace <code>YourKeyHere</code> with the API key you retrieved above.
-    Save and close the file, then source it in PowerShell:
-</p>
-
-<pre><code>. .\trainingsetup.ps1</code></pre>
-
-<p>The script sets these variables for your current session:</p>
-
-<pre><code>$env:ANTHROPIC_BEDROCK_BASE_URL = "https://apis.huit.harvard.edu/ais-bedrock-llm/v2"
-$env:ANTHROPIC_API_KEY = "YourKeyHere"
-$env:ANTHROPIC_SMALL_FAST_MODEL = "us.anthropic.claude-opus-4-5-20251101-v1:0"
-$env:CLAUDE_CODE_SKIP_BEDROCK_AUTH = "1"
-$env:CLAUDE_CODE_USE_BEDROCK = "1"</code></pre>
+<p>Save the file (<strong>Ctrl+S</strong>) and close Notepad.</p>
 
 <div class="disclaimer" style="background: #fff3cd; border-left: 4px solid #ff9800;">
     <h3 style="margin-top: 0; color: #ff9800;">Security: Never Share Your API Key</h3>
@@ -298,20 +148,92 @@ $env:CLAUDE_CODE_USE_BEDROCK = "1"</code></pre>
     </ul>
 </div>
 
-<h2>Launching Claude Code</h2>
+<h2>Step 4: Add Claude Code to Your PATH</h2>
 
 <p>
-    With the environment variables set, start Claude Code from your
-    working directory:
+    Claude Code needs to be on your system PATH so Windows can find it.
 </p>
 
-<pre><code>cd "$env:USERPROFILE\GAIsandbox"
-claude</code></pre>
+<ol>
+    <li>Open the <strong>Start menu</strong> and search for
+        <strong>"Edit environment variables for your account"</strong></li>
+    <li>In the <strong>User variables</strong> section, select <strong>Path</strong> and click <strong>Edit</strong></li>
+    <li>Click <strong>New</strong> and add the directory the installer mentioned (typically
+        <code>C:\Users\&lt;USERNAME&gt;\.local\bin</code>)</li>
+    <li>Click <strong>OK</strong> to save, then <strong>OK</strong> again to close</li>
+</ol>
+
+<div class="disclaimer" style="background: #d1ecf1; border-left: 4px solid #17a2b8;">
+    <strong>Important:</strong> After changing the PATH, you must close and reopen
+    Terminal for the change to take effect.
+</div>
+
+<h2>Step 5: Install Visual Studio Code</h2>
 
 <p>
-    You will be prompted to log in on first use. For this workshop we are
-    using Harvard's API endpoint, so you do not need a personal Claude
-    subscription.
+    Download and install VS Code from:
+</p>
+
+<p style="text-align: center; margin: 1rem 0;">
+    <a href="https://code.visualstudio.com/"
+       target="_blank"
+       style="display: inline-block; background: #A51C30; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 4px; font-weight: bold;">
+        Download Visual Studio Code
+    </a>
+</p>
+
+<h3>Install the Claude Code extension</h3>
+
+<ol>
+    <li>Open VS Code</li>
+    <li>Press <strong>Ctrl+Shift+X</strong> to open the Extensions panel</li>
+    <li>Search for <strong>"Claude Code"</strong></li>
+    <li>Find the extension published by <strong>Anthropic</strong> and click <strong>Install</strong></li>
+</ol>
+
+<h3>Disable the login prompt in VS Code</h3>
+
+<p>
+    Since we are using Harvard's HUIT proxy rather than Anthropic's direct authentication,
+    you need to disable the default login prompt:
+</p>
+
+<ol>
+    <li>Open VS Code Settings: <strong>Ctrl+comma</strong></li>
+    <li>Search for <strong>"Claude Code login"</strong></li>
+    <li>Check the box for <strong>Disable Login Prompt</strong></li>
+    <li>Close the Settings tab: <strong>Ctrl+W</strong> (settings auto-save)</li>
+</ol>
+
+<h2>Step 6: Verify Everything Works</h2>
+
+<p>
+    Open a new Terminal window from the Start menu and test that Claude Code is accessible:
+</p>
+
+<pre><code>claude --version</code></pre>
+
+<p>
+    You should see a version number. Then launch Claude Code:
+</p>
+
+<pre><code>claude</code></pre>
+
+<p>
+    You can also open Claude Code directly inside VS Code by clicking the
+    <strong>spark icon</strong> in the top-right corner of an editor tab, or by
+    pressing <strong>Ctrl+Shift+P</strong> and typing "Claude Code".
+</p>
+
+<p>
+    Send a simple test message:
+</p>
+
+<pre><code>Hello, what model are you?</code></pre>
+
+<p>
+    You should receive a response from Claude through the HUIT proxy.
+    If it works, you're all set.
 </p>
 
 <div class="disclaimer" style="background: #d1ecf1; border-left: 4px solid #17a2b8;">
@@ -334,27 +256,6 @@ claude</code></pre>
     </li>
 </ul>
 
-<h2>Making Environment Variables Permanent (Optional)</h2>
-
-<p>
-    The <code>. .\trainingsetup.ps1</code> command only sets variables for the current
-    PowerShell window. If you close the window, you'll need to source it again.
-    To make the variables persist across all future sessions, you can add them
-    to your PowerShell profile:
-</p>
-
-<pre><code># Create the profile file if it doesn't exist
-if (!(Test-Path -Path $PROFILE)) { New-Item -Type File -Path $PROFILE -Force }
-
-# Open it in Notepad
-notepad $PROFILE</code></pre>
-
-<p>
-    Paste the environment variable lines from <code>trainingsetup.ps1</code> into
-    the profile file (with your actual API key), save, and close. The variables
-    will be set automatically every time you open PowerShell.
-</p>
-
 <h2>After the Session: Get Your Own API Key</h2>
 
 <div class="disclaimer">
@@ -370,6 +271,19 @@ notepad $PROFILE</code></pre>
 
 <p style="text-align: center; margin: 2rem 0;">
     <a href="setting-up-claude-code.html" style="display: inline-block; background: #A51C30; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 4px; font-weight: bold;">Setting Up Anthropic API Access for Harvard Users</a>
+</p>
+
+<h2>Post-Session Survey</h2>
+
+<p>
+    Please take a moment to share your feedback — it helps us improve future sessions.
+</p>
+
+<p style="text-align: center; margin: 1.5rem 0;">
+    <a href="https://bit.ly/4rlIBCt" target="_blank"
+       style="display: inline-block; background: #A51C30; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 1.1rem;">
+        Take the Post-Session Survey
+    </a>
 </p>
 
 <footer>
