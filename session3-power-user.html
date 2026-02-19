@@ -57,6 +57,86 @@
     programming and data analysis tasks interactively, from your command line.
 </p>
 
+<h2>Claude Code CLI vs. Claude Cowork</h2>
+
+<p>
+    Anthropic offers two agentic AI tools. This session focuses on <strong>Claude Code CLI</strong>,
+    but participants should be aware of <strong>Claude Cowork</strong> as well:
+</p>
+
+<table style="width: 100%; margin: 1.5rem 0; border-collapse: collapse;">
+    <thead>
+        <tr>
+            <th style="border: 1px solid #ddd; padding: 0.5rem 0.8rem; background: #8C1515; color: white; width: 25%;"></th>
+            <th style="border: 1px solid #ddd; padding: 0.5rem 0.8rem; background: #8C1515; color: white; width: 37.5%;">Claude Code CLI</th>
+            <th style="border: 1px solid #ddd; padding: 0.5rem 0.8rem; background: #8C1515; color: white; width: 37.5%;">Claude Cowork</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="border: 1px solid #ddd; padding: 0.4rem 0.8rem;"><strong>Interface</strong></td>
+            <td style="border: 1px solid #ddd; padding: 0.4rem 0.8rem;">Terminal (command line)</td>
+            <td style="border: 1px solid #ddd; padding: 0.4rem 0.8rem;">Claude Desktop GUI</td>
+        </tr>
+        <tr style="background: #f7f5f2;">
+            <td style="border: 1px solid #ddd; padding: 0.4rem 0.8rem;"><strong>Primary focus</strong></td>
+            <td style="border: 1px solid #ddd; padding: 0.4rem 0.8rem;">Coding, programming, data analysis</td>
+            <td style="border: 1px solid #ddd; padding: 0.4rem 0.8rem;">Knowledge work (documents, spreadsheets, research)</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #ddd; padding: 0.4rem 0.8rem;"><strong>Typical outputs</strong></td>
+            <td style="border: 1px solid #ddd; padding: 0.4rem 0.8rem;">Code, scripts, plots, analysis pipelines</td>
+            <td style="border: 1px solid #ddd; padding: 0.4rem 0.8rem;">Excel with formulas, PowerPoint, formatted documents</td>
+        </tr>
+        <tr style="background: #f7f5f2;">
+            <td style="border: 1px solid #ddd; padding: 0.4rem 0.8rem;"><strong>Requires</strong></td>
+            <td style="border: 1px solid #ddd; padding: 0.4rem 0.8rem;">Command line comfort</td>
+            <td style="border: 1px solid #ddd; padding: 0.4rem 0.8rem;">Just the desktop app</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #ddd; padding: 0.4rem 0.8rem;"><strong>Runs on</strong></td>
+            <td style="border: 1px solid #ddd; padding: 0.4rem 0.8rem;">Mac, Linux, Windows (WSL)</td>
+            <td style="border: 1px solid #ddd; padding: 0.4rem 0.8rem;">Mac, Windows (x64)</td>
+        </tr>
+        <tr style="background: #f7f5f2;">
+            <td style="border: 1px solid #ddd; padding: 0.4rem 0.8rem;"><strong>Authentication</strong></td>
+            <td style="border: 1px solid #ddd; padding: 0.4rem 0.8rem;">API key (HUIT Bedrock for Harvard)</td>
+            <td style="border: 1px solid #ddd; padding: 0.4rem 0.8rem;">Paid Anthropic subscription (Pro, Max, Team, or Enterprise)</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #ddd; padding: 0.4rem 0.8rem;"><strong>Harvard billing</strong></td>
+            <td style="border: 1px solid #ddd; padding: 0.4rem 0.8rem;">Charged to PI's HUIT account</td>
+            <td style="border: 1px solid #ddd; padding: 0.4rem 0.8rem;">Personal subscription ($20+/month)</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="disclaimer" style="background: #d1ecf1; border-left: 4px solid #17a2b8;">
+    <strong>Note:</strong> Claude Cowork authenticates through the Claude Desktop app login — it does
+    <strong>not</strong> use API keys or environment variables, and <strong>cannot</strong> be routed
+    through Harvard's HUIT Bedrock endpoint. Data sent through Cowork is subject to Anthropic's
+    standard data policies, not Harvard's enterprise agreements.
+</div>
+
+<h3>Getting Claude Cowork (Optional)</h3>
+
+<p>
+    If you have a paid Anthropic subscription and want to try Cowork:
+</p>
+
+<ol>
+    <li><strong>Download Claude Desktop</strong> from
+        <a href="https://claude.ai/download" target="_blank">claude.ai/download</a>
+        (available for Mac and Windows x64)</li>
+    <li><strong>Log in</strong> with your Anthropic account</li>
+    <li><strong>Switch to Cowork mode</strong> using the mode selector in the app</li>
+</ol>
+
+<p>
+    For more details, see the
+    <a href="https://support.claude.com/en/articles/13345190-getting-started-with-cowork" target="_blank">Cowork getting started guide</a>.
+</p>
+
 <h3>Prerequisites</h3>
 <ul class="resources">
     <li>Familiarity with large language models (LLMs) and prompt-based interaction</li>
