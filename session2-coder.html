@@ -232,34 +232,17 @@
 </p>
 
 <p>
-    <strong>Using AI in your local notebook:</strong>
+    <strong>Try it out:</strong> Once Jupyternaut is configured and responding, copy and paste
+    this prompt into the Jupyternaut chat:
 </p>
 
-<pre><code>import anthropic
-import os
+<pre style="white-space: pre-wrap;"><code>Can you make me a notebook that simulates a damped harmonic oscillator, in a new notebook. I want dynamic plots and adjustable parameters with slider controls.</code></pre>
 
-# Initialize the client with Harvard endpoint
-client = anthropic.AnthropicBedrock(
-    aws_region="us-east-1"  # Not actually used, but required parameter
-)
-
-# Ask for help with your code
-def get_ai_help(prompt):
-    message = client.messages.create(
-        model="us.anthropic.claude-opus-4-5-20251101-v1:0",
-        max_tokens=1024,
-        messages=[{"role": "user", "content": prompt}]
-    )
-    return message.content[0].text
-
-# Example: Ask AI to help debug
-code_with_error = """
-def calculate_mean(data):
-    return sum(data) / length(data)  # Error: should be len()
-"""
-
-help_text = get_ai_help(f"Fix this Python code:\n{code_with_error}")
-print(help_text)</code></pre>
+<p>
+    Review the code Jupyternaut generates. Does it run? Do the sliders work?
+    This is a good test of whether the AI can produce a complete, functional
+    notebook from a single natural-language request.
+</p>
 
 <p>
     <strong>Advantages of local notebooks with AI:</strong>
