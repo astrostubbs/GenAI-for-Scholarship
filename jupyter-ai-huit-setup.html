@@ -128,21 +128,46 @@ which python3
 
 
 <!-- Step 2 -->
-<h2><span class="step-num">2</span> Install JupyterLab</h2>
+<h2><span class="step-num">2</span> Create a Virtual Environment</h2>
 
-<pre><code>python3 -m pip install notebook jupyterlab</code></pre>
+<p>
+    Jupyter AI v3 is beta software that can pull in dependency versions incompatible with
+    your existing Python packages. A <strong>virtual environment</strong> keeps everything
+    isolated so nothing else on your system is affected.
+</p>
 
-<p>Verify the installation and launch JupyterLab to confirm it works:</p>
+<pre><code>python3 -m venv ~/jupyter-ai-env</code></pre>
 
-<pre><code>python3 -m jupyter lab</code></pre>
+<p>Activate it:</p>
 
-<div class="info-box">
-    <strong>Always use <code>python3 -m jupyter lab</code></strong> to launch (not just
-    <code>jupyter lab</code>). This ensures you use the correct Python installation.
+<pre><code>source ~/jupyter-ai-env/bin/activate</code></pre>
+
+<p>
+    Your terminal prompt should now show <code>(jupyter-ai-env)</code> at the beginning,
+    confirming the virtual environment is active.
+</p>
+
+<div class="warn-box">
+    <strong>Remember:</strong> You must activate this virtual environment every time you open
+    a new terminal window before launching JupyterLab. Just run
+    <code>source ~/jupyter-ai-env/bin/activate</code> again.
 </div>
 
 <!-- Step 3 -->
-<h2><span class="step-num">3</span> Install Jupyter AI (v3 Beta)</h2>
+<h2><span class="step-num">3</span> Install JupyterLab</h2>
+
+<p>With the virtual environment active, install JupyterLab:</p>
+
+<pre><code>pip install notebook jupyterlab</code></pre>
+
+<p>Verify the installation and launch JupyterLab to confirm it works:</p>
+
+<pre><code>jupyter lab</code></pre>
+
+<p>Close it (Ctrl+C in the terminal) once you've confirmed it launches, then continue to the next step.</p>
+
+<!-- Step 4 -->
+<h2><span class="step-num">4</span> Install Jupyter AI (v3 Beta)</h2>
 
 <p>
     The HUIT proxy speaks the <strong>AWS Bedrock Converse API</strong> format. Jupyter AI v3 uses
@@ -150,11 +175,11 @@ which python3
     Bearer token authentication. This is why v3 (beta) is required instead of the stable v2 release.
 </p>
 
-<pre><code>python3 -m pip install "jupyter-ai==3.0.0b9" boto3</code></pre>
+<pre><code>pip install "jupyter-ai==3.0.0b9" boto3</code></pre>
 
 <p>Verify:</p>
 
-<pre><code>python3 -m pip show jupyter-ai
+<pre><code>pip show jupyter-ai
 # Expected: Version: 3.0.0b9</code></pre>
 
 <div class="warn-box">
@@ -162,8 +187,8 @@ which python3
     may change in future stable releases. This guide was tested with this specific version.
 </div>
 
-<!-- Step 4 -->
-<h2><span class="step-num">4</span> Configure Environment Variables</h2>
+<!-- Step 5 -->
+<h2><span class="step-num">5</span> Configure Environment Variables</h2>
 
 <p>
     Add the following to your <code>~/.zshrc</code> file (or <code>~/.bashrc</code> on Linux).
@@ -205,26 +230,28 @@ echo $ANTHROPIC_API_KEY
     you'll get "Unable to locate credentials."
 </div>
 
-<!-- Step 5 -->
-<h2><span class="step-num">5</span> Launch JupyterLab</h2>
-
-<p>Open a <strong>new terminal window</strong> (so the <code>.zshrc</code> changes take effect) and launch:</p>
-
-<pre><code>python3 -m jupyter lab</code></pre>
-
 <!-- Step 6 -->
-<h2><span class="step-num">6</span> Configure Jupyternaut Settings</h2>
+<h2><span class="step-num">6</span> Launch JupyterLab</h2>
+
+<p>Open a <strong>new terminal window</strong> (so the <code>.zshrc</code> changes take effect),
+activate your virtual environment, and launch:</p>
+
+<pre><code>source ~/jupyter-ai-env/bin/activate
+jupyter lab</code></pre>
+
+<!-- Step 7 -->
+<h2><span class="step-num">7</span> Configure Jupyternaut Settings</h2>
 
 <p>In the JupyterLab interface, open the Jupyternaut (AI assistant) settings panel.</p>
 
-<h3>6a. Find Settings</h3>
+<h3>7a. Find Settings</h3>
 <p>Look for the Jupyternaut settings. In v3, this may be accessible via:</p>
 <ul class="resources">
     <li>The menu bar: <strong>Settings &rarr; AI Settings</strong></li>
     <li>The Jupyternaut icon in the left sidebar &rarr; settings gear</li>
 </ul>
 
-<h3>6b. Set the Chat Model ID</h3>
+<h3>7b. Set the Chat Model ID</h3>
 <p>In the <strong>Chat model ID</strong> field, enter:</p>
 
 <pre><code>bedrock/converse/us.anthropic.claude-opus-4-5-20251101-v1:0</code></pre>
@@ -236,7 +263,7 @@ echo $ANTHROPIC_API_KEY
     URL construction issues with custom endpoints.
 </div>
 
-<h3>6c. Set Model Parameters</h3>
+<h3>7c. Set Model Parameters</h3>
 <p>In the <strong>Model parameters</strong> section, add:</p>
 
 <table>
@@ -252,18 +279,18 @@ echo $ANTHROPIC_API_KEY
     </tr>
 </table>
 
-<h3>6d. Verify API Key</h3>
+<h3>7d. Verify API Key</h3>
 <p>
     In the <strong>Secrets and API keys</strong> section, confirm that
     <code>AWS_BEARER_TOKEN_BEDROCK</code> appears as a static (read-only) secret
     imported from your environment. If it doesn't appear, add it using the "Add secret" button.
 </p>
 
-<h3>6e. Embedding Model</h3>
+<h3>7e. Embedding Model</h3>
 <p>Leave the <strong>Embedding model</strong> blank. It is only needed for the <code>/learn</code>
 document indexing feature and is not required for chat.</p>
 
-<h3>6f. Save and Test</h3>
+<h3>7f. Save and Test</h3>
 <p>Click <strong>Update chat model</strong>, then send a test message in the Jupyternaut chat:</p>
 
 <pre><code>Hello, can you tell me what model you are?</code></pre>
@@ -405,7 +432,7 @@ document indexing feature and is not required for chat.</p>
 
 <footer>
     <p>
-        Last updated: February 2025. Tested with Python 3.13.3, jupyter-ai 3.0.0b9, macOS (Apple Silicon).
+        Last updated: February 2026. Tested with Python 3.13.3, jupyter-ai 3.0.0b9, macOS (Apple Silicon).
     </p>
     <p>
         &copy; 2026 President and Fellows of Harvard College.
