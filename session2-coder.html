@@ -62,15 +62,16 @@
 </p>
 
 <p style="text-align: center; margin: 1.5rem 0;">
-    <img src="architecture_local_jupyter.png" alt="Architecture 2: Local Jupyter + Claude via Harvard HUIT proxy"
+    <img src="architecture_local_jupyter.png" alt="Architecture 2: Local Jupyter + AI via Harvard HUIT proxy"
          style="max-width: 700px; width: 100%; border: 1px solid #ddd; border-radius: 6px;">
 </p>
 
 <p>
     In <strong>Exercise 2</strong>, JupyterLab runs on your own machine, so your code and data
     stay local. When you ask the AI for help, the query goes through Harvard's
-    secure HUIT proxy to Claude (Anthropic) via AWS Bedrock, and the response
-    comes back the same way. Your data is protected by Harvard's enterprise agreement.
+    secure HUIT proxy to an LLM (Claude, Gemini, or others) via AWS Bedrock, and the response
+    comes back the same way. The same HUIT API key works for all models available
+    through Bedrock. Your data is protected by Harvard's enterprise agreement.
 </p>
 
 <h2>Prerequisites</h2>
