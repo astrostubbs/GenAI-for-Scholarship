@@ -43,6 +43,36 @@
     code generation, revision, and debugging in real time.
 </p>
 
+<h2>Two Architectures for AI-Assisted Coding</h2>
+
+<p>
+    This session covers two different ways to use AI while writing Python code.
+    Understanding the architecture helps you choose the right tool for the job.
+</p>
+
+<p style="text-align: center; margin: 1.5rem 0;">
+    <img src="architecture_colab.png" alt="Architecture 1: Google Colab + Gemini — everything runs in the cloud"
+         style="max-width: 700px; width: 100%; border: 1px solid #ddd; border-radius: 6px;">
+</p>
+
+<p>
+    In <strong>Exercise 1</strong>, your browser connects to Google Colab, which runs your code
+    on Google's servers. Gemini AI is built in — everything happens in the cloud.
+    Your laptop is just the display.
+</p>
+
+<p style="text-align: center; margin: 1.5rem 0;">
+    <img src="architecture_local_jupyter.png" alt="Architecture 2: Local Jupyter + Claude via Harvard HUIT proxy"
+         style="max-width: 700px; width: 100%; border: 1px solid #ddd; border-radius: 6px;">
+</p>
+
+<p>
+    In <strong>Exercise 2</strong>, JupyterLab runs on your own machine, so your code and data
+    stay local. When you ask the AI for help, the query goes through Harvard's
+    secure HUIT proxy to Claude (Anthropic) via AWS Bedrock, and the response
+    comes back the same way. Your data is protected by Harvard's enterprise agreement.
+</p>
+
 <h2>Prerequisites</h2>
 
 <p>
