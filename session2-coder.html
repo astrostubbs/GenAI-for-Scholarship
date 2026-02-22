@@ -84,12 +84,14 @@
 
 <h3>Setting Up for Session 2</h3>
 
-<p>Follow these steps to get the demonstration notebook ready:</p>
+<p>Follow these steps to get the demonstration notebooks ready:</p>
 
 <ol>
-    <li><strong>Download the notebook</strong>: Control-click (Mac) or right-click (Windows) the link below and select "Download Linked File" or "Save Link As..."
+    <li><strong>Download all three notebooks</strong>: Control-click (Mac) or right-click (Windows) each link below and select "Download Linked File" or "Save Link As..."
         <ul style="margin-top: 0.5rem;">
-            <li><a href="notebooks/session2/ai_python_demo.ipynb">ai_python_demo.ipynb</a></li>
+            <li><a href="notebooks/session2/notebook1_colab_ai_intro.ipynb">Notebook 1: Getting Started with AI in Colab</a></li>
+            <li><a href="notebooks/session2/notebook2_csv_data.ipynb">Notebook 2: Working with CSV Data</a></li>
+            <li><a href="notebooks/session2/notebook3_google_drive.ipynb">Notebook 3: Reading Files from Google Drive</a></li>
         </ul>
         <div style="background: #f0f8ff; padding: 0.5rem; margin-top: 0.5rem; font-size: 0.9rem;">
             <strong>Mac:</strong> Control+click (or two-finger click on trackpad) → "Download Linked File"<br>
@@ -101,13 +103,20 @@
         <ul style="margin-top: 0.5rem;">
             <li>Go to <a href="https://drive.google.com" target="_blank">drive.google.com</a></li>
             <li>Navigate to your "Colab Notebooks" folder (or create it if it doesn't exist)</li>
-            <li>Drag and drop the downloaded .ipynb file into this folder</li>
+            <li>Drag and drop all three .ipynb files into this folder</li>
+        </ul>
+    </li>
+
+    <li><strong>Upload a test image</strong> (for Notebook 3):
+        <ul style="margin-top: 0.5rem;">
+            <li>Upload any PNG image to the <strong>top level</strong> of your Google Drive (My Drive)</li>
+            <li>Name it <code>testimage.png</code></li>
         </ul>
     </li>
 
     <li><strong>Open in Colab</strong>:
         <ul style="margin-top: 0.5rem;">
-            <li>Right-click on the uploaded notebook file</li>
+            <li>Right-click on a notebook file in Google Drive</li>
             <li>Select "Open with" → "Google Colaboratory"</li>
             <li>You're ready to go!</li>
         </ul>
@@ -124,30 +133,18 @@
 
 <p>
     Google Colab has built-in Gemini integration, allowing you to get AI assistance
-    while writing code. The demonstration notebook covers:
+    while writing code. Three notebooks walk you through progressively:
 </p>
 
 <ul class="resources">
-    <li><strong>Debugging:</strong> Finding and fixing errors with AI assistance</li>
-    <li><strong>Documentation:</strong> Adding docstrings and comments</li>
-    <li><strong>Code generation:</strong> Creating new functions from descriptions</li>
-    <li><strong>Data analysis:</strong> Reading files from Google Drive and analyzing data</li>
+    <li><strong>Notebook 1 — AI in Colab:</strong> The Gemini sidebar (chat) vs. the magic wand (cell-level AI), pre-installed packages, and installing new ones with <code>!pip install</code></li>
+    <li><strong>Notebook 2 — CSV Data:</strong> Generating, writing, reading, and analyzing a CSV data file within Colab's session storage</li>
+    <li><strong>Notebook 3 — Google Drive:</strong> Mounting your Google Drive, reading an image file (<code>testimage.png</code>), and displaying it</li>
 </ul>
 
-<p style="text-align: center; margin: 2rem 0;">
-    <a href="notebooks/session2/ai_python_demo.ipynb"
-       style="display: inline-block; background: #A51C30; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 4px; font-weight: bold;">
-        Download Demonstration Notebook
-    </a>
-    <br>
-    <span style="font-size: 0.85rem; color: #666; margin-top: 0.5rem; display: inline-block;">
-        (Control-click on Mac, right-click on Windows, and select "Download Linked File")
-    </span>
-</p>
-
 <div class="disclaimer">
-    <strong>Note:</strong> The notebook includes tutorial markdown cells that walk you through
-    each exercise. Follow along during the session, or work through it at your own pace afterward.
+    <strong>Note:</strong> Each notebook includes detailed markdown cells that walk you through
+    every step. Follow along during the session, or work through them at your own pace afterward.
 </div>
 
 <h3>Exercise 2: Local Jupyter Notebook with AI Integration</h3>
