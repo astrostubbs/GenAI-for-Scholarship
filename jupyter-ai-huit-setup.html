@@ -205,14 +205,24 @@ source jupyter-ai-env/bin/activate</code></pre>
 </div>
 
 <!-- Step 6 -->
-<h2><span class="step-num">6</span> Configure Environment Variables</h2>
+<h2><span class="step-num">6</span> Create an Environment Setup Script</h2>
 
 <p>
-    Add the following to your <code>~/.zshrc</code> file (or <code>~/.bashrc</code> on Linux).
-    If you already have some of these set for Claude Code, you only need to add the new one.
+    We'll create a small shell script that sets the required environment variables.
+    This keeps everything in your working directory rather than modifying your
+    system-wide shell configuration.
 </p>
 
-<pre><code># ---- HUIT Bedrock Proxy Configuration ----
+<p>Open the file in nano:</p>
+
+<pre><code>nano set_env.sh</code></pre>
+
+<p>Paste the following contents (replace <code>your-huit-api-key-here</code> with your actual API key):</p>
+
+<pre><code>#!/bin/zsh
+# ---- HUIT Bedrock Proxy Configuration ----
+# Source this script before launching JupyterLab:
+#   source set_env.sh
 
 # API key for the HUIT Bedrock proxy
 export ANTHROPIC_API_KEY="your-huit-api-key-here"
@@ -223,11 +233,11 @@ export ANTHROPIC_BEDROCK_BASE_URL=https://apis.huit.harvard.edu/ais-bedrock-llm/
 # Required for Jupyter AI / LiteLLM
 # LiteLLM uses this for Bearer token auth to Bedrock endpoints
 # (use the same value as ANTHROPIC_API_KEY)
-export AWS_BEARER_TOKEN_BEDROCK="your-huit-api-key-here"</code></pre>
+export AWS_BEARER_TOKEN_BEDROCK="$ANTHROPIC_API_KEY"</code></pre>
 
-<p>After editing, reload your shell:</p>
+<p>Save and exit nano (Ctrl+O, Enter, Ctrl+X). Then source the script:</p>
 
-<pre><code>source ~/.zshrc</code></pre>
+<pre><code>source set_env.sh</code></pre>
 
 <p>Verify the key variables are set:</p>
 
@@ -245,11 +255,12 @@ echo $ANTHROPIC_API_KEY
 <!-- Step 7 -->
 <h2><span class="step-num">7</span> Launch JupyterLab</h2>
 
-<p>Open a <strong>new terminal window</strong> (so the <code>.zshrc</code> changes take effect),
-go to your working directory, activate your virtual environment, and launch:</p>
+<p>From your working directory, activate the virtual environment, source the
+environment script, and launch:</p>
 
 <pre><code>cd ~/Desktop/GAI/exercises
 source jupyter-ai-env/bin/activate
+source set_env.sh
 jupyter lab</code></pre>
 
 <!-- Step 8 -->
@@ -351,8 +362,8 @@ document indexing feature and is not required for chat.</p>
 <h3>"Unable to locate credentials"</h3>
 <p>
     LiteLLM is trying AWS SigV4 auth instead of Bearer token auth.
-    Ensure <code>AWS_BEARER_TOKEN_BEDROCK</code> is set and that you opened a
-    <strong>new terminal</strong> after editing <code>.zshrc</code>.
+    Ensure <code>AWS_BEARER_TOKEN_BEDROCK</code> is set. Run
+    <code>source set_env.sh</code> before launching JupyterLab.
 </p>
 
 <h3>"Invalid ApiKey" (oauth.v2.InvalidApiKey)</h3>
@@ -364,7 +375,7 @@ document indexing feature and is not required for chat.</p>
 <h3>"bedrock does not support parameters: ['tools']"</h3>
 <p>
     This should not occur with <code>bedrock/converse/</code> (which supports tools).
-    If it does, add to <code>~/.zshrc</code>:
+    If it does, add to <code>set_env.sh</code> and re-source it:
 </p>
 <pre><code>export LITELLM_DROP_PARAMS=true</code></pre>
 
