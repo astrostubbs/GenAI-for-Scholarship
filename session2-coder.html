@@ -139,7 +139,7 @@
 <h2>Session Exercises</h2>
 
 <p>
-    This session will explore three ways to integrate AI with Python programming:
+    This session covers two ways to integrate AI with Python programming:
 </p>
 
 <h3>Exercise 1: Colab with Gemini</h3>
@@ -264,144 +264,20 @@ print(help_text)</code></pre>
     </p>
 </div>
 
-<h3>Exercise 3: Running AI-Integrated Notebooks on Harvard RC Cluster</h3>
+<h2>Beyond Your Laptop: Jupyter on the Harvard RC Cluster</h2>
 
 <p>
-    For computationally intensive work, you may want to run Jupyter notebooks on Harvard's
-    Research Computing (RC) cluster, which provides powerful hardware and can integrate with AI tools.
+    For computationally intensive work — large datasets, GPU-accelerated machine learning,
+    or long-running analyses — you can run Jupyter notebooks on Harvard's Research Computing
+    cluster with the same AI integration.
 </p>
 
-<p>
-    <strong>What is the RC Cluster?</strong>
+<p style="text-align: center; margin: 1.5rem 0;">
+    <a href="jupyter-rc-cluster.html"
+       style="display: inline-block; background: #A51C30; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 4px; font-weight: bold;">
+        Jupyter on the Harvard RC Cluster
+    </a>
 </p>
-
-<p>
-    Harvard Research Computing provides a high-performance computing cluster with:
-</p>
-
-<ul class="resources">
-    <li>Powerful CPU and GPU resources</li>
-    <li>Large-scale data storage</li>
-    <li>Pre-installed scientific software</li>
-    <li>Jupyter notebook access through Open OnDemand</li>
-</ul>
-
-<p>
-    <strong>Prerequisites:</strong>
-</p>
-
-<ul class="resources">
-    <li>Harvard RC account (request at <a href="https://www.rc.fas.harvard.edu/account-request/" target="_blank">rc.fas.harvard.edu</a>)</li>
-    <li>VPN connection if accessing from off-campus</li>
-    <li>Basic familiarity with Linux command line</li>
-    <li>Harvard HUIT API key — see <a href="setting-up-claude-code.html">API setup guide</a></li>
-</ul>
-
-<p>
-    <strong>Accessing Jupyter on RC:</strong>
-</p>
-
-<ol>
-    <li><strong>Log in to Open OnDemand</strong>:
-        <ul style="margin-top: 0.5rem;">
-            <li>Go to <a href="https://rcood.rc.fas.harvard.edu" target="_blank">rcood.rc.fas.harvard.edu</a></li>
-            <li>Log in with your Harvard credentials</li>
-        </ul>
-    </li>
-
-    <li><strong>Launch a Jupyter notebook session</strong>:
-        <ul style="margin-top: 0.5rem;">
-            <li>Click "Interactive Apps" → "Jupyter Notebook"</li>
-            <li>Select partition (e.g., "test" for quick jobs, "shared" for longer runs)</li>
-            <li>Request resources (CPUs, memory, time limit)</li>
-            <li>Launch and wait for session to start</li>
-        </ul>
-    </li>
-
-    <li><strong>Install AI libraries in your RC environment</strong>:
-        <pre><code># In a terminal on RC (or in notebook cell with !):
-pip install --user anthropic</code></pre>
-    </li>
-
-    <li><strong>Configure Harvard API endpoint</strong>:
-        <pre><code># Add to your ~/.bashrc on RC cluster:
-export ANTHROPIC_BEDROCK_BASE_URL=https://apis.huit.harvard.edu/ais-bedrock-llm/v2
-export ANTHROPIC_API_KEY="your-harvard-api-key"
-
-# Then reload:
-source ~/.bashrc</code></pre>
-        <p style="margin-top: 0.5rem;"><strong>Important:</strong> Never commit your API key to code repositories.
-        Keep it in environment variables or secure configuration files that are excluded from version control.</p>
-    </li>
-</ol>
-
-<p>
-    <strong>Example workflow: Large-scale data analysis with AI assistance</strong>
-</p>
-
-<pre><code># In your RC Jupyter notebook
-import anthropic
-import pandas as pd
-import numpy as np
-import os
-
-# Load large dataset (stored on RC cluster)
-data = pd.read_csv('/n/holyscratch01/your_lab/large_dataset.csv')
-
-# Initialize client with Harvard endpoint
-client = anthropic.AnthropicBedrock(
-    aws_region="us-east-1"  # Required parameter
-)
-
-prompt = f"""
-I have a dataset with {len(data)} rows and columns: {list(data.columns)}.
-Write Python code to:
-1. Calculate correlation matrix
-2. Identify top 5 most correlated variable pairs
-3. Create a heatmap visualization
-"""
-
-response = client.messages.create(
-    model="us.anthropic.claude-opus-4-5-20251101-v1:0",
-    max_tokens=2000,
-    messages=[{"role": "user", "content": prompt}]
-)
-
-print(response.content[0].text)
-# Then run the generated code</code></pre>
-
-<p>
-    <strong>Advantages of RC cluster for AI-assisted research:</strong>
-</p>
-
-<ul class="resources">
-    <li><strong>Computational power:</strong> Handle large datasets that won't fit on your laptop</li>
-    <li><strong>Parallel processing:</strong> Run multiple analyses simultaneously</li>
-    <li><strong>GPU access:</strong> For ML/DL workloads that need acceleration</li>
-    <li><strong>Persistent storage:</strong> Keep large datasets and results on cluster</li>
-    <li><strong>Long-running jobs:</strong> Leave analyses running without keeping laptop on</li>
-</ul>
-
-<div class="disclaimer" style="background: #fff3cd; border-left: 4px solid #ff9800;">
-    <h3 style="margin-top: 0; color: #ff9800;">Important Cost and Security Notes</h3>
-    <ul style="margin-bottom: 0;">
-        <li><strong>RC cluster usage</strong> is billed to PI accounts through FAS-RC</li>
-        <li><strong>API usage</strong> is billed to PI accounts through HUIT</li>
-        <li>Coordinate with your advisor about appropriate resource usage for both</li>
-        <li><strong>Never commit API keys to code repositories</strong> — use environment variables</li>
-        <li>Set monthly spending limits when registering your HUIT API access</li>
-    </ul>
-</div>
-
-<p>
-    <strong>Resources:</strong>
-</p>
-
-<ul class="resources">
-    <li><a href="https://docs.rc.fas.harvard.edu" target="_blank">RC Documentation</a></li>
-    <li><a href="https://docs.rc.fas.harvard.edu/kb/jupyter-notebook/" target="_blank">Jupyter on RC Guide</a></li>
-    <li><a href="https://www.rc.fas.harvard.edu/training/" target="_blank">RC Training Materials</a></li>
-</ul>
 
 <h2>Looking Ahead: Session 3 — Claude Code CLI</h2>
 
