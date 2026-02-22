@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jupyter AI Setup with HUIT Bedrock — Generative AI for Scholarship</title>
+    <title>Jupyter AI Setup with HUIT Bedrock (Windows) — Generative AI for Scholarship</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Additional styles for setup guide */
         .step-num {
             display: inline-block;
             background: var(--crimson);
@@ -37,7 +36,7 @@
         }
         .info-box {
             background: #d1ecf1;
-            border-left: 4px solid #18a2b8;
+            border-left: 4px solid #17a2b8;
             padding: 0.8rem 1rem;
             margin: 1rem 0;
             border-radius: 0 4px 4px 0;
@@ -90,18 +89,16 @@
     </a>
 </div>
 
-<h2>Setting Up Jupyter AI with the Harvard HUIT Bedrock Endpoint (Mac)</h2>
+<h2>Setting Up Jupyter AI with the Harvard HUIT Bedrock Endpoint (Windows)</h2>
 
 <p>
     This guide walks through configuring <strong>Jupyter AI</strong> (the JupyterLab AI chat assistant)
-    to route queries through Harvard's HUIT Bedrock proxy. This gives you an interactive
-    AI assistant directly inside JupyterLab on your local machine.
+    to route queries through Harvard's HUIT Bedrock proxy on Windows.
 </p>
 
 <div class="info-box">
-    <strong>Windows users:</strong> See the
-    <a href="jupyter-ai-huit-setup-windows.html"><strong>Windows setup guide</strong></a> for
-    PowerShell-based instructions.
+    <strong>Mac users:</strong> See the
+    <a href="jupyter-ai-huit-setup.html"><strong>Mac setup guide</strong></a> instead.
 </div>
 
 <div class="info-box">
@@ -116,32 +113,25 @@
 <!-- Step 1 -->
 <h2><span class="step-num">1</span> Create Your Working Directory</h2>
 
-<p>Open Terminal and create a directory for this work:</p>
+<p>Open <strong>Terminal</strong> from the Start menu and create a directory for this work:</p>
 
-<pre><code>mkdir -p ~/Desktop/GAI/exercises
-cd ~/Desktop/GAI/exercises</code></pre>
+<pre><code>mkdir "$env:USERPROFILE\Desktop\GAI\exercises"
+cd "$env:USERPROFILE\Desktop\GAI\exercises"</code></pre>
 
 <p>You will run all subsequent commands from this directory.</p>
 
 <!-- Step 2 -->
 <h2><span class="step-num">2</span> Verify Your Python Version</h2>
 
-<p>
-    Ensure you are running Python 3.13 (or at least 3.10+). The system Python 3.9 from
-    Xcode Command Line Tools is too old and causes package conflicts.
-</p>
+<p>Ensure Python 3.10 or later is installed:</p>
 
-<pre><code>python3 --version
-# Expected: Python 3.13.x
-
-which python3
-# Expected: /usr/local/bin/python3 (not /usr/bin/python3)</code></pre>
+<pre><code>python --version
+# Expected: Python 3.13.x (or 3.10+)</code></pre>
 
 <p>
-    If you need to install Python 3.13, download it from
+    If Python is not installed or the version is too old, download it from
     <a href="https://www.python.org/downloads/" target="_blank">python.org</a>.
 </p>
-
 
 <!-- Step 3 -->
 <h2><span class="step-num">3</span> Create a Virtual Environment</h2>
@@ -152,11 +142,11 @@ which python3
     isolated so nothing else on your system is affected.
 </p>
 
-<pre><code>python3 -m venv jupyter-ai-env</code></pre>
+<pre><code>python -m venv jupyter-ai-env</code></pre>
 
 <p>Activate it:</p>
 
-<pre><code>source jupyter-ai-env/bin/activate</code></pre>
+<pre><code>.\jupyter-ai-env\Scripts\Activate.ps1</code></pre>
 
 <p>
     Your terminal prompt should now show <code>(jupyter-ai-env)</code> at the beginning,
@@ -164,10 +154,16 @@ which python3
 </p>
 
 <div class="warn-box">
+    <strong>If you get a script execution error:</strong> Run
+    <code>Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser</code>
+    and type <strong>Y</strong> to confirm, then try activating again.
+</div>
+
+<div class="warn-box">
     <strong>Remember:</strong> You must activate this virtual environment every time you open
     a new terminal window before launching JupyterLab:
-    <pre><code>cd ~/Desktop/GAI/exercises
-source jupyter-ai-env/bin/activate</code></pre>
+    <pre><code>cd "$env:USERPROFILE\Desktop\GAI\exercises"
+.\jupyter-ai-env\Scripts\Activate.ps1</code></pre>
 </div>
 
 <!-- Step 4 -->
@@ -208,31 +204,18 @@ source jupyter-ai-env/bin/activate</code></pre>
 <h2><span class="step-num">6</span> Configure Environment Variables</h2>
 
 <p>
-    Add the following to your <code>~/.zshrc</code> file (or <code>~/.bashrc</code> on Linux).
-    If you already have some of these set for Claude Code, you only need to add the new one.
+    Set the following environment variables in your terminal.
+    Replace <code>your-huit-api-key-here</code> with the API key from the link at the top of this page.
 </p>
 
-<pre><code># ---- HUIT Bedrock Proxy Configuration ----
+<pre><code>$env:ANTHROPIC_API_KEY = "your-huit-api-key-here"
+$env:ANTHROPIC_BEDROCK_BASE_URL = "https://apis.huit.harvard.edu/ais-bedrock-llm/v2"
+$env:AWS_BEARER_TOKEN_BEDROCK = "your-huit-api-key-here"</code></pre>
 
-# API key for the HUIT Bedrock proxy
-export ANTHROPIC_API_KEY="your-huit-api-key-here"
+<p>Verify they are set:</p>
 
-# Base URL for the HUIT Bedrock proxy
-export ANTHROPIC_BEDROCK_BASE_URL=https://apis.huit.harvard.edu/ais-bedrock-llm/v2
-
-# Required for Jupyter AI / LiteLLM
-# LiteLLM uses this for Bearer token auth to Bedrock endpoints
-# (use the same value as ANTHROPIC_API_KEY)
-export AWS_BEARER_TOKEN_BEDROCK="your-huit-api-key-here"</code></pre>
-
-<p>After editing, reload your shell:</p>
-
-<pre><code>source ~/.zshrc</code></pre>
-
-<p>Verify the key variables are set:</p>
-
-<pre><code>echo $AWS_BEARER_TOKEN_BEDROCK
-echo $ANTHROPIC_API_KEY
+<pre><code>echo $env:AWS_BEARER_TOKEN_BEDROCK
+echo $env:ANTHROPIC_API_KEY
 # Both should print your API key</code></pre>
 
 <div class="info-box">
@@ -242,14 +225,29 @@ echo $ANTHROPIC_API_KEY
     you'll get "Unable to locate credentials."
 </div>
 
+<div class="warn-box">
+    <strong>Note:</strong> These environment variables only last for the current terminal session.
+    To make them permanent, see the
+    <a href="#make-permanent">Making Environment Variables Permanent</a> section below.
+</div>
+
 <!-- Step 7 -->
 <h2><span class="step-num">7</span> Launch JupyterLab</h2>
 
-<p>Open a <strong>new terminal window</strong> (so the <code>.zshrc</code> changes take effect),
-go to your working directory, activate your virtual environment, and launch:</p>
+<p>With the environment variables set and the virtual environment active, launch JupyterLab:</p>
 
-<pre><code>cd ~/Desktop/GAI/exercises
-source jupyter-ai-env/bin/activate
+<pre><code>jupyter lab</code></pre>
+
+<p>
+    If you opened a new terminal, you need to set the environment variables and
+    activate the venv again first:
+</p>
+
+<pre><code>cd "$env:USERPROFILE\Desktop\GAI\exercises"
+.\jupyter-ai-env\Scripts\Activate.ps1
+$env:ANTHROPIC_API_KEY = "your-huit-api-key-here"
+$env:ANTHROPIC_BEDROCK_BASE_URL = "https://apis.huit.harvard.edu/ais-bedrock-llm/v2"
+$env:AWS_BEARER_TOKEN_BEDROCK = "your-huit-api-key-here"
 jupyter lab</code></pre>
 
 <!-- Step 8 -->
@@ -315,7 +313,7 @@ document indexing feature and is not required for chat.</p>
 <!-- Models -->
 <h2>Available Models</h2>
 
-<p>Change the model ID in Jupyternaut settings to use different Claude models:</p>
+<p>Change the model ID in Jupyternaut settings to use different models:</p>
 
 <table>
     <tr>
@@ -340,19 +338,14 @@ document indexing feature and is not required for chat.</p>
     </tr>
 </table>
 
-<div class="warn-box">
-    The exact model IDs available through your HUIT proxy may differ. Check with
-    Harvard IT for the current list of supported Bedrock model identifiers.
-</div>
-
 <!-- Troubleshooting -->
 <h2>Troubleshooting</h2>
 
 <h3>"Unable to locate credentials"</h3>
 <p>
     LiteLLM is trying AWS SigV4 auth instead of Bearer token auth.
-    Ensure <code>AWS_BEARER_TOKEN_BEDROCK</code> is set and that you opened a
-    <strong>new terminal</strong> after editing <code>.zshrc</code>.
+    Ensure <code>AWS_BEARER_TOKEN_BEDROCK</code> is set in the same terminal
+    session where you launched JupyterLab.
 </p>
 
 <h3>"Invalid ApiKey" (oauth.v2.InvalidApiKey)</h3>
@@ -361,81 +354,44 @@ document indexing feature and is not required for chat.</p>
     (same value as <code>ANTHROPIC_API_KEY</code>).
 </p>
 
-<h3>"bedrock does not support parameters: ['tools']"</h3>
-<p>
-    This should not occur with <code>bedrock/converse/</code> (which supports tools).
-    If it does, add to <code>~/.zshrc</code>:
-</p>
-<pre><code>export LITELLM_DROP_PARAMS=true</code></pre>
+<h3>Script execution policy error when activating venv</h3>
+<p>Run this once to allow scripts for your user account:</p>
+<pre><code>Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser</code></pre>
+<p>Type <strong>Y</strong> and press Enter to confirm.</p>
 
 <h3>No response / silent failure</h3>
 <p>Check the terminal where you launched <code>jupyter lab</code> for error tracebacks. Common causes:</p>
 <ul class="resources">
     <li>Wrong model ID format (must start with <code>bedrock/converse/</code>)</li>
     <li>Missing <code>api_base</code> model parameter in Jupyternaut settings</li>
-    <li>Stale environment variables (open a new terminal)</li>
+    <li>Environment variables not set in the current terminal session</li>
 </ul>
 
-<h3>"No generation chunks were returned"</h3>
+<!-- Make permanent -->
+<h2 id="make-permanent">Making Environment Variables Permanent (Optional)</h2>
+
 <p>
-    You may be using the wrong API format. The HUIT proxy uses Bedrock Converse API, not the
-    native Anthropic Messages API. Do not use the <code>anthropic-chat</code> provider.
+    To avoid re-entering environment variables every time you open a terminal,
+    you can add them to your PowerShell profile:
 </p>
 
-<!-- Summary tables -->
-<h2>Summary: Packages Installed</h2>
+<pre><code># Create the profile file if it doesn't exist
+if (!(Test-Path -Path $PROFILE)) { New-Item -Type File -Path $PROFILE -Force }
 
-<table>
-    <tr>
-        <th>Package</th>
-        <th>Version</th>
-        <th>Purpose</th>
-    </tr>
-    <tr>
-        <td>jupyter-ai</td>
-        <td>3.0.0b9</td>
-        <td>JupyterLab AI extension (LiteLLM backend)</td>
-    </tr>
-    <tr>
-        <td>boto3</td>
-        <td>(latest)</td>
-        <td>AWS SDK, required by LiteLLM for Bedrock</td>
-    </tr>
-    <tr>
-        <td>notebook / jupyterlab</td>
-        <td>(latest)</td>
-        <td>Jupyter Notebook server and JupyterLab IDE</td>
-    </tr>
-</table>
+# Open it in Notepad
+notepad $PROFILE</code></pre>
 
-<h2>Summary: Environment Variables</h2>
+<p>Add these lines to the profile file (with your actual API key), save, and close:</p>
 
-<table>
-    <tr>
-        <th>Variable</th>
-        <th>Used By</th>
-        <th>Purpose</th>
-    </tr>
-    <tr>
-        <td><code>ANTHROPIC_API_KEY</code></td>
-        <td>HUIT Bedrock proxy</td>
-        <td>Your HUIT API key (authenticates all Bedrock requests)</td>
-    </tr>
-    <tr>
-        <td><code>ANTHROPIC_BEDROCK_BASE_URL</code></td>
-        <td>HUIT Bedrock proxy</td>
-        <td>Harvard's secure proxy URL</td>
-    </tr>
-    <tr>
-        <td><code>AWS_BEARER_TOKEN_BEDROCK</code></td>
-        <td>Jupyter AI / LiteLLM</td>
-        <td>HUIT API key for LiteLLM Bearer auth (same value as ANTHROPIC_API_KEY)</td>
-    </tr>
-</table>
+<pre><code>$env:ANTHROPIC_API_KEY = "your-huit-api-key-here"
+$env:ANTHROPIC_BEDROCK_BASE_URL = "https://apis.huit.harvard.edu/ais-bedrock-llm/v2"
+$env:AWS_BEARER_TOKEN_BEDROCK = "your-huit-api-key-here"</code></pre>
+
+<p>The variables will be set automatically every time you open a terminal.</p>
 
 <footer>
     <p>
-        Last updated: February 2026. Tested with Python 3.13.3, jupyter-ai 3.0.0b9, macOS (Apple Silicon).
+        Last updated: February 2026. Tested with Python 3.13, jupyter-ai 3.0.0b9, Windows 11.
     </p>
     <p>
         &copy; 2026 President and Fellows of Harvard College.
