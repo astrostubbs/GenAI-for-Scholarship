@@ -48,39 +48,42 @@
     </li>
 
     <li>
-        <strong>Exercise 1: Google Colab with Gemini</strong>
+        <strong>Two architectures</strong> (lecture, ~10 min)
+        <ul>
+            <li>Show the two architecture diagrams on the <a href="session2-coder.html">session page</a></li>
+            <li>Architecture 1: Google Colab + Gemini — everything in the cloud, free</li>
+            <li>Architecture 2: Local JupyterLab + HUIT Bedrock proxy — code and data stay on your machine, API calls billed to PI</li>
+        </ul>
+    </li>
+
+    <li>
+        <strong>Exercise 1: Google Colab with Gemini</strong> (3 notebooks)
         <ul>
             <li>Ensure everyone can access Colab with their Harvard Google account</li>
-            <li>Walk through the demonstration notebook (ai_python_demo.ipynb)</li>
-            <li>Cover: debugging, documentation, code generation, data analysis</li>
-            <li>Key point: Gemini works cell-by-cell within the notebook</li>
+            <li><strong>Notebook 1 — AI in Colab:</strong> Gemini sidebar (chat) vs. magic wand (cell-level AI), pre-installed packages, installing new ones with <code>!pip install</code></li>
+            <li><strong>Notebook 2 — File I/O with Google Drive:</strong> Generating, writing, reading, and analyzing a CSV file on Google Drive</li>
+            <li><strong>Notebook 3 — Data Browsing:</strong> Load SDSS galaxy photometry from Google Drive, inspect and visualize, then use Gemini chat to generate a 3D interactive plot and convert the notebook to a standalone program</li>
+            <li>Key point: two Gemini interfaces — the magic wand (cell context) vs. the blue Gemini star at the bottom (general chat, no cell context)</li>
         </ul>
     </li>
 
     <li>
-        <strong>Exercise 2: Local Jupyter Notebook with Jupyternaut</strong>
+        <strong>Exercise 2: Local JupyterLab with Jupyternaut</strong>
         <ul>
-            <li>This requires Python installed locally and the HUIT API key</li>
-            <li>Walk through the <a href="jupyter-ai-huit-setup.html">Jupyter AI setup guide</a></li>
-            <li>Show Jupyternaut chat interface in JupyterLab</li>
-            <li>Key point: local notebooks give you control over environment and files</li>
-        </ul>
-    </li>
-
-    <li>
-        <strong>Exercise 3: Harvard RC Cluster overview</strong>
-        <ul>
-            <li>This is more of a demo/walkthrough than a hands-on exercise</li>
-            <li>Show Open OnDemand interface if possible</li>
-            <li>Explain when RC is appropriate (large datasets, GPU, long-running jobs)</li>
+            <li>Walk through the setup guide (<a href="jupyter-ai-huit-setup.html">Mac</a> | <a href="jupyter-ai-huit-setup-windows.html">Windows</a>): venv, pip install, environment variables, Jupyternaut settings</li>
+            <li>Settings are at <strong>Settings &rarr; Jupyternaut Settings</strong> — show the <a href="jupyter-ai-huit-setup.html">screenshot in the Mac guide</a></li>
+            <li>Common issue: forgetting to <code>source ./set_env.sh</code> before launching JupyterLab</li>
+            <li><strong>Prompt 1:</strong> Damped harmonic oscillator notebook with slider controls — tests whether AI can generate a complete interactive notebook from scratch</li>
+            <li><strong>Prompt 2:</strong> "Do some sensible analysis on sdss_photometry.csv" — tests whether AI can figure out what the data is and choose appropriate analyses without being told</li>
+            <li>Key point: local notebooks give you control over environment, files, and privacy</li>
         </ul>
     </li>
 
     <li>
         <strong>Preview of Session 3</strong>
         <ul>
-            <li>Briefly introduce Claude Code CLI</li>
-            <li>Explain the difference: Colab/Jupyter AI works cell-by-cell, Claude Code is an autonomous agent</li>
+            <li>Show the Claude Code architecture diagram</li>
+            <li>Explain the difference: Colab/Jupyter AI works inside a notebook, Claude Code is an autonomous agent at the OS level</li>
             <li>No setup required before Session 3 — we'll do it together</li>
         </ul>
     </li>
@@ -98,17 +101,21 @@
 <h3>Colab + Gemini</h3>
 <ul class="resources">
     <li>Participants need a Harvard-affiliated Google account (g.harvard.edu) for Colab</li>
-    <li>The demonstration notebook has tutorial markdown cells — participants can follow along or work at their own pace</li>
-    <li>Gemini in Colab operates per-cell: it sees the current cell and context, not the whole notebook at once</li>
-    <li>Show participants how to use the Gemini sidebar for code suggestions and explanations</li>
+    <li>Each notebook has detailed markdown cells — participants can follow along or work at their own pace</li>
+    <li>Notebook 3 uses <code>sdss_photometry.csv</code> — make sure participants upload it to their Colab Notebooks folder on Google Drive (same folder as the notebooks)</li>
+    <li>Notebook 3's Gemini exercises use the <strong>chat interface</strong> (blue star at bottom), not the magic wand</li>
+    <li>The 3D scatter plot prompt asks for redshift as radius with RA/Dec as angles on a sphere — expect Plotly output</li>
+    <li>The standalone program prompt asks Gemini to produce a .py file and an HTML user's guide — good example of AI going from notebook to distributable code</li>
 </ul>
 
 <h3>Local Jupyter + HUIT</h3>
 <ul class="resources">
     <li>This exercise requires Python 3.13+ and a working HUIT API key</li>
-    <li>The <code>AWS_BEARER_TOKEN_BEDROCK</code> environment variable must be set before launching JupyterLab</li>
-    <li>Common issue: participants forget to set the environment variable, get authentication errors</li>
+    <li>Participants create a virtual environment and a local <code>set_env.sh</code> script (Mac) or PowerShell environment variables (Windows)</li>
+    <li>The <code>AWS_BEARER_TOKEN_BEDROCK</code> environment variable must be set before launching JupyterLab — this is the most common failure point</li>
     <li>Jupyter AI v3 (beta) is required: <code>pip install "jupyter-ai==3.0.0b9" boto3</code></li>
+    <li>Jupyternaut settings: <strong>Settings &rarr; Jupyternaut Settings</strong>, set model ID to <code>bedrock/converse/us.anthropic.claude-opus-4-5-20251101-v1:0</code>, add <code>api_base</code> parameter</li>
+    <li>The damped oscillator prompt tests code generation + interactive widgets; the SDSS prompt tests whether AI can infer domain knowledge from column names</li>
 </ul>
 
 <h3>Cost awareness</h3>
@@ -126,6 +133,7 @@
     <li>How do you verify AI-generated code is correct?</li>
     <li>What are the risks of relying on AI for debugging — can it introduce new bugs?</li>
     <li>How do you decide between Colab (cloud) and local Jupyter (your machine)?</li>
+    <li>How well did the AI understand the SDSS data without being told what the columns mean?</li>
 </ul>
 
 <div class="disclaimer" style="background: #d4edda; border-left: 4px solid #28a745; text-align: center; padding: 1.5rem; margin: 2rem 0;">
