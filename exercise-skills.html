@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building Claude Code Skills — Generative AI for Scholarship</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .step-num {
+            display: inline-block;
+            background: var(--crimson);
+            color: white;
+            width: 1.7rem;
+            height: 1.7rem;
+            line-height: 1.7rem;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 0.85rem;
+            margin-right: 0.4rem;
+            font-family: -apple-system, Helvetica, Arial, sans-serif;
+        }
+        .info-box {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 0.8rem 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .warn-box {
+            background: #fff3cd;
+            border-left: 4px solid #ff9800;
+            padding: 0.8rem 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 0.8rem 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1rem 0;
+        }
+        th, td {
+            border: 1px solid var(--border);
+            padding: 0.5rem 0.8rem;
+            text-align: left;
+        }
+        th {
+            background: var(--crimson-dark);
+            color: white;
+            font-family: -apple-system, Helvetica, Arial, sans-serif;
+            font-size: 0.9rem;
+        }
+        tr:nth-child(even) { background: var(--bg-warm); }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logos">
+        <img src="HDSI.png" alt="Harvard Data Science Initiative">
+        <img src="FAS.png" alt="Harvard Faculty of Arts and Sciences">
+    </div>
+    <h1>Generative AI for Scholarship</h1>
+    <div class="sponsors">Harvard Data Science Initiative (HDSI) &amp; Faculty of Arts and Sciences (FAS)</div>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="session1-foundation.html">The Basics</a>
+    <a href="session2-coder.html">The AI-Empowered Coder</a>
+    <a href="session3-power-user.html">Claude Code CLI</a>
+    <a href="site-map.html">Site Map</a>
+    <a href="https://datascience.harvard.edu/education/generative-ai-for-graduate-students-and-postdocs/" target="_blank">Other GAI Sessions</a>
+</nav>
+
+<h2>Building Custom Skills in Claude Code</h2>
+
+<p>
+    Skills are reusable instructions that teach Claude Code how to perform specific tasks.
+    Each skill becomes a <strong>slash command</strong> (like <code>/reviewpaper</code> or
+    <code>/analyze-data</code>) that you can invoke any time. Skills are just markdown files
+    with a bit of YAML configuration at the top &mdash; no programming required.
+</p>
+
+<div class="info-box">
+    <strong>Why skills matter:</strong> Instead of re-explaining the same task to Claude every
+    session, you write the instructions once as a skill. Claude discovers your skills
+    automatically and can even invoke them on its own when appropriate.
+</div>
+
+<h2><span class="step-num">1</span> What Is a Skill?</h2>
+
+<p>A skill is a directory containing a <code>SKILL.md</code> file:</p>
+
+<pre><code>~/.claude/skills/my-skill/
+    SKILL.md</code></pre>
+
+<p>
+    The <code>SKILL.md</code> file has two parts: <strong>YAML frontmatter</strong> (configuration)
+    and <strong>markdown body</strong> (instructions for Claude).
+</p>
+
+<h3>Example: a simple skill</h3>
+
+<pre style="white-space: pre-wrap;"><code>---
+name: summarize-csv
+description: Load a CSV file and produce a summary of its contents.
+argument-hint: [filename]
+allowed-tools: Read, Bash
+---
+
+# Summarize CSV Data
+
+Load the file: **$ARGUMENTS**
+
+1. Show the first 10 rows
+2. List all columns with their data types
+3. Report the number of rows and any missing values
+4. Generate descriptive statistics for numeric columns
+5. Suggest what kind of analysis this data might support</code></pre>
+
+<p>
+    After saving this file, you can type <code>/summarize-csv mydata.csv</code> in any Claude
+    Code session and it will follow those exact instructions.
+</p>
+
+<h2><span class="step-num">2</span> Skill Configuration Options</h2>
+
+<p>
+    The YAML frontmatter at the top of <code>SKILL.md</code> controls how the skill behaves.
+    All fields are optional except <code>description</code> (recommended).
+</p>
+
+<table>
+    <tr>
+        <th>Field</th>
+        <th>What It Does</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td><code>name</code></td>
+        <td>The slash command name (defaults to directory name)</td>
+        <td><code>review-paper</code></td>
+    </tr>
+    <tr>
+        <td><code>description</code></td>
+        <td>What the skill does &mdash; Claude uses this to decide when to auto-invoke</td>
+        <td><code>Critique an academic paper</code></td>
+    </tr>
+    <tr>
+        <td><code>argument-hint</code></td>
+        <td>Shows in autocomplete to guide the user</td>
+        <td><code>[filename]</code></td>
+    </tr>
+    <tr>
+        <td><code>allowed-tools</code></td>
+        <td>Tools the skill can use without asking permission</td>
+        <td><code>Read, Write, Bash</code></td>
+    </tr>
+    <tr>
+        <td><code>model</code></td>
+        <td>Override which model to use</td>
+        <td><code>opus</code>, <code>sonnet</code>, <code>haiku</code></td>
+    </tr>
+    <tr>
+        <td><code>disable-model-invocation</code></td>
+        <td>Set to <code>true</code> so only you can trigger it (not Claude automatically)</td>
+        <td><code>true</code></td>
+    </tr>
+    <tr>
+        <td><code>user-invocable</code></td>
+        <td>Set to <code>false</code> to hide from <code>/</code> menu (Claude-only background knowledge)</td>
+        <td><code>false</code></td>
+    </tr>
+    <tr>
+        <td><code>context</code></td>
+        <td>Set to <code>fork</code> to run in an isolated subagent</td>
+        <td><code>fork</code></td>
+    </tr>
+    <tr>
+        <td><code>agent</code></td>
+        <td>Subagent type when forked</td>
+        <td><code>Explore</code>, <code>Plan</code>, <code>general-purpose</code></td>
+    </tr>
+</table>
+
+<h3>Variables you can use in the skill body</h3>
+
+<table>
+    <tr>
+        <th>Variable</th>
+        <th>What It Contains</th>
+    </tr>
+    <tr>
+        <td><code>$ARGUMENTS</code></td>
+        <td>Everything the user typed after the slash command</td>
+    </tr>
+    <tr>
+        <td><code>$0</code>, <code>$1</code>, <code>$2</code></td>
+        <td>Individual arguments by position (0-indexed)</td>
+    </tr>
+</table>
+
+<h2><span class="step-num">3</span> Where Skills Live</h2>
+
+<table>
+    <tr>
+        <th>Location</th>
+        <th>Scope</th>
+        <th>Use When</th>
+    </tr>
+    <tr>
+        <td><code>~/.claude/skills/</code></td>
+        <td>Personal &mdash; all your projects</td>
+        <td>General-purpose skills you always want available</td>
+    </tr>
+    <tr>
+        <td><code>.claude/skills/</code></td>
+        <td>Project &mdash; this repo only</td>
+        <td>Project-specific skills, shareable with collaborators via git</td>
+    </tr>
+</table>
+
+<h2><span class="step-num">4</span> Exercise: Build a Skill That Builds Skills</h2>
+
+<p>
+    The best way to learn skills is to make one. We're going to create a meta-skill called
+    <code>/newskill</code> that walks you through building <em>any</em> new skill interactively.
+    This is a tool that makes tools.
+</p>
+
+<h3>4a. Download the skill file</h3>
+
+<p style="text-align: center; margin: 1.5rem 0;">
+    <a href="skills/newskill/SKILL.md" download
+       style="display: inline-block; background: #A51C30; color: white; padding: 0.6rem 1.2rem; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 0.95rem;">
+        Download SKILL.md for /newskill
+    </a>
+</p>
+
+<h3>4b. Install it</h3>
+
+<p>Skills live in <code>~/.claude/skills/</code> (the <code>.claude</code> directory inside your
+home folder). Create the directory and move the file into place:</p>
+
+<pre><code>mkdir -p ~/.claude/skills/newskill
+mv ~/Downloads/SKILL.md ~/.claude/skills/newskill/SKILL.md</code></pre>
+
+<p>
+    (Adjust the source path if your browser downloads to a different location.)
+</p>
+
+<h3>4c. Verify it's in place</h3>
+
+<pre><code>cat ~/.claude/skills/newskill/SKILL.md</code></pre>
+
+<p>You should see the contents shown below:</p>
+
+<pre style="white-space: pre-wrap;"><code>---
+name: newskill
+description: Interactively create a new Claude Code skill through conversation. Gathers requirements, then iteratively drafts and refines the skill with user feedback until it's right.
+argument-hint: [skill-name]
+disable-model-invocation: true
+allowed-tools: Read, Write, Bash, Glob, AskUserQuestion
+---
+
+# Create a New Skill
+
+You are helping the user build a new Claude Code skill. The skill name provided is: **$ARGUMENTS**
+
+If no skill name was provided, ask the user for one first.
+
+## Step 1: Quick Configuration
+
+Use AskUserQuestion to gather these structural choices (combine into 1-2 questions):
+
+1. **Scope**: Personal (all projects, ~/.claude/skills/) or Project (this repo only, .claude/skills/)?
+2. **Invocation**: User only, Claude only, or both?
+3. **Execution**: Inline or forked subagent? If forked, which agent type?
+4. **Model**: Inherit, opus, sonnet, or haiku?
+5. **Arguments**: What arguments does it take? (e.g., [filename], [issue-number])
+
+## Step 2: Describe What the Skill Should Do
+
+Now ask the user to describe in their own words — in as much detail as they want — what this skill should do when invoked. Tell them:
+
+"Describe what this skill should do. Be as detailed as you like — what steps should it take, what output should it produce, what format should it follow, any specific instructions or constraints. I'll draft the skill from your description and we'll refine it together."
+
+Wait for the user's full description. Do NOT use AskUserQuestion for this — let them type freely in the conversation.
+
+## Step 3: Draft the SKILL.md
+
+Based on everything gathered, produce a complete first draft of the SKILL.md file. Show it to the user in full — both the YAML frontmatter and the markdown body.
+
+After showing the draft, ask: "What would you change? I can adjust the structure, add or remove sections, change the tone, make instructions more or less specific — anything. Or say 'looks good' to save it."
+
+## Step 4: Iterative Refinement
+
+This is the critical step. Repeat this loop:
+
+1. The user gives feedback (add this section, remove that, rephrase this, make it more specific, etc.)
+2. You revise the SKILL.md accordingly
+3. Show the updated version in full
+4. Ask again: "Any more changes, or ready to save?"
+
+Continue until the user says it's ready. Do NOT rush to save — the user should feel they can keep refining as long as they want.
+
+During refinement, actively help:
+- If instructions are vague, suggest ways to make them more specific
+- If the scope is too broad, suggest breaking it into multiple skills
+- If something would work better as a different frontmatter option, say so
+- Point out potential issues (e.g., "this needs WebFetch in allowed-tools if you want it to search the web")
+
+## Step 5: Save
+
+Once the user approves:
+
+1. Create the directory at the correct location (personal or project scope)
+2. Write the SKILL.md file
+3. Create any supporting files discussed during refinement
+4. Confirm: "Saved to [path]. You can invoke it with /[name] in your next session (or restart this one)."</code></pre>
+
+<p>Save and exit nano (Ctrl+O, Enter, Ctrl+X).</p>
+
+<h3>4d. Test it</h3>
+
+<p>Start a new Claude Code session (or restart your current one):</p>
+
+<pre><code>claude</code></pre>
+
+<p>Then type:</p>
+
+<pre><code>/newskill reviewpaper</code></pre>
+
+<p>
+    Claude will walk you through configuring a new skill called <code>reviewpaper</code>.
+    It will ask you quick configuration questions, then let you describe in detail what
+    the skill should do. It drafts the SKILL.md, shows it to you, and you iterate
+    back and forth until you're satisfied. Then it saves the file.
+</p>
+
+<div class="success-box">
+    <strong>What just happened:</strong> You built a reusable tool that builds reusable tools.
+    The <code>/newskill</code> command is itself a skill &mdash; a markdown file with instructions
+    that Claude follows. And it produces more markdown files with instructions that Claude
+    follows. Skills all the way down.
+</div>
+
+<h2><span class="step-num">5</span> Ideas for Skills to Build</h2>
+
+<p>
+    Try using <code>/newskill</code> to create skills for tasks you do regularly.
+    Here are some ideas:
+</p>
+
+<ul class="resources">
+    <li><strong>/reviewpaper</strong> &mdash; Read a PDF and produce a structured referee report</li>
+    <li><strong>/analyze-data</strong> &mdash; Load a dataset and perform exploratory data analysis with standard plots</li>
+    <li><strong>/write-abstract</strong> &mdash; Draft a paper abstract from a set of results and figures</li>
+    <li><strong>/debug</strong> &mdash; Systematically diagnose why a script is failing</li>
+    <li><strong>/make-figure</strong> &mdash; Generate a publication-quality plot from data with your preferred style settings</li>
+    <li><strong>/lab-notebook</strong> &mdash; Summarize today's analysis work into a dated lab notebook entry</li>
+    <li><strong>/grant-review</strong> &mdash; Critique a grant proposal draft against review criteria</li>
+</ul>
+
+<h2><span class="step-num">6</span> Key Takeaways</h2>
+
+<ul class="resources">
+    <li>Skills are just markdown files &mdash; no programming required</li>
+    <li>They turn recurring tasks into one-command workflows</li>
+    <li>Personal skills (<code>~/.claude/skills/</code>) follow you across all projects</li>
+    <li>Project skills (<code>.claude/skills/</code>) can be shared with collaborators via git</li>
+    <li>Claude can invoke skills automatically based on the description, or you can restrict them to manual use</li>
+    <li>The iterative refinement loop (describe &rarr; draft &rarr; feedback &rarr; revise) is itself a pattern you'll use constantly with AI tools</li>
+</ul>
+
+<p style="margin-top: 2rem;">
+    <a href="session3-power-user.html">&larr; Back to Session 3</a>
+</p>
+
+<footer>
+    <p>
+        &copy; 2026 President and Fellows of Harvard College.
+        Licensed under
+        <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.
+    </p>
+</footer>
+
+<script data-goatcounter="https://genaiatfas.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

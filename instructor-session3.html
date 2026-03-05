@@ -89,6 +89,19 @@
     </li>
 
     <li>
+        <strong>Building skills</strong>
+        <ul>
+            <li>Walk through the <a href="exercise-skills.html">skills tutorial</a></li>
+            <li>Explain what a skill is: a markdown file that becomes a slash command</li>
+            <li>Show the SKILL.md structure (YAML frontmatter + markdown instructions)</li>
+            <li>Participants download and install the <code>/newskill</code> skill file</li>
+            <li>Demo: run <code>/newskill reviewpaper</code> to build a paper review skill interactively</li>
+            <li>Key point: the iterative refinement loop (describe &rarr; draft &rarr; feedback &rarr; revise) is itself a transferable pattern for working with AI</li>
+            <li>Let participants try building their own skill for a task in their research</li>
+        </ul>
+    </li>
+
+    <li>
         <strong>Wrap-up</strong>
         <ul>
             <li>Show <code>/cost</code> to see session API usage</li>
@@ -121,6 +134,17 @@
     <li><strong>Step 5 (sunset markers):</strong> This shows Claude Code's ability to break complex problems into sub-tasks, install libraries, and combine results</li>
     <li><strong>Step 7 (critical thinking):</strong> The Fourier analysis may give unexpected results — the dominant period should be ~1 day (diurnal cycle), but participants should think about whether the data supports this and what other periods appear</li>
     <li><strong>Plan Mode:</strong> Emphasize that reviewing the plan is critical — don't just rubber-stamp it. This teaches good habits for working with AI agents</li>
+</ul>
+
+<h3>Skills exercise</h3>
+<ul class="resources">
+    <li>Participants need to install the SKILL.md file to <code>~/.claude/skills/newskill/SKILL.md</code> &mdash; the download button is on the <a href="exercise-skills.html">tutorial page</a></li>
+    <li>They must restart Claude Code after installing the skill for it to be discovered</li>
+    <li>If <code>/newskill</code> doesn't appear in autocomplete, check the file is in the right place: <code>cat ~/.claude/skills/newskill/SKILL.md</code></li>
+    <li>The <code>/newskill</code> demo works best with a concrete example like <code>/reviewpaper</code> &mdash; participants can relate to it</li>
+    <li>Encourage participants to think about their own recurring tasks: data processing pipelines, code review checklists, report templates</li>
+    <li>Skills with <code>context: fork</code> run in isolated subagents &mdash; useful for long-running or expensive tasks</li>
+    <li>Project skills (<code>.claude/skills/</code>) can be committed to git and shared with collaborators &mdash; this is a practical selling point</li>
 </ul>
 
 <h3>Cost awareness</h3>
@@ -160,6 +184,7 @@
     <li>What are the risks of letting an AI agent read, write, and execute code on your machine?</li>
     <li>How do you evaluate whether a Plan Mode plan is good before approving it?</li>
     <li>What research tasks in your field could benefit from this kind of agentic workflow?</li>
+    <li>What recurring tasks in your research could you turn into a reusable skill?</li>
 </ul>
 
 <div class="disclaimer" style="background: #d4edda; border-left: 4px solid #28a745; text-align: center; padding: 1.5rem; margin: 2rem 0;">
