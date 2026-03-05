@@ -89,21 +89,74 @@
     with a bit of YAML configuration at the top &mdash; no programming required.
 </p>
 
-<div class="info-box">
-    <strong>Why skills matter:</strong> Instead of re-explaining the same task to Claude every
-    session, you write the instructions once as a skill. Claude discovers your skills
-    automatically and can even invoke them on its own when appropriate.
-</div>
-
-<h2><span class="step-num">1</span> What Is a Skill?</h2>
-
-<p>A skill is a directory containing a <code>SKILL.md</code> file:</p>
-
-<pre><code>~/.claude/skills/my-skill/
-    SKILL.md</code></pre>
+<h2><span class="step-num">1</span> Skills Are Not Stored Prompts</h2>
 
 <p>
-    The <code>SKILL.md</code> file has two parts: <strong>YAML frontmatter</strong> (configuration)
+    You might think of a skill as a saved prompt &mdash; a convenient way to avoid retyping
+    the same question. That undersells what's happening. A stored prompt is a message you
+    send to an AI and wait for a text response. A skill is a set of <strong>instructions
+    for an autonomous agent</strong>.
+</p>
+
+<p>
+    When you invoke a skill, Claude Code doesn't just generate text. It <strong>acts</strong>:
+    it reads files, writes files, runs shell commands, installs packages, searches the web,
+    creates directories, executes Python scripts, and iterates on its own work. A skill
+    sets an agent loose to do your bidding, following the instructions you wrote.
+</p>
+
+<table>
+    <tr>
+        <th></th>
+        <th>Stored Prompt</th>
+        <th>Claude Code Skill</th>
+    </tr>
+    <tr>
+        <td><strong>What it produces</strong></td>
+        <td>Text response</td>
+        <td>Files, code, plots, reports &mdash; actual work products</td>
+    </tr>
+    <tr>
+        <td><strong>Can it take action?</strong></td>
+        <td>No &mdash; you copy/paste the output</td>
+        <td>Yes &mdash; reads, writes, and executes on your machine</td>
+    </tr>
+    <tr>
+        <td><strong>Multi-step?</strong></td>
+        <td>One response</td>
+        <td>Plans, iterates, recovers from errors, asks follow-up questions</td>
+    </tr>
+    <tr>
+        <td><strong>Reusable?</strong></td>
+        <td>Copy/paste into new chats</td>
+        <td>Always available as a slash command, auto-discovered</td>
+    </tr>
+</table>
+
+<div class="info-box">
+    <strong>Think of it this way:</strong> A stored prompt is like giving someone verbal
+    instructions. A skill is like hiring a research assistant, giving them a written
+    procedures manual, and letting them do the work.
+</div>
+
+<h2><span class="step-num">2</span> What Is a Skill, Technically?</h2>
+
+<p>A skill is a directory containing a <code>SKILL.md</code> file. Your skills directory
+looks like this:</p>
+
+<pre><code>~/.claude/
+    skills/
+        newskill/
+            SKILL.md
+        reviewpaper/
+            SKILL.md
+        analyze-data/
+            SKILL.md
+            templates/
+                report-template.md</code></pre>
+
+<p>
+    Each <code>SKILL.md</code> file has two parts: <strong>YAML frontmatter</strong> (configuration)
     and <strong>markdown body</strong> (instructions for Claude).
 </p>
 
@@ -131,7 +184,7 @@ Load the file: **$ARGUMENTS**
     Code session and it will follow those exact instructions.
 </p>
 
-<h2><span class="step-num">2</span> Skill Configuration Options</h2>
+<h2><span class="step-num">3</span> Skill Configuration Options</h2>
 
 <p>
     The YAML frontmatter at the top of <code>SKILL.md</code> controls how the skill behaves.
@@ -208,7 +261,7 @@ Load the file: **$ARGUMENTS**
     </tr>
 </table>
 
-<h2><span class="step-num">3</span> Where Skills Live</h2>
+<h2><span class="step-num">4</span> Where Skills Live</h2>
 
 <table>
     <tr>
@@ -228,7 +281,172 @@ Load the file: **$ARGUMENTS**
     </tr>
 </table>
 
-<h2><span class="step-num">4</span> Exercise: Build a Skill That Builds Skills</h2>
+<h2><span class="step-num">5</span> Inline vs. Forked: Two Ways to Run a Skill</h2>
+
+<p>
+    By default, a skill runs <strong>inline</strong> &mdash; in your main conversation.
+    You see everything the agent does in real time and can interact with it. Alternatively,
+    setting <code>context: fork</code> runs the skill in an <strong>isolated subagent</strong>
+    that works independently and returns a summary when it's done.
+</p>
+
+<table>
+    <tr>
+        <th></th>
+        <th>Inline (default)</th>
+        <th>Forked (<code>context: fork</code>)</th>
+    </tr>
+    <tr>
+        <td><strong>You see</strong></td>
+        <td>Every step as it happens</td>
+        <td>A summary when the agent finishes</td>
+    </tr>
+    <tr>
+        <td><strong>You can interact</strong></td>
+        <td>Yes &mdash; ask questions, redirect mid-task</td>
+        <td>No &mdash; agent works autonomously</td>
+    </tr>
+    <tr>
+        <td><strong>Good for</strong></td>
+        <td>Interactive, iterative tasks where you want control</td>
+        <td>Well-defined tasks you want to hand off completely</td>
+    </tr>
+    <tr>
+        <td><strong>Context</strong></td>
+        <td>Shares your conversation history</td>
+        <td>Isolated &mdash; only sees the skill instructions</td>
+    </tr>
+</table>
+
+<h3>Examples: when to use each</h3>
+
+<table>
+    <tr>
+        <th>Skill</th>
+        <th>Inline or Forked?</th>
+        <th>Why</th>
+    </tr>
+    <tr>
+        <td><code>/newskill</code></td>
+        <td>Inline</td>
+        <td>Needs back-and-forth conversation to refine the skill</td>
+    </tr>
+    <tr>
+        <td><code>/reviewpaper</code></td>
+        <td>Forked</td>
+        <td>Long-running analysis &mdash; let it work while you do other things</td>
+    </tr>
+    <tr>
+        <td><code>/validate-code</code></td>
+        <td>Forked</td>
+        <td>Runs tests, checks types, reports back &mdash; no interaction needed</td>
+    </tr>
+    <tr>
+        <td><code>/ship-it</code></td>
+        <td>Inline</td>
+        <td>Updates docs, commits, and pushes &mdash; you want to review each step</td>
+    </tr>
+    <tr>
+        <td><code>/tree</code></td>
+        <td>Inline</td>
+        <td>Quick directory listing, immediate output</td>
+    </tr>
+</table>
+
+<h2><span class="step-num">6</span> Example Skills</h2>
+
+<p>
+    Here are three concrete skills to illustrate different patterns. You don't need to
+    build these now &mdash; they're here to show what's possible.
+</p>
+
+<h3>/tree &mdash; visualize directory structure</h3>
+
+<p>A quick inline skill. Shows a tree view of the current project, like the classic
+Unix <code>tree</code> command:</p>
+
+<pre style="white-space: pre-wrap;"><code>---
+name: tree
+description: Display the directory structure of the current project as a tree diagram.
+argument-hint: [directory]
+allowed-tools: Bash, Glob
+---
+
+Show the directory structure of: **$ARGUMENTS**
+
+If no directory was specified, use the current working directory.
+
+Display the output as an indented tree using lines and branches, like:
+
+    project/
+    ├── src/
+    │   ├── main.py
+    │   └── utils.py
+    ├── tests/
+    │   └── test_main.py
+    ├── README.md
+    └── requirements.txt
+
+Exclude hidden directories (.git, __pycache__, .venv, node_modules).
+Show directories first, then files, alphabetically within each level.</code></pre>
+
+<h3>/validate-code &mdash; check Python code quality (forked)</h3>
+
+<p>A forked skill that runs autonomously and reports back. Good example of
+<code>context: fork</code> for a task that doesn't need interaction:</p>
+
+<pre style="white-space: pre-wrap;"><code>---
+name: validate-code
+description: Run validation and verification checks on Python code. Checks for syntax errors, runs tests, and reviews code quality.
+argument-hint: [file-or-directory]
+context: fork
+agent: general-purpose
+allowed-tools: Read, Bash, Grep, Glob
+---
+
+# Validate Python Code
+
+Target: **$ARGUMENTS**
+
+Run these checks and report results:
+
+1. **Syntax check**: Run `python3 -m py_compile` on all .py files
+2. **Run tests**: Look for test files (test_*.py, *_test.py) and run them with `python3 -m pytest` if available, otherwise `python3 -m unittest`
+3. **Import check**: Try importing each module to catch missing dependencies
+4. **Code review**: Read each file and flag:
+   - Unused imports
+   - Functions with no docstring
+   - Bare except clauses
+   - Hardcoded file paths or credentials
+   - Potential division by zero or index errors
+
+Report a summary with PASS/FAIL for each check and specific line numbers for any issues found.</code></pre>
+
+<h3>/ship-it &mdash; update docs, commit, and push (inline)</h3>
+
+<p>An inline skill for the end of a work session. Runs step by step so you can review
+before committing:</p>
+
+<pre style="white-space: pre-wrap;"><code>---
+name: ship-it
+description: Update all documentation to match current code, commit changes, and push to GitHub. Run at the end of a work session.
+disable-model-invocation: true
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep
+---
+
+# Ship It: Wrap Up and Push
+
+Walk through these steps, pausing to show me what you're doing at each stage:
+
+1. **Review changes**: Run `git status` and `git diff` to show what has changed
+2. **Update documentation**: Check if any README, docstrings, or comments need updating to reflect the code changes. Make the updates.
+3. **Stage files**: Add the changed files to staging. Show me the list before committing.
+4. **Commit**: Write a clear commit message summarizing all changes. Show me the message for approval before committing.
+5. **Push**: Push to the remote. Confirm success.
+
+Do NOT proceed past step 3 without my explicit approval of the commit message.</code></pre>
+
+<h2><span class="step-num">7</span> Exercise: Build a Skill That Builds Skills</h2>
 
 <p>
     The best way to learn skills is to make one. We're going to create a meta-skill called
@@ -353,7 +571,7 @@ Once the user approves:
     follows. Skills all the way down.
 </div>
 
-<h2><span class="step-num">5</span> Ideas for Skills to Build</h2>
+<h2><span class="step-num">8</span> Ideas for Skills to Build</h2>
 
 <p>
     Try using <code>/newskill</code> to create skills for tasks you do regularly.
@@ -370,9 +588,10 @@ Once the user approves:
     <li><strong>/grant-review</strong> &mdash; Critique a grant proposal draft against review criteria</li>
 </ul>
 
-<h2><span class="step-num">6</span> Key Takeaways</h2>
+<h2><span class="step-num">9</span> Key Takeaways</h2>
 
 <ul class="resources">
+    <li>Skills are not stored prompts &mdash; they set autonomous agents loose to do real work on your machine</li>
     <li>Skills are just markdown files &mdash; no programming required</li>
     <li>They turn recurring tasks into one-command workflows</li>
     <li>Personal skills (<code>~/.claude/skills/</code>) follow you across all projects</li>

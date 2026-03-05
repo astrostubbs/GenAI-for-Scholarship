@@ -92,8 +92,10 @@
         <strong>Building skills</strong>
         <ul>
             <li>Walk through the <a href="exercise-skills.html">skills tutorial</a></li>
-            <li>Explain what a skill is: a markdown file that becomes a slash command</li>
-            <li>Show the SKILL.md structure (YAML frontmatter + markdown instructions)</li>
+            <li><strong>Key distinction:</strong> Skills are not stored prompts &mdash; they set autonomous agents loose to take action (read/write files, run code, iterate). Emphasize the comparison table on the tutorial page.</li>
+            <li>Show the SKILL.md structure (YAML frontmatter + markdown instructions), the directory tree</li>
+            <li>Walk through the three example skills: <code>/tree</code> (quick inline), <code>/validate-code</code> (forked, autonomous), <code>/ship-it</code> (inline with approval gates)</li>
+            <li>Explain inline vs forked execution &mdash; when you want to watch vs hand off</li>
             <li>Participants download and install the <code>/newskill</code> skill file</li>
             <li>Demo: run <code>/newskill reviewpaper</code> to build a paper review skill interactively</li>
             <li>Key point: the iterative refinement loop (describe &rarr; draft &rarr; feedback &rarr; revise) is itself a transferable pattern for working with AI</li>
@@ -141,6 +143,8 @@
     <li>Participants need to install the SKILL.md file to <code>~/.claude/skills/newskill/SKILL.md</code> &mdash; the download button is on the <a href="exercise-skills.html">tutorial page</a></li>
     <li>They must restart Claude Code after installing the skill for it to be discovered</li>
     <li>If <code>/newskill</code> doesn't appear in autocomplete, check the file is in the right place: <code>cat ~/.claude/skills/newskill/SKILL.md</code></li>
+    <li>Start with the "skills vs stored prompts" comparison &mdash; this is the conceptual hook that makes skills click</li>
+    <li>The three example skills (<code>/tree</code>, <code>/validate-code</code>, <code>/ship-it</code>) show the range: simple inline, forked autonomous, and inline with approval gates</li>
     <li>The <code>/newskill</code> demo works best with a concrete example like <code>/reviewpaper</code> &mdash; participants can relate to it</li>
     <li>Encourage participants to think about their own recurring tasks: data processing pipelines, code review checklists, report templates</li>
     <li>Skills with <code>context: fork</code> run in isolated subagents &mdash; useful for long-running or expensive tasks</li>
