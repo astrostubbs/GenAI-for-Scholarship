@@ -505,6 +505,20 @@ Use AskUserQuestion to gather these structural choices (combine into 1-2 questio
 4. **Model**: Inherit, opus, sonnet, or haiku?
 5. **Arguments**: What arguments does it take? (e.g., [filename], [issue-number])
 
+## Step 1b: Help Flag and Command-Line Options
+
+Ask the user (via AskUserQuestion): "Should this skill support a -h flag
+that prints usage help? This makes the skill self-documenting, like a Unix
+command. If yes, we'll also ask about any other command-line flags it should
+support (e.g., -v for verbose, -o for output file)."
+
+If the user wants a -h flag:
+- Ask what other flags/options would be useful for this skill
+- The generated skill will include a "Step 0: Parse Arguments" section
+  that checks for -h and prints a man-page-style help text, then stops
+- All flags will be documented in the help text and in the argument-hint
+  frontmatter
+
 ## Step 2: Describe What the Skill Should Do
 
 Now ask the user to describe in their own words — in as much detail as they want — what this skill should do when invoked. Tell them:
@@ -515,7 +529,16 @@ Wait for the user's full description. Do NOT use AskUserQuestion for this — le
 
 ## Step 3: Draft the SKILL.md
 
-Based on everything gathered, produce a complete first draft of the SKILL.md file. Show it to the user in full — both the YAML frontmatter and the markdown body.
+Based on everything gathered, produce a complete first draft of the SKILL.md
+file. Show it to the user in full — both the YAML frontmatter and the
+markdown body.
+
+If the user opted for a -h flag, the generated skill MUST include:
+- A "Step 0: Parse Arguments" section that checks for flags
+- A help text block printed when -h is detected (then stop)
+- The help text should follow man-page conventions: Usage line,
+  description, options list, examples
+- All flags listed in the argument-hint frontmatter field
 
 After showing the draft, ask: "What would you change? I can adjust the structure, add or remove sections, change the tone, make instructions more or less specific — anything. Or say 'looks good' to save it."
 
