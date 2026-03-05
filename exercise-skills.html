@@ -482,32 +482,36 @@ Do NOT proceed past step 3 without my explicit approval of the commit message.</
     This is a tool that makes tools.
 </p>
 
-<h3>4a. Download the skill file</h3>
+<h3>7a. Install the skill file</h3>
 
-<p style="text-align: center; margin: 1.5rem 0;">
-    <a href="skills/newskill/SKILL.md" download
-       style="display: inline-block; background: #A51C30; color: white; padding: 0.6rem 1.2rem; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 0.95rem;">
-        Download SKILL.md for /newskill
-    </a>
-</p>
-
-<h3>4b. Install it</h3>
-
-<p>Skills live in <code>~/.claude/skills/</code> (the <code>.claude</code> directory inside your
-home folder). Create the directory and move the file into place:</p>
+<p>Create the skills directory and download the <code>SKILL.md</code> file directly:</p>
 
 <pre><code>mkdir -p ~/.claude/skills/newskill
-mv ~/Downloads/SKILL.md ~/.claude/skills/newskill/SKILL.md</code></pre>
+curl -o ~/.claude/skills/newskill/SKILL.md \
+  https://raw.githubusercontent.com/astrostubbs/GenAI-for-Scholarship/main/skills/newskill/SKILL.md</code></pre>
 
 <p>
-    (Adjust the source path if your browser downloads to a different location.)
+    Alternatively, you can copy the full contents shown below in step 7c and save it
+    manually to <code>~/.claude/skills/newskill/SKILL.md</code>.
 </p>
 
-<h3>4c. Verify it's in place</h3>
+<h3>7b. Verify it's in place</h3>
 
 <pre><code>cat ~/.claude/skills/newskill/SKILL.md</code></pre>
 
-<p>You should see the contents shown below:</p>
+<h3>7c. What's inside</h3>
+
+<p>You should see the contents shown below. This is written <strong>for Claude to follow</strong>,
+not for you to read as documentation. A few things that may look unfamiliar:</p>
+
+<ul>
+    <li><strong><code>AskUserQuestion</code></strong> &mdash; Claude Code's built-in tool for presenting
+        you with a structured multiple-choice dialog. When the skill says "Use AskUserQuestion",
+        it means Claude will pop up a set of options for you to choose from.</li>
+    <li><strong><code>$ARGUMENTS</code></strong> &mdash; Gets replaced automatically with whatever you
+        typed after the slash command (e.g., <code>/newskill reviewpaper</code> &rarr; <code>$ARGUMENTS</code>
+        becomes <code>reviewpaper</code>).</li>
+</ul>
 
 <pre style="white-space: pre-wrap;"><code>---
 name: newskill
@@ -596,9 +600,7 @@ Once the user approves:
 3. Create any supporting files discussed during refinement
 4. Confirm: "Saved to [path]. You can invoke it with /[name] in your next session (or restart this one)."</code></pre>
 
-<p>Save and exit nano (Ctrl+O, Enter, Ctrl+X).</p>
-
-<h3>4d. Test it</h3>
+<h3>7d. Test it</h3>
 
 <p>Start a new Claude Code session (or restart your current one):</p>
 
