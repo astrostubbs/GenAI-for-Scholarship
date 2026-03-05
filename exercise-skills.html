@@ -261,6 +261,14 @@ Load the file: **$ARGUMENTS**
     </tr>
 </table>
 
+<div class="info-box">
+    <strong>Best practice: add a <code>-h</code> flag.</strong> Any skill that accepts arguments
+    should support <code>-h</code> to print a help message (like a Unix man page). Include a
+    "Step 0: Parse Arguments" section in your skill that checks for <code>-h</code>, prints
+    usage info, and stops. This makes your skills self-documenting &mdash; anyone can type
+    <code>/my-skill -h</code> to see what it does and what options it supports.
+</div>
+
 <h2><span class="step-num">4</span> Where Skills Live</h2>
 
 <table>
@@ -363,32 +371,52 @@ Load the file: **$ARGUMENTS**
 <h3>/tree &mdash; visualize directory structure</h3>
 
 <p>A quick inline skill. Shows a tree view of the current project, like the classic
-Unix <code>tree</code> command:</p>
+Unix <code>tree</code> command. Note the <code>-h</code> flag for built-in help &mdash;
+a good practice for any skill that accepts arguments:</p>
 
 <pre style="white-space: pre-wrap;"><code>---
 name: tree
-description: Display the directory structure of the current project as a tree diagram.
-argument-hint: [directory]
+description: Display the hierarchical directory structure from the current working directory, like the Unix tree command. Shows three levels deep with counts for deeper content. Supports -L depth, -d dirs-only, and -h for help.
+argument-hint: [-L depth] [-d] [-h] [directory]
 allowed-tools: Bash, Glob
 ---
 
-Show the directory structure of: **$ARGUMENTS**
+# Display Directory Tree
 
-If no directory was specified, use the current working directory.
+Arguments: **$ARGUMENTS**
 
-Display the output as an indented tree using lines and branches, like:
+## Step 0: Parse Arguments
 
-    project/
-    ├── src/
-    │   ├── main.py
-    │   └── utils.py
-    ├── tests/
-    │   └── test_main.py
-    ├── README.md
-    └── requirements.txt
+Check for flags in $ARGUMENTS:
 
-Exclude hidden directories (.git, __pycache__, .venv, node_modules).
-Show directories first, then files, alphabetically within each level.</code></pre>
+- **-h**: Print the help text below and stop. Do nothing else.
+- **-L N**: Set maximum display depth to N (default: 3)
+- **-d**: Show directories only, suppress files
+- Any remaining non-flag argument is the target directory (default: cwd)
+
+### Help text (for -h)
+
+When -h is present, print exactly this and stop:
+
+    Usage: /tree [-L depth] [-d] [-h] [directory]
+
+    Display directory structure as an indented tree.
+
+    Options:
+      -L N    Show N levels deep (default: 3)
+      -d      Directories only (suppress files)
+      -h      Show this help message
+
+## Step 1: Display the Tree
+
+1. Use tree-style branch characters (├──, └──, │)
+2. Show levels specified by -L (default 3) with full names
+3. Directories at the depth limit show a summary:
+   ├── subdir/ (12 files, 3 dirs)
+4. If -d flag: directories only, suppress files
+5. Exclude: .git, __pycache__, .venv, node_modules, .eggs, .tox, .mypy_cache
+6. Directories first, then files, alphabetically
+7. Summary line at bottom: X directories, Y files</code></pre>
 
 <h3>/validate-code &mdash; check Python code quality (forked)</h3>
 
@@ -620,6 +648,7 @@ Once the user approves:
     <li>Personal skills (<code>~/.claude/skills/</code>) follow you across all projects</li>
     <li>Project skills (<code>.claude/skills/</code>) can be shared with collaborators via git</li>
     <li>Claude can invoke skills automatically based on the description, or you can restrict them to manual use</li>
+    <li>Add a <code>-h</code> flag to any skill that takes arguments &mdash; makes it self-documenting</li>
     <li>The iterative refinement loop (describe &rarr; draft &rarr; feedback &rarr; revise) is itself a pattern you'll use constantly with AI tools</li>
 </ul>
 
